@@ -23,9 +23,7 @@ EF延迟加载：就是使用Lamabda表达式或者Linq 从 EF实体对象中查
             
             //使用Lamabda表达式来获取数据
             //返回一个List<T>的对象来存储文章列表
-            List < Models.BlogArticle > list= db.BlogArticles.Where(p => p.AIsDel == false).ToList();
-            
-            
+            List < Models.BlogArticle > list= db.BlogArticles.Where(p => p.AIsDel == false).ToList(); 
             //也可以使用Linq来获取数据 
             List<Models.BlogArticle> list1 = (from p in db.BlogArticles where p.AIsDel == false select p).ToList();
 
@@ -37,7 +35,7 @@ EF延迟加载：就是使用Lamabda表达式或者Linq 从 EF实体对象中查
         #endregion
 ```
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+[![复制代码](assets/copycode.gif)](javascript:void(0);)
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
