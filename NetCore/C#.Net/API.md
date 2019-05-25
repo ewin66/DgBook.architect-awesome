@@ -39,6 +39,12 @@
 > 1、只在需要读取关联数据的时候才进行加载
 > 2、可能因为数据访问的延迟而降低性能，因为循环中，每一条数据都会访问一次数据库，导致数据库的压力加大
 
+### [EF延迟加载及原理深入解析](https://www.cnblogs.com/jasonwb/articles/3505130.html)
+
+> https://www.cnblogs.com/jasonwb/articles/3505130.html
+
+# [EF延迟加载及原理深入解析](https://www.cnblogs.com/jasonwb/articles/3505130.html)
+
 ###	综上所述
 
 ，我们应该比较清楚时候应该使用哪种机制？我个人的建议是：
