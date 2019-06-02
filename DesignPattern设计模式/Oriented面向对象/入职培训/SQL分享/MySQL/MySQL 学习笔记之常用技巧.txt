@@ -1,0 +1,58 @@
+﻿MySQL 学习笔记之常用技巧：
+1、带有外键的表无法truncate
+	方法一：先备份数据库和表之间的外键关系，然后删除外键，然后truncate ，最后添加外键
+	方法二：先 SET FOREIGN_KEY_CHECKS = 0 然后truncate ，再 SET FOREIGN_KEY_CHECKS = 1
+
+2、锁定数据库为只读：
+	mysql> flush tables with read lock; --全局读锁定，所有库所有表都被锁定只读，此时数据库的写操作将被阻塞，读操作顺利进行
+	
+	mysql> unlock tables; -- 解锁 flush tables with read lock；
+	
+3、关于授权(阿里云RDS版)
+	mysql> select * from mysql.user_view; --查询阿里云 mysql用户信息
+	
+	mysql> show privileges; --显示权限；
+
+	mysql> show grants; --显示账号权限
+	
+	mysql> show grants for root; --显示root账号权限
+	
+		--show grants for root 结果：
+		GRANT ALL PRIVILEGES 
+			ON *.* TO 'root'@'%' IDENTIFIED BY PASSWORD '*B628350782B69D9BC7DD9D0BB9151F2B80D800F3' WITH GRANT OPTION
+			
+		--show grants for mysql_admin :显示阿里云RDS高权限账号权限，结果如下
+		GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, PROCESS, REFERENCES, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER 
+			ON *.* TO 'mysql_admin'@'%' IDENTIFIED BY PASSWORD '*8659B180665842FC350041D817DFA323E6B2EF8E' WITH GRANT OPTION
+		
+		--给u_web授权：
+		GRANT SELECT, INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, EXECUTE 
+			ON `zjgq`.* TO 'u_web'@'%' IDENTIFIED BY 'db_dev_only+(35171)'
+			
+		--删除u_web用户：
+		drop user u_web;
+
+4、阿里云RDS MySQL还原到本地实例：工具 xtrabackup
+		1、下载备份文件
+		[root@dba91only ~]# wget -c 'https://rdsbak-st.oss-cn-shenzhen.aliyuncs.com/custins1672443/hins1660313_xtra_20160908033440.tar.gz?OSSAccessKeyId=c9gzsqpauj3duw5whwdv40hb&Expires=1473390750&Signature=kMbUpmo9%2F%2F9sbFrEuunGB23Y%2FYk%3D' -O zjgq-full-201609080335.tar.gz
+		
+		2、新建临时目录，下载的压缩文件解压到刚建的目录内
+		[root@dba91only mysql]# mkdir linshi && cd linshi
+		[root@dba91only linshi]# bash /data/backup/tools/rds_backup_extract.sh -f /data/backup/zjgqfullbackup/zjgq-full-201609080335.tar.gz 
+		
+		3、删除实例的data目录
+		[root@dba91only mysql]# rm -rf /data/mysql/data/*
+		
+		4、恢复
+		[root@dba91only ~]# innobackupex --user=root --password=mima+123 --defaults-file=/data/mysql/my.cnf --apply-log /data/mysql/linshi/
+		
+		[root@dba91only ~]# innobackupex --user=root --password=mima+123 --defaults-file=/data/mysql/my.cnf --copy-back /data/mysql/linshi/
+		
+		5、添加权限，启动mysql
+		[root@dba91only ~]# chown -R mysql:mysql /data/mysql/
+		[root@dba91only ~]# service mysql start
+		
+		6、注意事项：
+		本地实例mysql的数据目录和日志目录区分为多个的时候。
+		
+	

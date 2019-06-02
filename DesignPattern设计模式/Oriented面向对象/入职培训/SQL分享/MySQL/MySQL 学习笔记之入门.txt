@@ -1,0 +1,240 @@
+MySQL学习笔记之入门
+安装部分：
+	编译安装MySQL ：
+		1、检查并更新可更新的rpm包
+		2、关闭防火墙
+		3、修改hosts
+		4、检查并删除之前安装的MySQL
+		5、安装编译代码依赖的包
+		6、新建组合用户
+		7、cmake > make >  make install
+		8、创建目录、修改my.cnf参数、添加链接文件、修改文件夹权限
+		9、初始化配置
+		10、启动MySQL并配置MySQL用户和环境变量
+
+基本语法部分：
+	1、默认约束
+	区别：MySQL里面的default关键字后面不需要加括号
+	--sqlserver 
+	create table temp(id int default(12))
+	--mysql
+	create table temp(id int default 12);
+	
+	2、设置自增列
+	区别：MySQL自增列一定要是有索引的列，设置种子值要在表的后面设置
+	--sqlserver
+	create table temp(id int identity(1,1))
+	--mysql
+	create table temp(id int primary key auto_increment) auto_increment=1; --设置自增ID从1开始
+	MySQL自增长列的步长分为全局和会话级别两种，并且MySQL不支持表级别的步长： show global variables like 'auto_incre%'
+	问：如果有一张表，里面有个字段为id的自增主键，当已经向表里面插入了10条数据之后，删除了id为8，9，10的数据，再把mysql重启，之后再插入一条数据，那么这条数据的id值应该是多少，是8，还是11？
+	答：MYISAM引擎是11，InnoDB引擎是8 。因为两种类型的存储引擎所存储的最大ID记录的方式不同，MyISAM表将最大的ID记录到了数据文件里，重启mysql自增主键的最大ID值也不会丢失；
+	而InnoDB则是把最大的ID值记录到了内存中，所以重启mysql或者对表进行了OPTIMIZE操作后，最大ID值将会丢失。 
+	
+	3、修改表名
+	--sqlserver
+	sp_rename 'temp','temp2'
+	--mysql
+	alter table temp rename remp2;
+	
+	4、修改字段数据类型
+	--sqlserver 
+	alter table [dbo].[temp] alter column [id] bigint
+	--mysql
+	alter table temp modify id bigint;
+	
+	5、修改表的字段名
+	MySQL里修改字段名的时候需要加上字段的数据类型，否则会报错，而change也可以只修改数据类型，实现和modify同样的效果，方法是将SQL语句中的“新字段名”和“旧字段名”设置为相同的名称，只改变数据类型。
+	--sqlserver
+	sp_rename 'temp.id','iid','column'
+	--mysql
+	alter table temp change id idd bigint;
+	
+	6、添加字段
+	MySQL里可以使用first和after关键字指定添加的字段的位置
+	--sqlserver
+	alter table [dbo].[temp] add iid varchar(10) null
+	--mysql
+	alter table temp add iid varchar(10) null;
+	
+	7、删除字段
+	MySQL删除字段不需要添加column关键字
+	--sqlserver
+	alter table [dbo].[temp] drop column name
+	--mysql
+	alter table temp drop name;
+	
+	8、删除外键约束
+	--sqlserver无论是唯一约束、check约束还是外键约束都可以用下面的sql删除
+	alter table tablename drop constraint [约束名]
+	--mysql 如果是外键约束，需要使用drop foreign key，如果是主键约束需要使用drop primary key
+	alter table tablename drop foreign key fk_name
+	alter table tablename drop primary key pk_name
+	
+	9、数据类型
+	MySQL中的整数及其他数据类型都可以指定显示宽度，但显示宽度只用于显示，并不能限制取值范围和占用空间;
+	例如：int(3)会占用4个字节的存储空间，并且允许的最大值也不会是999，而是int整形所允许的最大值。
+
+权限部分：暂略！
+
+备份和恢复
+	MySQL的备份分为逻辑备份和物理备份，还原同样分逻辑还原和物理还原。
+	mysqldump逻辑备份：
+		mysqldump 命令，把数据从mysql库里以逻辑的sql语句形式直接输出并生成备份文件，
+			文件中实际上包含了多个CREATE 和INSERT语句，使用这些语句可以重新创建表和插入数据
+	基本语法： mysqldump -uusername -ppassword -hhostip dbname[tbname,tbname...] > filename.sql
+	mysqldump 参数总结：
+		-A 备份所有库
+		-B 备份多个库时使用，并增加建库和use 库 语句，单表备份不需要加-B参数
+		-F 或者 --flush-logs 导出之前刷新binlog日志
+		-R 备份包含存储过程和函数
+		-d 或者 --no-data 只备份表结构 
+		-t 或者 --no-create 只备份数据，不备份DDL语句
+		-q 或者 --quick 不会把整个导出的内容读入内存再执行导出，而是在读到的时候就写入到文件
+		-l 或者 --lock-tables 导出过程中给表加锁
+		--master-data 增加binlog日志文件名及对应的位置点
+		--set-gtid-purged=OFF 不启用gtid-purged 备份，这个参数开启很危险。
+		--lock-tables=0 备份时不锁表
+		-x 适合MyISAM引擎，锁表功能保证数据一致性
+		--single-transaction 适合Innodb 引擎事务数据库备份，保证备份的一致性，工作原理是设定本次会话的隔离级别为：repeatable read ，以确保本次会话dump时，不会看到其他会话已提交了的数据。
+		其他参数可运行 mysqldump --help 自行查看
+	例子：
+	# MYISAM引擎>	
+	mysqldump -uroot -p"mima+123" -A -B -F --master-data=2 -x --events |gzip > /data/mysql/data/all_db.sql.gz
+	# INNODB引擎>	
+	mysqldump -uroot -p"mima+123" -A -B -F --master-data=2 --events --single-transaction |gzip > /data/mysql/data/all_db.sql.gz
+	# 同时备份 monitor 和test两个库>/
+	mysqldump -uroot -p"mima+123" -B monitor test|gzip > /data/mysql/data/mt.sql
+	# -d 仅备份表结构 -t 仅备份数据 ， 不加tablename就是全库>
+	mysqldump -uroot -p"" -d dbname tablename > /data/mysql/data/s.sql  
+
+	xtrabackup实现备份：重要，此处后续补上！
+	
+	物理备份：
+	1、直接复制整个数据目录：MySQL表保存为文件方式，所以可以直接复制MySQL数据库的存储目录以及文件进行备份。要想保持备份一致，备份前需要对相关表执行 lock tables 操作，然后对表执行flush tables ，
+		这样复制数据库目录中的文件时，允许其他客户继续查询表；需要flush tables语句来确保开始备份前将所有激活的索引页写入磁盘。此法虽然简单，但是对Innodb存储引擎的表不适用。
+		
+恢复：
+	mysql  +  "< "    或者 source （需要登录到数据库里） ； 使用gzip压缩的备份需要先解压。
+
+MySQL日志：4类
+	1、错误日志：记录mysql服务的启动、运行、停止时出现的问题
+	2、查询日志：记录建立的客户端连接和执行的语句
+	3、二进制日志：既binlog日志，记录备份后所有更改数据的语句、主要用于复制
+	4、慢查询日志：记录所有执行时间超过long_query_time或者查询不使用索引的查询
+	
+	mysqlbinlog 
+		mysqlbinlog解析MySQL的binlog日志命令。binlog用来记录MySQL内部增删改的内容记录。
+
+		
+MySQL主从复制实践：
+	1、系统环境：
+		master-server：CentOS 6.5 | db11.mysql.com | 172.16.16.188  
+		slave-server ：CentOS 6.5 | db12.mysql.com | 172.16.16.189 
+	2、 安装MySQL ：mysql-5.6.25
+		确保两台服务器安装的MySQL路径等等信息均保持一致，并准备测试环境数据库 testrep
+	3、	配置
+		0、要求：版本一致；初始化数据库
+		1、修改主服务器（即master）
+			#vi /data/mysql/my.cnf
+			[mysqld]
+			log_bin=/data/mysql/mysql_logs/bin_log/mysql_bin
+			server_id=188
+		2、修改从服务器（即slave）
+			#vi /data/mysql/my.cnf
+			[mysqld]
+			log_bin=/data/mysql/mysql_logs/bin_log/mysql_bin
+			server_id=189
+		3、重启两台服务器的mysql
+			service mysql restart
+		4、在主服务器上建立账户并授权给slave
+			#mysql -uroot -p
+			mysql>grant replication slave on *.* to 'repl'@'%' identified by '123';
+			##注释：@'%' -- 表示只要账号密码正确，所有客户端都能连master服务器，可以用具体客户端IP来加强安全，如：@'172.16.16.189'
+		5、登录主服务器的mysql，查询master状态
+			mysql> show master status;
+			+------------------+----------+--------------+------------------+-------------------+
+			| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
+			+------------------+----------+--------------+------------------+-------------------+
+			| mysql_bin.000004 |      397 |              |                  |                   |
+			+------------------+----------+--------------+------------------+-------------------+
+			1 row in set (0.00 sec)
+			##注释：执行完此步骤后不要再操作主服务器MySQL，防止主服务器状态值变化。
+		6、配置从服务器slave
+			mysql> change master to master_host='172.16.16.188',master_user='repl',master_password='123',master_log_file='mysql_bin.000004',master_log_pos=397;
+			Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+			mysql> start slave;
+			Query OK, 0 rows affected (0.01 sec)
+		7、检查从服务器复制功能状态
+			mysql> show slave status\G;
+			##消息如下。注释：Slave_IO_Running 和 Slave_SQL_Running 两个进程必须都正常运行，即yes状态，否则都是错误的状态
+*************************** 1. row ***************************
+               Slave_IO_State: Waiting for master to send event
+                  Master_Host: 172.16.16.188
+                  Master_User: repl
+                  Master_Port: 3306
+                Connect_Retry: 60
+              Master_Log_File: mysql_bin.000004
+          Read_Master_Log_Pos: 1177
+               Relay_Log_File: relay_log.000002
+                Relay_Log_Pos: 1063
+        Relay_Master_Log_File: mysql_bin.000004
+             Slave_IO_Running: Yes
+            Slave_SQL_Running: Yes
+              Replicate_Do_DB: 
+          Replicate_Ignore_DB: 
+           Replicate_Do_Table: 
+       Replicate_Ignore_Table: 
+      Replicate_Wild_Do_Table: 
+  Replicate_Wild_Ignore_Table: 
+                   Last_Errno: 0
+                   Last_Error: 
+                 Skip_Counter: 0
+          Exec_Master_Log_Pos: 1177
+              Relay_Log_Space: 1230
+              Until_Condition: None
+               Until_Log_File: 
+                Until_Log_Pos: 0
+           Master_SSL_Allowed: No
+           Master_SSL_CA_File: 
+           Master_SSL_CA_Path: 
+              Master_SSL_Cert: 
+            Master_SSL_Cipher: 
+               Master_SSL_Key: 
+        Seconds_Behind_Master: 0
+Master_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: 0
+                Last_IO_Error: 
+               Last_SQL_Errno: 0
+               Last_SQL_Error: 
+  Replicate_Ignore_Server_Ids: 
+             Master_Server_Id: 188
+                  Master_UUID: 0789daba-6ec7-11e6-a538-000c29069d00
+             Master_Info_File: mysql.slave_master_info
+                    SQL_Delay: 0
+          SQL_Remaining_Delay: NULL
+      Slave_SQL_Running_State: Slave has read all relay log; waiting for the slave I/O thread to update it
+           Master_Retry_Count: 86400
+                  Master_Bind: 
+      Last_IO_Error_Timestamp: 
+     Last_SQL_Error_Timestamp: 
+               Master_SSL_Crl: 
+           Master_SSL_Crlpath: 
+           Retrieved_Gtid_Set: 
+            Executed_Gtid_Set: 
+                Auto_Position: 0
+1 row in set (0.00 sec)
+
+ERROR: 
+No query specified
+		8、至此主从已配置完毕，后续测试。
+		
+MySQL卸载
+	1.检查是否有安装mysql
+	[root@dba91only ~]# rpm -qa|grep -i mysql
+	2.停止mysql服务并卸载
+	[root@dba91only ~]# service mysql stop
+	[root@dba91only ~]# yum remove mysql-libs
+	3.找到mysql的安装目录和数据目录，删除
+	[root@dba91only ~]# find / -name mysql

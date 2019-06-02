@@ -1,0 +1,966 @@
+高级操作
+1.Mysql 主从同步配置
+2.Mysql 双master 配置
+3.Mysql 双master+丛库+keepalived 配置高可用数据库
+客户端
+作为DBA，一定不要用各种GUI工具，mysql自带命令行client才是你的最佳武器
+可选项
+1.mysql 分区配置，因为限制太多，实际中分表都是程序做
+2.高性能 mysql
+a).drizzle
+b).MariaDB
+c).handlersocket
+
+基本知识
+1.mysql的编译安装
+2.mysql 第3方存储引擎安装配置方法
+3.mysql 主流存储引擎(MyISAM/innodb/MEMORY)的特点
+4.字符串编码知识
+5.MySQL用户账户管理
+6.数据备份/数据入导出
+7.mysql 支持的基本数据类型
+8.库/表/字段/索引 的创建/修改/删除
+9.基本sql 语法：select/insert/update/delete，掌握最基本的语法即可，什么inner join,left join的了解就行 mysql的应用场景大多都是高并发访问/业务逻辑简单，join/子查询/视图/触发器 基本上不用
+10.sql 聚集查询：group by/having
+11.如何用explain 分析优化查询
+12.常见 sql 优化技巧
+a).select xx from yyy limited ...,
+b).order by random
+c).select count(*) from
+13.各种show xxx 指令，大概有20种，每个都尝试用一次
+14.show VARIABLES; 大概有240项，逐条看懂，可以打印出来贴墙上
+
+############################ 以下为笔记 ###################################################
+####### show #########
+show databases;
+解释：显示mysql中所有数据库的名称
+
+show processlist;
+解释：显示系统中正在运行的所有进程，也就是当前正在执行的查询。大多数用户可以查看
+他们自己的进程，但是如果他们拥有process权限，就可以查看所有人的进程，包括密码。
+
+show tables
+解释：显示当前数据库中所有表的名称
+
+show table status;
+解释：显示当前使用或者指定的database中的每个表的信息。信息包括表类型和表的最新更新时间
+
+show columns from table_name from database_name;
+解释：显示表中列名称
+
+show grants for user_name@localhost;
+解释：显示一个用户的权限，显示结果类似于grant 命令
+
+show index from table_name;
+解释：显示表的索引
+
+show status;
+解释：显示一些系统特定资源的信息，例如，正在运行的线程数量
+
+show variables;
+解释：显示系统变量的名称和值
+
+show privileges;
+解释：显示服务器所支持的不同权限
+
+show create database database_name;
+解释：显示create database 语句是否能够创建指定的数据库
+
+show create table table_name;
+解释：显示create database 语句是否能够创建指定的数据库
+
+show engies;
+解释：显示安装以后可用的存储引擎和默认引擎。
+
+show innodb status;
+解释：显示innoDB存储引擎的状态
+
+show logs;
+解释：显示BDB存储引擎的日志
+
+show warnings;
+解释：显示最后一个执行的语句所产生的错误、警告和通知
+
+show errors;
+解释：只显示最后一个执行语句所产生的错误
+
+####### show variables #########
+
+###基本参数配置：
+
+port
+端口号
+
+datadir
+数据文件目录
+
+basedir
+msyql应用程序的目录
+
+socket
+socket文件，默认在/tmp目录下，但是建议不要这样设置，/tmp目录是一个大家都愿意破坏的目录
+
+##查询的Cache的是从MySQL4.0版本开始提供的功能。相关的参数为：
+
+query_cache_size
+查询Cache的尺寸
+
+query_cache_type
+查询的Cache类型。
+	0 OFF，不进行缓冲
+	1 ON，进行缓冲
+	2 DEMAND，对SELECT SQL_CACHE开头的查询进行缓冲
+
+query_cache_limit
+查询的结果的限制长度，小于这个长度的数据才能Cache
+
+##MyISAM的索引参数：key_buffer_size为MyISAM引擎的最关键的优化参数之一。
+
+key_buffer_size
+(关键参数),索引块用的缓冲区大小，所有的连接程序线程共用
+
+key_cache_block_size
+每一个索引block的大小，默认1024字节,从4.1.1后才出现这个参数，原来都是直接采用1024字节作为Block的长度
+
+##InnoDB使用的参数：InnoDB的参数较少，笼统而不细致，内存的管理多由InnoDB引擎自己负责，主要的缓冲就是innodb_buffer_pool_size参数分配的缓冲。这样配置倒是简单了，但没有了细致优化乐趣。
+
+innodb_buffer_pool_size
+innodb的缓冲区大小，存放数据和索引,一般设置为机器内存的50%-80%
+
+innodb_log_buffer_size
+InnoDB日志缓冲区大小
+
+innodb_flush_method
+刷新日志的方法
+
+innodb_additional_mem_pool_size
+innodb内存池的大小，存放着各种内部使用的数据结构
+
+innodb_data_home_dir
+InnoDB数据文件的目录
+
+innodb_data_file_path
+数据文件配置
+
+innodb_log_files_in_group
+Innodb日志的日志文件数。默认值为2。日志是以顺序的方式写入
+
+innodb_log_file_size
+Innodb日志文件的尺寸
+
+innodb_lock_wait_timeout
+等待数据锁的超时时间，避免死锁的一种措施
+
+innodb_flush_log_at_trx_commit
+日志提交方式 (关键参数)
+
+	0每秒写1次日志，将数据刷入磁盘，相当于每秒提交一次事务。
+
+	1每次提交事务写日志，同时将刷新相应磁盘，默认参数。
+
+	2每提交事务写一次日志，但每隔一秒刷新一次相应的磁盘文件[注]
+
+innodb_force_recovery
+在Innodb的自动恢复失败后，从崩溃中强制启动，有1-6个级别，数值越低恢复的方式也保守，默认为4。尽量使用较保守方式恢复。
+恢复后要注释删除这一行。
+
+
+##Log的参数：MySQL的日志有6种，查询日志，慢查询日志，变更日志，二进制变更日志，告警日志，错误日志。my.cnf中可以配置日志的前缀和日志参数。日志是监控数据库系统的重要途径。
+
+log_bin
+二进制变更日志，更加紧凑，使用mysqlbinlog读取，操作，转换
+
+binlog_cache_size
+临时存放某次事务的SQL语句缓冲长度
+
+max_binlog_cache_szie
+最大的二进制Cache日志缓冲区尺寸
+
+max_binlog_size
+最大的二进制日志尺寸
+
+log_error
+导致无法启动的错误日志
+
+log_warnings
+告警日志
+
+long_query_time
+慢查询时间限度，超过这个限度，mysqld认为是一个慢查询
+
+log_queries_not_using_indexes
+没有使用索引查询的日志,方便记录长时间访问的查询进行优化
+
+slow_query_log
+慢速的查询日志，
+
+
+##打开文件参数：
+
+table_open_cache
+能够被同时打开的表最大个数，打开一个表使用2个文件描述符
+
+open_files_limit
+mysqld保留的文件描述符号个数，和table_cache和max_connections设置相关，默认为0
+
+	设置为0, 系统设置max_connections*5或者max_connections + table_cache*2中的最大值
+
+
+##关于连接通信的参数：
+
+max_connections
+最大的连接数
+
+max_connect_errors
+同一个地址最大错误连接数，防止攻击用
+
+net_buffer_length
+服务器和客户之间通讯的使用的缓冲区长度
+
+max_allowed_packet
+服务器和客户之间最大的通信的缓冲区长度
+
+net_read_timeout
+网络读取超时
+
+net_write_timeout
+网络写入超时
+
+interactive_timeout
+交互模式下的没有操作后的超时时间
+
+wait_timeout
+非交互模式的没有操作后的超时时间
+
+##每个会话使用的buffer设置，默认使用my.cnf的配置，也可以使用每个会话设置。不要设置的过大。
+
+read_buffer_size
+对数据表作顺序读取的缓冲大小
+
+read_rnd_buffer_size
+在排序后，读取结果数据的缓冲区大小，
+
+sort_buffer_size
+用来完成排序操作的线程使用的缓冲区大小
+
+join_buffer_size
+全关联操作缓冲区（没有索引而进行关联操作）
+
+myisam_sort_buffer_szie
+为索引的重新排序操作（比如CREATE INDEX）的分配的缓冲区的长度
+对于磁盘缓式写入的一些选项，delay_key_write，flush，flush_time参数可能可以进一步提高MyISAM引擎的性能，但是在服务器Crash的时候，可能会丢失数据，造成表损坏。
+
+##MySQL对于插入语句支持一个选项INSERT DELAYED，如果有这个选项，MySQL将这些插入语句放入一个队列，并不马上读入磁盘。delay_insert_XXX的选项都是配置这个功能，MySQL创建表的时候也有一个选项，DELAY_KEY_WRITE，有这个选项描述的表的键发生改动后，改动可以缓冲在key_buffer中，不立即回写磁盘。
+
+delayed_insert_limit
+INSERT DELAYED语句选项。（插入语句的描述）
+处理INSERT DELAYED语句，MYSQL插入delay_insert_limit条语句后检查是否有查询语句，如有有去查询，如果没有，则继续插入
+
+delayed_insert_timeout
+在处理完INSERT DELAYED对列的插入数据后，MYSQL等待delay_insert_timeout秒后看看是否有INSERT DELAYED数据，如果有继续，如果没有结束这次操作。
+
+max_insert_delayed_threads
+INSERT DELAYED插入数据对列的长度
+
+max_delayed_threads
+处理INSERT DELAYED语句的最大线程个数
+
+delay_key_write
+对于使用DELAY_KEY_WRITE选项的创建的表，可以延缓键读写
+	0N  不延缓所有的键写如操作
+	OFF延缓有DELAY_KEY_WRITE选项的标的键写入操作
+	ALL延缓所有的表
+
+flush 
+是否要在每个操作后立即刷新数据表
+
+flush_time
+每隔多少秒，对数据表进行一次刷新。关闭后打开。
+
+
+##关闭某些选项：关闭某些选项可以加快MySQL的运行速度，这些选项在MySQL SHOW VARIABLES 中显示为have_XXX 的变量。
+
+have_ssl
+开启mysql服务器对SSL加密的支持
+
+
+skip_external_locking
+不使用外部锁,MySQL的外部锁用于防止其他程序修改正在数据文件，但其在部分系统上不可靠，一般都不使用。(4.03版本前叫skip-locking)
+
+skip_networking
+只能从本地访问数据库
+
+skip_external_locking
+不使用外部锁,MySQL的外部锁用于防止其他程序修改正在数据文件，但其在部分系统上不可靠，一般都不使用。(4.03版本前叫skip-locking)
+
+skip_networking
+只能从本地访问数据库
+
+ 
+
+##其他参数：
+
+slow_launch_time
+用多于这个时间创建的线程视为一个慢创建线程
+
+binlog_cache_size
+临时存放构成每次事务的SQL的缓冲区长度，(全局变量，但是应该影响每一个会话)
+
+max_binlog_cache_size
+二进制日志缓冲区的最大长度，其实就是事物的最大长度，默认4G
+
+max_heap_table_size
+HEAP表的最大允许长度
+
+max_tmp_tables
+临时tables的最大个数
+
+myisam_recover_options
+myisam引擎的自动恢复模式
+
+thread_cache_size
+线程缓冲区的所能容纳的最大线程个数
+
+tmp_table_size
+临时tables的最大尺寸
+
+ 
+#### 运行状态监控 ############## SHOW STATUS ###########
+MySQL有两种途径途径了解其的运行状态，一个是MySQL交互模式下的命令SHOW STATUS，一个使用mysqladmin extended-status  。两种方法异曲同工，通过观察其运行状态可以了解我们的参数设置是否合理，是否有要优化的表和数据。
+SHOW STATUS显示了MySQL从运行开始到现在为止状态，大部分为一些计数器，使用FLUSH STATUS可以重新对各种状态变量进行计数。
+
+##MySQL的状态计数器
+
+Aborted_clients
+因客户没有正确关闭而丢弃的连接数量，没有正确关闭指没有调用mysql_close就退出，连接超时，数据传送中客户端退出
+
+Aborted_connects
+试图连接MySQL服务器但没有成功的次数
+
+Connections
+试图连接MySQL服务器的尝试次数，（包括成功的和没有成功）
+ 
+Com_XXX (这个很多，有一百多个参数)
+执行语句的计数器，比如Com_select变量记录了select语句的个数，Com_kill 记录杀掉的进程数量等等
+
+Created_tmp_disk_tables
+使用磁盘创建临时表的次数，如果要创建的临时表的尺寸大于tmp_table_size，那么临时表将创建在磁盘上，
+
+Created_tmp_tables
+创建临时表的次数
+
+Delayed_XXX
+INSERT DELAYED语句的执行性能参数
+
+Opened_tables
+曾经打开过的数据表总数
+
+Open_tables
+当前处于打开的表个数
+
+Open_files
+当前处于打开的文件个数
+
+Bytes_received
+从客户收到的字节总数
+
+Bytes_send
+发送给客户的字节总数
+
+Handler_commit
+Handler_rollback
+事务提交或者回滚的次数
+
+Handler_delete
+对数据表删除一条记录的次数
+
+Handler_update
+对数据表修改一条记录的次数
+
+Handler_write
+对数据表插入一条记录的次数
+
+Handler_read_first
+读取索引中第一个索引项的个数
+
+Handler_read_key
+根据索引直接读取一行数据的次数，这个数值高表示数据库有较好的检索能力。
+
+Handler_read_next
+根据索引读取下个数据行的请求次数. 在一个索引的区间内进行查询( > < ,orderby 这类查询条件)会影响这个计数器。
+
+Handler_read_prev
+根据索引读取前个数据行的请求次数.用于一些反序查询。
+
+Handler_read_rnd
+通过一个固定位置(应该就是不通过索引)读取一个数据行的次数。这个数值很高表示你的很多查询操作的结果需要排序，可能这些查询操作不能适当使用索引而要检索整个表。
+
+Handler_read_rnd_next
+请求从数据文件中读取下一个记录的次数.如果有很多全表的检索这个值将很高. 通常这表示数据表没有合适的索引。
+
+key_blocks_used
+索引缓冲区块中已经被使用的区块大小。Block的尺寸默认是1024字节，4.1.1后可以通过key_cache_block_size参数设置。可以根据key_buffer_size/(1024 or key_cache_block_size) 得到Block总数，然后知道key_buffer的利用率
+
+Key_read_requests
+从缓冲读取1个Block的次数
+
+Key_read
+从磁盘读取的次数
+
+Key_write_requests
+写入索引缓冲区写入一个Block的次数
+
+Key_write
+写回磁盘的次数
+
+Qcache_free_blocks
+Qcache没有使用的内存块个数
+
+Qcache_free_memory
+Qcache没有使用的内存尺寸
+
+Qcache_hits
+查询在Qcache中的命中次数，和Com_select比较，就可以知道Qache的大约命中率是多少。
+
+Qcache_inserts
+加入Cache中的查询个数
+
+Qcache_lowmem_prunes
+由于Qcache不够用，造成替换出Qcache的查询个数
+
+Qcache_not_cached
+没有能Cache的查询个数
+
+Slow_queries
+慢查询的次数，如果一个查询的所用的时间大于long_query_time设置的时间，则计数加1
+
+Select_XXXX
+关联查询的一些状态计数
+
+Innodb_XXXX
+InnoDB的状态技术器，不过只有MySQL 5.02的版本才支持这些计数器。这儿略过
+
+Table_locks_waited
+必须等待后才能完成表锁定的请求个数，如果这个数值和下面数值的比率过大，表示数据库的性能较低
+
+Table_locks_immediate
+无需等待，立即完成表锁定的请求个数。
+
+Threads_connected
+现在处在连接打开状态的线程个数
+
+Threads_cached
+现在在现场缓冲区的线程个数
+
+Threads_created
+到目前为止,创建的线程个数
+
+Threads_running
+现在运行的线程个数，不是所有打开的线程都在运行，有些会处于SLEEP状态
+
+
+
+###InnoDB的状态监控的要在交互模式下使用show variables 命令。相对的可以利用InnoDB状态参数也过少。
+
+1、innodb_flush_log_at_trx_commit  AND  sync_binlog
+
+innodb_flush_log_at_trx_commit = N：
+	N=0  – 每隔一秒，把事务日志缓存区的数据写到日志文件中，以及把日志文件的数据刷新到磁盘上；
+	N=1  – 每个事务提交时候，把事务日志从缓存区写到日志文件中，并且刷新日志文件的数据到磁盘上；
+	N=2  – 每事务提交的时候，把事务日志数据从缓存区写到日志文件中；每隔一秒，刷新一次日志文件，但不一定刷新到磁盘上，而是取决于操作系统的调度；
+sync_binlog =  N：
+
+	N>0  — 每向二进制日志文件写入N条SQL或N个事务后，则把二进制日志文件的数据刷新到磁盘上；
+	N=0  — 不主动刷新二进制日志文件的数据到磁盘上，而是由操作系统决定；
+推荐配置组合：
+	N=1,1  — 适合数据安全性要求非常高，而且磁盘IO写能力足够支持业务，比如充值消费系统；
+	N=1,0  — 适合数据安全性要求高，磁盘IO写能力支持业务不富余，允许备库落后或无复制；
+	N=2,0或2,m(0<m<100)  — 适合数据安全性有要求，允许丢失一点事务日志，复制架构的延迟也能接受；
+	N=0,0  — 磁盘IO写能力有限，无复制或允许复制延迟稍微长点能接受，例如：日志性登记业务；
+
+2、 innodb_file_per_table
+启用单表空间，减少共享表空间维护成本，减少空闲磁盘空间释放的压力。另外，大数据量情况下 的性能，也会有性能上的提升，为此建议大家使用独立表空间 代替  共享表空间的方式；
+
+3、  key_buffer_size
+key_buffer_size只能缓存MyISAM或类MyISAM引擎的索引数据，而innodb_buffer_pool_size不仅能缓存索引数据，还能缓存元数据，但是对于我们只使用InnoDB引擎的数据库系统而言，此参数值也不能设置过于偏小，因为临时表可能会使用到此键缓存区空间，索引缓存区推荐：64M；
+
+4、  query_cache_type  and query_cache_size
+n   query_cache_type=N
+	N=0  —- 禁用查询缓存的功能；
+	N=1  —- 启用产讯缓存的功能，缓存所有符合要求的查询结果集，除SELECT SQL_NO_CACHE..， 以及不符合查询缓存设置的结果集外
+	N=2  —- 仅仅缓存SELECT SQL_CACHE …子句的查询结果集，除不符合查询缓存设置的结果集外；
+n  query_cache_size
+查询缓存设置多大才是合理？至少需要从四个维度考虑：
+	①   查询缓存区对DDL和DML语句的性能影响；
+	②   查询缓存区的内部维护成本；
+	③   查询缓存区的命中率及内存使用率等综合考虑
+	④   业务类型
+
+5、  innodb_commit_concurrency
+含义：同一时刻，允许多少个线程同时提交InnoDB事务，默认值为0，范围0-1000。
+	0      — 允许任意数量的事务在同一时间点提交；
+	N>0  — 允许N个事务在同一时间点提交；
+注意事项：
+	①   mysqld提供服务时，不许把 innodb_commit_concurrency 的值从0改为非0，或非0的值改为0；
+	②   mysqld提供时，允许把 innodb_commit_concurrency 的值N>0改为M，且M>0；
+
+6、 innodb_concurrency_tickets
+含义：同一时刻，能访问InnoDB引擎数据的线程数，默认值为500，范围1-4294967295。
+补充说明：当访问InnoDB引擎数据的线程数达到设置的上线，线程将会被放到队列中，等待其他线程释放ticket。
+建议：MySQL数据库服务最大线程连接数参数max_connections，一般情况下都会设置在128-1024的范围，再结合实际业务可能的最大事务并发度，innodb_concurrency_tickets保持默认值一般情况下足够。
+
+7、 innodb_fast_shutdown  and innodb_force_recovery
+
+innodb_fast_shutdown：
+含义：设置innodb引擎关闭的方式，默认值为：1，正常关闭的状态；
+	0—mysqld服务关闭前，先进行数据完全的清理和插入缓冲区的合并操作，若是脏数据较多或者服务器性能等因素，会导致此过程需要数分钟或者更长时间；
+	1— 正常关闭mysqld服务，针对innodb引擎不做任何其他的操作；
+	2— 若是mysqld出现崩溃，立即刷事务日志到磁盘上并且冷关闭mysqld服务；没有提交的事务将会丢失，但是再启动mysqld服务的时候会进行事务回滚恢复；
+innodb_force_recovery：
+含义：mysqld服务出现崩溃之后，InnoDB引擎进行回滚的模式，默认值为0，可设置的值0~6；
+提示：只有在需要从错误状态的数据库进行数据备份时，才建议设置innodb_force_recovery的值大于0。 若是把此参数作为安全选项，也可以把参数的值设置大于0，防止InnoDB引擎的数据变更，设置不同值的作用：
+	0 — 正常的关闭和启动，不会做任何强迫恢复操作；
+	1 — 跳过错误页，让mysqld服务继续运行。跳过错误索引记录和存储页，尝试用
+		SELECT *  INOT OUTFILE ‘../filename’ FROM tablename;方式，完成数据备份；
+	2 — 阻止InnoDB的主线程运行。清理操作时出现mysqld服务崩溃，则会阻止数据恢复操作；
+	3 —  恢复的时候，不进行事务回滚；
+	4 — 阻止INSERT缓冲区的合并操作。不做合并操作，为防止出现mysqld服务崩溃。不计算表的统计信息
+	5 — mysqld服务启动的时候不检查回滚日志：InnoDB引擎对待每个不确定的事务就像提交的事务一样；
+	6 — 不做事务日志前滚恢复操作；推荐的参数组合配置：
+innodb_fast_shutdown = 1
+若是机房条件较好可设置为0（双路电源、UPS、RAID卡电池和供电系统稳定性）
+innodb_force_recovery =0
+至于出问题的时候，设置为何值，要视出错的原因和程度，对数据后续做的操作
+
+8、  innodb_additional_mem_pool_size
+含义：开辟一片内存用于缓存InnoDB引擎的数据字典信息和内部数据结构（比如：自适应HASH索引结构）；
+默认值：build-in版本默认值为：1M；Plugin-innodb版本默认值为：8M；
+提示：若是mysqld服务上的表对象数量较多，InnoDB引擎数据量很大，且innodb_buffer_pool_size的值设置 较大，则应该适当地调整innodb_additional_mem_pool_size的值。若是出现缓存区的内存不足，则会直接向操作系统申请内存分配，并且会向MySQL的error log文件写入警告信息；
+
+9、 innodb_buffer_pool_size
+含义：开辟一片内存用于缓存InnoDB引擎表的数据和索引；
+默认值：历史默认值为：8M，现在版本默认值为：128M；
+参数最大值：受限于CPU的架构，支持32位还是支持64位，另外还受限于操作系统为32位还是64位；
+提示：innodb_buffer_pool_size的值设置合适，会节约访问表对象中数据的物理IO。官方手册上建议专用的数据库服务器，可考虑设置为物理内存总量的80%，但是个人建议要看物理服务器的物理内存总量，以及考虑： 是否只使用InnoDB引擎、mysqld内部管理占用的内存、最大线程连接数和临时表等因素，官方提供的80%值作为一个参考，举而个例子方便大家作决定（前提：物理服务器为mysqld服务专用，且只用InnoDB引擎,假设数据量远大于物理内存）：
+	1).内存配置：24G    则 innodb_buffer_pool_size=18G
+	1).内存配置：32G    则 innodb_buffer_pool_size=24G
+	出现下列哪些情况，则可以考虑减小innodb_buffer_pool_size的值：
+	1).出现物理内存的竞争，可能导致操作系统的分页；
+	2).InnoDB预分配额外的内存给缓冲区和结构管理，当分配的总内存量超过innodb_buffer_pool_size值的10%；
+	3).地址空间要求必须为连续的，在windows系统有一个严重问题，DLL需要加载在特定的地址空间；
+	4).初始化缓冲区的时间消耗，与缓冲区的大小成正比。官方提供的数据 Linux X86 64位系统 初始化 innodb_buffer_pool_size=10G 大概需要6秒钟；
+
+10、  lower_case_table_names
+Linux或类Unix平台，对文件名称大小写敏感，也即对数据库、表、存储过程等对象名称大小写敏 感，为减少开发人员的开发成本，为此推荐大家设置该参数使对象名称都自动转换成小写；
+
+11、  max_connect_errors
+max_connect_errors默认值为10，也即mysqld线程没重新启动过，一台物理服务器只要连接 异常中断累计超过10次，就再也无法连接上mysqld服务，为此建议大家设置此值至少大于等于10W； 若异常中断累计超过参数设置的值，有二种解决办法，执行命令：FLUSH HOSTS;或者重新启动mysqld服务；
+
+12、  interactive_timeout  and wait_timeout
+u  interactive_timeout
+处于交互状态连接的活动被服务器端强制关闭，而等待的时间，单位：秒；
+u  wait_timeout
+与服务器端无交互状态的连接，直到被服务器端强制关闭而等待的时间，此参数只对基于TCP/IP或基于 Socket通信协议建立的连接才有效，单位：秒；
+u  推荐设置
+     interactive_timeout = 172800
+     wait_timeout  = 172800
+
+13、  transaction-isolation  and binlog-format 
+u  transaction-isolation
+可供设置的值：READ-UNCOMMITTED、READ-COMMITTED、REPEATABLE-READ、
+SERIALIZABLE，默认的值为： REPEATABLE-READ，事务隔离级别设置的不同，对二进制日志登记格
+式影响非常大，详细信息可见文章解读MySQL事务的隔离级别和日志登记模式选择技巧；
+u  binlog-format
+复制的模式，可供设置的值：STATEMENT、ROW、MIXED（注：5.0.*只有命令行式复制），
+
+5.1.*版本默认设置：MIXED；
+u  推荐配置
+①   只读为主的业务应用场景
+            transaction-isolation =  read-committed
+            binlog-format  = mixed            #5.1.*版本，5.0.*只能设置为 statement
+
+①   非只读为主的业务应用场景
+            transaction-isolation = repeatabled-read
+            binlog-format  = mixed            #5.1.*版本，5.0.*只能设置为 statement
+
+14、  event_scheduler
+事务调度默认是关闭状态，也推荐源码编译的版本可不编译进来，以及实际生产环境保持默认禁用 状态，当真正需要用的时候，可以临时打开，命令：SET GLOBAL event_scheduler=1;
+
+15、  skip_external_locking
+外部锁，也即操作系统所实施的锁，只对MyISAM引擎有效，且容易造成死锁发生，为此我们一律禁用；
+
+16、 innodb_adaptive_hash_index
+InnoDB引擎会根据数据的访问频繁度，把表的数据逐渐缓到内存，若是一张表的数据大量缓存在 内存中，则使用散列索引（注：Hash Index）会更高效。InnoDB内有Hash Index机制，监控数据的访 问情况，可以自动创建和维护一个Hash Index，以提供访问效率，减少内存的使用；
+
+17、  innodb_max_dirty_pages_pct
+InnoDB主线程直接更新Innodb_buffer_pool_size中存在的数据，并且不实时刷回磁盘，而是等待 相关的处罚事件发生，则允许缓存空间的数据量不实时刷回磁盘的最大百分比。比例设置较小，有利于 减少mysqld服务出现问题的时候恢复时间，缺点则是需要更多的物理I/O，为此我们必须根据业务特点 和可承受范围进行一个折中，一般范围建议设置为5%~90%，像我们SNS游戏行业的写非常厉害，综合 各方面因素，设置为20%；
+
+
+#################################################################################################
+mysql有以下几种日志：
+  错误日志：    log-err
+  查询日志：    log
+  慢查询日志:  log-slow-queries
+  更新日志:    log-update
+  二进制日志： log-bin 
+
+要把日志生成在 /var/log 目录下(是系统日志存放的地方，只有 root 账号有写权限)，需要 MySQL 进程对这个目录有读写权限，一般是不这么做的，也考虑到安全问题，包括 MySQL 本身的数据安全，因为对 MySQL 的所有操作，都会记录到常规查询日志。MySQL 的日志就不要用 /var/log/ 目录下。
+########################2 my.cnf
+default-character-set = utf8
+port    = 3306
+socket  = /tmp/mysql.sock
+
+no-auto-rehash
+
+#default-character-set = utf8
+user    = mysql
+port    = 3306
+socket  = /tmp/mysql.sock
+basedir = /usr/local/webserver/mysql
+datadir = /data0/mysql/3306/data
+open_files_limit    = 10240
+back_log = 600
+max_connections = 3000 实际MySQL服务器允许的最大连接数16384；
+max_connect_errors = 6000  可以允许多少个错误连接
+table_cache = 1024  高速缓存的大小.table_cache的值在2G内存以下的机器中的值默认时256到 512，如果机器有4G内存,则默认这个值是2048，但这决意味着机器内存越大，这个值应该越大，因为table_cache加大后，使得mysql对 SQL响应的速度更快了，不可避免的会产生更多的死锁（dead lock），这样反而使得数据库整个一套操作慢了下来，严重影响性能。
+external-locking = FALSE
+max_allowed_packet = 32M
+sort_buffer_size = 2M 是一个connection级参数，在每个connection第一次需要使用这个buffer的时候，一次性分配设置的内存.并不是越大越好，由于是connection级的参数，过大的设置+高并发可能会耗尽系统内存资源。
+join_buffer_size = 2M
+thread_cache_size = 64  重新利用保存在缓存中线程的数量,当断开连接时如果缓存中还有空间,那么客户端的线程将被放到缓存中,如果线程重新被请求，那么请求将从缓存中读取,如果缓存中是空的或者是新的请求，那么这个线程将被重新创建,如果有很多新的线程，增加这个值可以改善系统性能
+  根据物理内存设置规则如下：
+    1G  ---> 8
+    2G  ---> 16
+    3G  ---> 32
+    >3G  ---> 64
+
+thread_concurrency = 16 对mysql的性能影响很大, 在多个cpu(或多核)的情况下，错误设置了thread_concurrency的值, 会导致mysql不能充分利用多cpu(或多核), 出现同一时刻只能一个cpu(或核)在工作的情况。应设为CPU核数的2倍. 比如有一个双核的CPU, 那么thread_concurrency的应该为4; 2个双核的cpu, thread_concurrency的值应为8.
+
+query_cache_size = 32M 缓存机制简单的说就是缓存sql文本及查询结果，如果运行相同的sql，服务器直接从缓存中取到结果，而不需要再去解析和执行sql。如果表更改了，那么使用这个表的所有缓冲查询将不再有效，查询缓存值的相关条目被清空
+query_cache_limit = 2M 单个查询能够使用的缓冲区大小.缺省为1M
+query_cache_min_res_unit = 2k 它指定分配缓冲区空间的最小单位，缺省为4K。检查状态值Qcache_free_blocks，如果该值非常大，则表明缓冲区中碎片很多，这就表明查询结果都比较小，此时需要减小query_cache_min_res_unit
+default-storage-engine = MyISAM
+default_table_type = MyISAM
+thread_stack = 192K
+transaction_isolation = READ-COMMITTED  设置所有连接的默认事务隔离级
+tmp_table_size = 256M 临时HEAP数据表的最大长度
+max_heap_table_size = 256M HEAP数据表(内存表)的最大长度(默认设置是16M);
+long_query_time = 1
+log_long_format
+log-bin = /data0/mysql/3306/binlog
+binlog_cache_size = 8M 为binary log指定在查询请求处理过程中SQL 查询语句使用的缓存大小
+binlog_format = MIXED
+max_binlog_cache_size = 8M
+max_binlog_size = 512M
+expire_logs_days = 7
+key_buffer_size = 256M  索引缓冲区的大小，严格说是它决定了数据库索引处理的速度，尤其 是索引读的速度
+read_buffer_size = 1M  读查询操作所能使用的缓冲区大小，该参数对应的分配内存也是每连接独享.
+read_rnd_buffer_size = 16M 针对按某种特定顺序(如ORDER BY子句)输出的查询结果(默认256K) 加速排序操作后的读数据，提高读分类行的速度。
+bulk_insert_buffer_size = 64M 指定 MyISAM 类型数据表表使用特殊的树形结构的缓存
+myisam_sort_buffer_size = 128M myisam引擎的sort_buffer_size
+myisam_max_sort_file_size = 10G
+#myisam_max_extra_sort_file_size = 10G  这个参数已经不在MySQL
+myisam_repair_threads = 1
+myisam_recover  自动检查和修复无法正确关闭MyISAM表
+
+skip-name-resolve
+master-connect-retry = 10
+slave-skip-errors = 1032,1062,126,1114,1146,1048,1396
+
+server-id = 1 设定为master
+
+innodb_additional_mem_pool_size = 16M InnoDB用来存储数据字典和其他内部数据结构的内存池大小。
+  应用程序里的表越多就应该分配越多的内存，如果innodb用光了这个内存就会向系统内存要。
+  并且写入警告日志,根据MySQL手册，对于2G内存的机器，推荐值是20M。
+  缺省值是1M。通常不用太大，只要够用就行，与表结构的复杂度有关系。
+
+innodb_status_file
+InnoDB发送诊断输出到stderr或文件，而不是到stdout或者固定尺寸内存缓冲，以避免底层缓冲溢出。作为一个副效果，SHOW INNODB STATUS 的输出每15秒钟写到一个状态文件。这个文件的名字是innodb_status.pid，其中pid是服务器进程ID。这个文件在MySQL数据目录里创建。正常关机之时，InnoDB删除这个文件。如果发生不正常的关机，这些状态文件的实例可能被展示，而且必须被手动删除。在移除它们之前，你可能想要检查它们来看它们是否包含有关不正常关机的原因的有用信息。仅在配置选项innodb_status_file=1被设置之时，innodb_status.pid文件被创建。
+
+innodb_buffer_pool_size = 2048M 指定大小的内存来缓冲数据和索引。
+  对于单独的MySQL数据库服务器，最大可以把该值设置成物理内存的80%。
+  根据MySQL手册，对于2G内存的机器，推荐值是1G（50%）
+
+innodb_data_file_path = ibdata1:1024M:autoextend
+innodb_file_io_threads = 4 IO操作(硬盘写操作)的最大线程个数(默认设置是4)。
+innodb_thread_concurrency = 16 InnoDB驱动程序能够同时使用的最大线程个数(默认设置是8)。
+innodb_flush_log_at_trx_commit = 2  InnoDB记录日志的方式
+  如果设置为1，则每个事务提交的时候，MySQL都会将事务日志写入磁盘。
+  如果设置为0或者2，则大概每秒中将日志写入磁盘一次。
+  实际测试发现，该值对插入数据的速度影响非常大
+    设置为2时插入10000条记录只需要2秒，设置为0时只需要1秒，而设置为1时则需要229秒。
+  建议尽量将插入操作合并成一个事务，这样可以大幅提高速度。
+  在存在丢失最近部分事务的危险的前提下，可以把该值设为0。
+
+innodb_log_buffer_size = 16M 日志缓存的大小
+  默认的设置在中等强度写入负载以及较短事务的情况下，一般可以满足服务器的性能要求。
+  如果更新操作峰值或者负载较大就应该加大这个值。8-16M即可。
+
+innodb_log_file_size = 128M 日志组中每个日志文件的大小在高写入负载尤其是大数据集的情况下很重要。
+  这个值越大性能就越高，但恢复时时间会加长。默认是5M。Javaeye推荐innodb_log_file_size = 64M
+
+innodb_log_files_in_group = 3 日志组中的日志文件数目,推荐使用3
+innodb_max_dirty_pages_pct = 90 最大脏页的百分数
+innodb_lock_wait_timeout = 120 事务获得资源超时设置,默认50s
+innodb_file_per_table = 0  为每一个新数据表创建一个表空间文件而不是把数据表都集中保存在中央表空间里
+
+quick  不缓冲查询，直接导出至stdout
+max_allowed_packet = 32M
+停用mysql的严格验证STRICT_TRANS_TABLES
+#把sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" 中"STRICT_TRANS_TABLES,"去掉，重启MySQL服务，问题解决……汗颜~~~
+经过此役，总结数据库设计中的一个注意点，也即避免此现象的两种方法：
+1、在表的设计过程中，对所有不能为空的字段设置默认值
+2、配置MySQL服务，如上所述将STRICT_TRANS_TABLES去掉
+
+#开启event
+#event_scheduler = on
+#myisam自动修复
+myisam-recover=BACKUP,FORCE
+
+# 在 中輸入
+log-bin=/var/lib/mysql/mysql-bin
+#expire_logs_days = 10
+#max_binlog_size = 100M
+log=/var/lib/mysql/mysql.log
+log-error=/var/lib/mysql/error.log
+#log-update=/var/lib/mysql/update.log  未能成功生成
+long_query_time=1
+log-slow-queries
+log-queries-not-using-indexes
+
+是否启用了日志
+mysql>show variables like 'log_%';
+怎样知道当前的日志
+mysql> show master status;
+顯示二進制日志數目
+mysql> show master logs;
+看二进制日志文件用mysqlbinlog
+shell>mysqlbinlog mail-bin.000001
+或者shell>mysqlbinlog mail-bin.000001 | tail
+
+
+#详细说明
+log-bin=/var/lib/mysql/mysql-bin #二进制LOG,mysqlbinlog直接读取二进制日志文件。二进制日志包含所有更新数据的语句 ，其目的是在恢复数据库时用它来把数据尽可能恢复到最后的状态。另外，如果做同步复制( Replication )的话，也需要使用二进制日志传送修改情况。log_bin指定日志文件，如果不提供文件名，MySQL将自己产生缺省文件名。MySQL会在文件名后面自动添加数字索引，每次启动服务时，都会重新生成一个新的二进制文件。
+
+时间长了log bin也会占很大的硬盘空间，所以在my.ini中加上对其的限制。
+#expire_logs_days = 10
+#max_binlog_size = 100M
+---------------------
+# show master status;
+#mysqlbinlog mysql-bin.000052
+-------------格式如下：
+flush privileges
+;
+# at 173
+#090814 10:09:22 server id 1  end_log_pos 448  Query  thread_id=51    exec_tim                                            e=0    error_code=0
+use sq_gllutf8;
+SET TIMESTAMP=1250215762;
+;
+SET @@session.character_set_client=33,@@session.collation_connection=33,@@sessio                                            n.collation_server=8;
+update gll_products set  sn_name='休闲裤'  ,ch_name='H957-3'  ,color='卡其'  ,co                                            mposition='60%马棉44'  ,huoqi=''  ,p_remarks=''  ,utime='2009-08-14 10:09:22'  ,                                            uip='192.168.200.96'  WHERE id = '339'
+;
+# at 448
+#090814 10:11:14 server id 1  end_log_pos 556  Query  thread_id=59    exec_tim                                            e=0    error_code=0
+SET TIMESTAMP=1250215874;
+delete from gll_member  WHERE id = '26'
+;
+DELIMITER ;
+# End of log file
+ROLLBACK ;
+;
+-----------------------------------
+
+log=/var/lib/mysql/mysql.log  #对所有执行语句进行记录
+----------------------------格式如下：
+090814 10:11:14      59 Connect    sq_szczkj@localhost on
+                    59 Init DB    sq_gllutf8
+                    59 Query      SET NAMES 'UTF8'
+                    59 Query      delete from gll_member  WHERE id = '26'
+                    59 Quit
+090814 10:11:15      60 Connect    sq_szczkj@localhost on
+                    60 Init DB    sq_gllutf8
+                    60 Query      SET NAMES 'UTF8'
+                    60 Query      select * from gll_member  ORDER BY id DESC
+                    60 Query      select * from gll_member  ORDER BY id DESC  limit  0,50
+                    60 Quit
+                    61 Connect    sq_szczkj@localhost on
+                    61 Init DB    sq_gllutf8
+                    61 Query      SET NAMES 'UTF8'
+                    61 Query      select * from gll_zone  ORDER BY id DESC
+                    61 Query      select * from gll_zone  ORDER BY id DESC  limit  0,99
+                    61 Quit
+---------------------------------
+
+log-error=/var/lib/mysql/error.log
+#log-update=/var/lib/mysql/update.log  未能成功生成
+
+long_query_time=1
+log-slow-queries
+#--log-slow-queries[=file_name] 的file_name参数可选，缺省值是host_name
+
+-slow.log ，如果指定了file_name参数的话，mysql就会把慢查询的日志记录到file_name所设定的文件中，如果file_name提供的是一个相对路径，mysql会把日志记录到mysql的data目录中。
+log-queries-not-using-indexes #在mysql的启动配置文件或命令行参数中增加--log-queries-not-using-indexes 参数就可以启用未使用索引查询语句了，日志记录的文件就是log-slow-queries对应的文件。
+
+----------------Mysql的log_slow_queries日志文件设置不当错误
+1，容易发生错误的设置：
+log_slow_queries = ON
+log_slow_queries=/var/log/slow-queries.log
+long_query_time=5
+这种容易导致slow-queries.log无法读取的错误（权限问题）。
+常见错误提示：
+Could not use /var/log/slow-queries.log for
+logging (error 13). Turning logging off for the whole duration of the
+MySQL server process. To turn it on again: fix the cause, shutdown the
+MySQL server and restart it.
+
+2，比较妥当的配置：
+log_slow_queries = ON
+log_slow_queries=slow-log
+long_query_time=5
+直接在目录/var/lib/mysql/ 下生成 slow-log 文件
+
+----------------------------测试慢日志
+mysql>select sleep(1);
+mysql>select sleep(3);
+mysql>select * from gll_products;
+
+打开mysql.log和慢日志文件可以看到
+select sleep(3);
+select * from gll_products;
+
+---------------------------------------------------------------------3 命令说明
+show variables like 'long%'; 查询 long_query_time 的值
+
+mysql>show variables like 'log_%';  是否启用了日志
+mysql> show variables like 'log_%';
++---------------------------------+--------------------------+
+| Variable_name                  | Value                    |
++---------------------------------+--------------------------+
+| log_bin                        | ON                      |
+| log_bin_trust_function_creators | OFF                      |
+| log_error                      | /var/lib/mysql/error.log |
+| log_queries_not_using_indexes  | ON                      |
+| log_slave_updates              | OFF                      |
+| log_slow_queries                | ON                      |
+| log_warnings                    | 1                        |
++---------------------------------+--------------------------+
+
+mysql> show master logs;  顯示二進制日志數目
+
+mysql>show variables like 'log_bin'; 确认你日志是否启用
+
+mysql> show master status; 怎样知道当前的二进制日志
+
+查看从某一段时间到某一段时间的二进制日志
+mysqlbinlog --start-datetime='2008-01-19 00:00:00' --stop-datetime='2008-01-30 00:00:00'  /var/lib/mysql/mysql-bin.000006 > mysqllog1.log
+
+shell>mysqlbinlog mail-bin.000001  看二进制日志文件用mysqlbinlog
+或者shell>mysqlbinlog mail-bin.000001 | tail
+
+flush privileges;  刷新数据库
+
+mysql> SHOW STATUS;  运行下列命令可以获取状态变量的值：
+
+mysql> SHOW STATUS LIKE ‘[匹配模式]’; ( 可以使用%、?等 )  如果只要检查某几个状态变量，可以使用下列命令：
+
+select version(); 查看mysql版本
+
+http://blog.sina.com.cn/s/blog_417b97470100mvnj.html  Mysql性能调优
+
+########### sql_mode : MySql模式###########################################################################
+sql_mode=""，即强制不设定MySql模式（如不作输入检测、错误提示、语法模式检查等）应该能提高性能，但有如下问题：
+如果插入了不合适数据（错误类型或超常），mysql会将数据设为“最好的可能数据”而不报错，如：
+/数字 设为：0/可能最小值/可能最大值
+/字符串 设为：空串/能够存储的最大容量字符串
+/表达式 设为：返回一个可用值（1/0-null）
+所以，解决办法是：所有列都要采用默认值，这对性能也好。
+
+mysql_mode的详细描述：
+
+在mysql 5中,默认的是REAL_AS_FLOAT,PIPES_AS_CONTACT,ANSI_QUOTES,GNORE_SPACE和ANSI,
+在这种模式下,允许插入超过字段长度的值,只是插入后,返回的是警告而不是错误,当用STRICT_TRANS_TABLES时,
+则是错误了,严格的警告.
+
+NO_AUTO_CREATE_USER
+
+防止GRANT自动创建新用户，除非还指定了密码。
+下面是手册中的一些介绍
+
+下面描述了支持的所有模式：
+· ALLOW_INVALID_DATES
+在严格模式下不要检查全部日期。只检查1到12之间的月份和1到31之间的 日。这在Web应用程序中，当你从三个不同的字段获取年、月、日，并且想要确切保存用户插入的内容(不进行日期验证)时很重要。该模式适用于DATE和 DATETIME列。不适合TIMESTAMP列，TIMESTAMP列需要验证日期。
+启用严格模式后，服务器需要合法的月和日，不仅仅是分别在1到12和1到31范围内。例如，禁用严格模式时'2004-04-31′是合法的，但启用严格模式后是非法的。要想在严格模式允许遮掩固定日期，还应启用ALLOW_INVALID_DATES。
+· ANSI_QUOTES
+将‘”'视为识别符引号(‘`'引号字符)，不要视为字符串的引号字符。在ANSI模式，你可以仍然使用‘`'来引用识别符。启用ANSI_QUOTES后，你不能用双引号来引用字符串，因为它被解释为识别符。
+· ERROR_FOR_DIVISION_BY_ZERO
+在严格模式，在INSERT或UPDATE过程中，如果被零除(或 MOD(X，0))，则产生错误(否则为警告)。如果未给出该模式，被零除时MySQL返回NULL。如果用到INSERT IGNORE或UPDATE IGNORE中，MySQL生成被零除警告，但操作结果为NULL。
+· HIGH_NOT_PRECEDENCE
+NOT 操作符的优先顺序是表达式例如NOT a BETWEEN b AND c被解释为NOT (a BETWEEN b AND c)。在一些旧版本MySQL中， 表达式被解释为(NOT a) BETWEEN b AND c。启用HIGH_NOT_PRECEDENCESQL模式，可以获得以前的更高优先级的结果。
+mysql>SET sql_mode = ‘';
+mysql>SELECT NOT 1 BETWEEN -5 AND 5;
+-> 0
+mysql>SET sql_mode = ‘broken_not';
+mysql>SELECT NOT 1 BETWEEN -5 AND 5;
+-> 1
+· IGNORE_SPACE
+允许函数名和‘('之间有空格。强制将所有函数名视为保存的字。结果是，如果你想要访问保存为字的数据库、表或列名，你必须引用它。例如，因为有USER()函数，mysql数据库中的user表名和该表内的User列被保存下来，因此你必须引用它们：
+SELECT "User" FROM mysql."user";
+· NO_AUTO_CREATE_USER
+防止GRANT自动创建新用户，除非还指定了密码。
+· NO_AUTO_VALUE_ON_ZERO
+NO_AUTO_VALUE_ON_ZERO影响AUTO_INCREMENT列的处理。一般情况，你可以向该列插入NULL或0生成下一个序列号。NO_AUTO_VALUE_ON_ZERO禁用0，因此只有NULL可以生成下一个序列号。
+如果将0保存到表的AUTO_INCREMENT列，该模式会很有用。(不推荐采用该惯例)。例如，如果你用mysqldump转储表并重载，MySQL遇到0值一般会生成新的序列号，生成的表的内容与转储的表不同。重载转储文件前启用NO_AUTO_VALUE_ON_ZERO可以解决该问题。mysqldump在输出中自动包括启用NO_AUTO_VALUE_ON_ZERO的语句。
+· NO_BACKSLASH_ESCAPES
+禁用反斜线字符(‘')做为字符串内的退出字符。启用该模式，反斜线则成为普通字符。
+· NO_DIR_IN_CREATE
+创建表时，忽视所有INDEX DIRECTORY和DATA DIRECTORY指令。该选项对从复制服务器有用。
+· NO_ENGINE_SUBSTITUTION
+如果需要的存储引擎被禁用或未编译，可以防止自动替换存储引擎。
+· NO_FIELD_OPTIONS
+不要在SHOW CREATE TABLE的输出中打印MySQL专用列选项。该模式在可移植模式（portability mode）下用于mysqldump。
+· NO_KEY_OPTIONS
+不要在SHOW CREATE TABLE的输出中打印MySQL专用索引选项。该模式在可移植模式（portability mode）下用于mysqldump。
+· NO_TABLE_OPTIONS
+不要在SHOW CREATE TABLE的输出中打印MySQL专用表选项（例如ENGINE）。该模式在可移植模式（portability mode）下用于mysqldump。
+· NO_UNSIGNED_SUBTRACTION
+在减运算中，如果某个操作数没有符号，不要将结果标记为UNSIGNED。请注意这样使UNSIGNED BIGINT不能100%用于上下文中。 · NO_ZERO_DATE
+在严格模式，不要将 ‘0000-00-00′做为合法日期。你仍然可以用IGNORE选项插入零日期。在非严格模式，可以接受该日期，但会生成警告。
+· NO_ZERO_IN_DATE
+在严格模式，不接受月或日部分为0的日期。如果使用IGNORE选项，我们为类似的日期插入'0000-00-00′。在非严格模式，可以接受该日期，但会生成警告。
+· ONLY_FULL_GROUP_BY
+不要让GROUP BY部分中的查询指向未选择的列。
+· PIPES_AS_CONCAT
+将||视为字符串连接操作符（＋）(同CONCAT())，而不视为OR。
+· REAL_AS_FLOAT
+将REAL视为FLOAT的同义词，而不是DOUBLE的同义词。
+· STRICT_TRANS_TABLES
+为所有存储引擎启用严格模式。非法数据值被拒绝。后面有详细说明。
+· STRICT_TRANS_TABLES
+为事务存储引擎启用严格模式，也可能为非事务存储引擎启用严格模式。后面有详细说明。
+严格模式控制MySQL如何处理非法或丢失的输入值。有几种原因可以使一个值为非法。例如，数据类型错误，不适合列，或超出范围。当新插入的行不包含某列的没有显示定义DEFAULT子句的值，则该值被丢失。
+对于事务表，当启用STRICT_ALL_TABLES或STRICT_TRANS_TABLES模式时，如果语句中有非法或丢失值，则会出现错误。语句被放弃并滚动。
+对于非事务表，如果插入或更新的第1行出现坏值，两种模式的行为相同。语句被放弃，表保持不变。如果语句插入或修改多行，并且坏值出现在第2或后面的行，结果取决于启用了哪个严格选项：
+· 对于STRICT_ALL_TABLES，MySQL返回错误并忽视剩余的行。但是，在这种情况下，前面的行已经被插入或更新。这说明你可以部分更新，这可能不是你想要的。要避免这点，最好使用单行语句，因为这样可以不更改表即可以放弃。
+· 对于STRICT_TRANS_TABLES，MySQL将非法值转换为最接近该列的合法值并插入调整后的值。如果值丢失，MySQL在列中插入隐式默认值。在任何情况下，MySQL都会生成警告而不是给出错误并继续执行语句。描述了隐式默认值。
+严格模式不允许非法日期，例如'2004-04-31′。它不允许禁止日期使用“零”部分，例如'2004-04-00′或“零”日期。要想禁止，应在严格模式基础上，启用NO_ZERO_IN_DATE和NO_ZERO_DATE SQL模式。
+如果你不使用严格模式(即不启用STRICT_TRANS_TABLES或STRICT_ALL_TABLES模式)，对于非法或丢失的值，MySQL将插入调整后的值并给出警告。在严格模式，你可以通过INSERT IGNORE或UPDATE IGNORE来实现。
+下面的特殊模式快速组合了前面所列的模式。
+其中包括大多数最新版本MySQL中的所有模式值。旧版本中，组合模式不包括新版本中没有的不适用的具体模式值。
+· ANSI
+等同REAL_AS_FLOAT、PIPES_AS_CONCAT、ANSI_QUOTES、IGNORE_SPACE。
+· DB2
+等同PIPES_AS_CONCAT、ANSI_QUOTES、IGNORE_SPACE、NO_KEY_OPTIONS、NO_TABLE_OPTIONS、NO_FIELD_OPTIONS。
+· MAXDB
+等同PIPES_AS_CONCAT、ANSI_QUOTES、IGNORE_SPACE、NO_KEY_OPTIONS、NO_TABLE_OPTIONS、NO_FIELD_OPTIONS、 NO_AUTO_CREATE_USER。
+· MSSQL
+等同PIPES_AS_CONCAT、ANSI_QUOTES、IGNORE_SPACE、NO_KEY_OPTIONS、NO_TABLE_OPTIONS、 NO_FIELD_OPTIONS。
+· MYSQL323
+等同NO_FIELD_OPTIONS、HIGH_NOT_PRECEDENCE。
+· MYSQL40
+等同NO_FIELD_OPTIONS、HIGH_NOT_PRECEDENCE。
+· ORACLE
+等同PIPES_AS_CONCAT、ANSI_QUOTES、IGNORE_SPACE、NO_KEY_OPTIONS、NO_TABLE_OPTIONS、NO_FIELD_OPTIONS、NO_AUTO_CREATE_USER。
+· POSTGRESQL
+等同PIPES_AS_CONCAT、ANSI_QUOTES、IGNORE_SPACE、NO_KEY_OPTIONS、NO_TABLE_OPTIONS、NO_FIELD_OPTIONS。
+· TRADITIONAL
+等同STRICT_TRANS_TABLES、STRICT_ALL_TABLES、NO_ZERO_IN_DATE、NO_ZERO_DATE、ERROR_FOR_DIVISION_BY_ZERO、NO_AUTO_CREATE_USER 
