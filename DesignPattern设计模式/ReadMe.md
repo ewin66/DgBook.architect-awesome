@@ -120,6 +120,8 @@
     - 空对象模式：如 java.util.Collections#emptyList()。
     - 观察者模式：它使得一个对象可以灵活的将消息发送给感兴趣的对象，如 java.util.EventListener。
     - 模板方法模式：让子类可以重写方法的一部分，而不是整个重写，如 java.util.Collections#sort()。
+    - te策略模式：定义一系列算法，将每一个算法封装起来，并让它们可以相互替换。策略模式让算法独立于使用它的客户而变化，也称为政策模式(Policy)。
+    - --
 - [《Spring-涉及到的设计模式汇总》](https://www.cnblogs.com/hwaggLee/p/4510687.html)
 - [《Mybatis使用的设计模式》](https://blog.csdn.net/u012387062/article/details/54719114)
 
