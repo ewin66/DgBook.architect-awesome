@@ -404,3 +404,434 @@ DDD的起点是它为设计服务的，然后才可能为落地实现细节的�
 [通过一张图来表达就是这样的效果：](https://www.cnblogs.com/farb/p/4981387.html)
 
 [![image](../assets/577014-20151120170407452-699851971.png)](http://images2015.cnblogs.com/blog/577014/201511/577014-20151120170407108-499238970.png)
+
+
+
+###	领域驱动的【核心-领域】
+
+
+
+##### 系统领域-模块化【酒店模型】
+
+
+
+![点击查看源网页](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/timg.jpg)
+
+
+
+##### 系统领域-模块化【电商模型】
+
+
+
+![1557333935240](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557333935240.png)
+
+##### 抽象领域模型
+
+![1557333909793](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557333909793.png)
+
+ 
+
+##### ERP周边
+
+![1557334005975](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334005975.png)
+
+
+
+#####	清晰子域
+
+![1557334032428](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334032428.png)
+
+
+
+
+
+##### ER领域模型
+
+![1557333973559](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557333973559.png)
+
+#####	上下文管理【*Conntext*】 
+
+IRepositoryDb **Conntext**
+
+![1557334084580](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334084580.png)
+
+
+
+##### 敏捷项目 上下文管理
+
+![1557334107194](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334107194.png)
+
+##### 分离领域
+
+
+
+![1557334142707](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334142707.png)
+
+
+
+![1557334173870](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334173870.png)
+
+
+
+
+
+
+
+##	ABP框架
+
+
+
+> ABP 官方的介绍是：ASP.NET Boilerplate 是一个用最佳实践和流行技术开发现代 WEB 应用程序的新起点，它旨在成为一个通用的
+> WEB 应用程序基础框架和项目模板。基于 DDD 的经典分层架构思想，实现了众多 DDD 的概念（但没有实现所有 DDD 的概念）。
+
+从技术投资层面，你可以学习到新的思维模式和了解.net core 和目前世界上最流行的技术体系和架构，他们有不少的内容都在 ABP 中进行了落地。
+
+从看看自己瓶颈的角度上，目前 ABP 已经是一个较为完整的生态，我们在国内看到一些公司招聘的时候，已经有提到有了解或者 ABP 框架的优先，说明了 ABP 在国内已经有很多公司在进行使用了。而学会使用 ABP 框架后，你会忍不住的去用前端的东西，很容易把自己培养为全栈开发，在前端配合 Angular 开发，基本上没有太多的难度。
+
+
+
+> ABP 的官方网站：<http://www.aspnetboilerplate.com> 
+>
+> ABP 在 Github 上的开源项目：<https://github.com/aspnetboilerplate> 
+>
+> 52ABP 的官方网站：<https://www.52abp.com> 
+>
+> 52ABP 在 Github 上的开源项目：<https://github.com/52abp>
+>
+> 作者：角落的白板笔
+>
+> 链接：https://www.jianshu.com/p/10a44fae07fc
+
+##### 
+
+
+
+![img](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/406794-20170118100517937-1155598716.png)
+
+##### 组织-人员-角色-权限
+
+![组织-人员-角色-权限](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/%E7%BB%84%E7%BB%87-%E4%BA%BA%E5%91%98-%E8%A7%92%E8%89%B2-%E6%9D%83%E9%99%90.png)
+
+###### [ASP.NET Identity 使用 RoleManager](https://www.cnblogs.com/lyosaki88/p/3497478.html)
+
+![http://dl2.iteye.com/upload/attachment/0124/1087/f272fd3a-1b9c-39c4-8361-5aedee262581.png](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/f272fd3a-1b9c-39c4-8361-5aedee262581.png)
+
+
+
+##### 组织单元
+
+![组织单元](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/%E7%BB%84%E7%BB%87%E5%8D%95%E5%85%83.png)
+
+### DDD模型
+
+###### 传统DDD
+
+![1557334193943](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334193943.png)
+
+
+
+##### 支持API的六边形
+
+![1557334216254](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334216254.png)
+
+
+
+
+
+
+
+### 聚合
+
+
+
+![1557334508907](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334508907.png)****
+
+
+
+### 界面
+
+
+
+![1557334579284](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334579284.png)
+
+
+
+
+
+### 应用-调用领域
+
+##### 微服务 -分而必合
+
+![1557334611886](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334611886.png)
+
+
+
+
+
+
+
+### DDD模型
+
+###### 传统DDD
+
+![1557334193943](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334193943.png)
+
+### DDD 汉堡--Me
+
+##### 理念
+
+![1557369612930](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557369612930.png)
+
+![DDD汉堡](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/DDD%E6%B1%89%E5%A0%A1.png)
+
+![1557369394677](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557369394677.png)
+
+
+
+###### 仓储
+
+![1557370054554](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557370054554.png)
+
+###### Dto
+
+![img](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/310026364985851.png)
+
+###### AutoMapper
+
+
+
+![1557370029330](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557370029330.png)
+
+### ABP--现有机制
+
+###### 现成的机制
+
+![1557369502995](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557369502995.png)
+
+##### 其他
+
+
+
+
+
+##### 登录日志
+
+![1559536226552](../assets/1559536226552.png)
+
+
+
+
+
+##### 多国语
+
+
+
+![1559536307583](../assets/1559536307583.png)
+
+
+
+##### 审计日志
+
+
+
+![1559536416870](../assets/1559536416870.png)
+
+
+
+![img](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/2799767-4b13da08e87060d5.png)
+
+
+
+
+
+
+
+![https://www.52abp.com/imgs/banner/abp-design.png](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/abp-design.png)
+
+
+
+
+
+
+
+##### 理念
+
+
+
+![1557369612930](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557369612930.png)
+
+
+
+### 生产力
+
+![img](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/271702143103229.jpg)
+
+
+
+###	DDD--设计微服务的最佳实践 
+> [《为什么DDD是设计微服务的最佳实践》](https://www.jianshu.com/p/e1b32a5ee91c) 
+> [《当DDD遇上微服务 》](http://www.sohu.com/a/212007407_609518)        
+> 《不用DDD?那你的微服务可能都做错了!》    
+> 《不要把微服务做成小单体》
+##### 支持SOA的六边形
+
+![1557334241766](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334241766.png)
+
+##### CQRS
+
+![1557334340881](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334340881.png)
+
+
+
+
+
+##### 事件驱动六边形
+
+
+
+![1557334371140](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334371140.png)
+
+
+
+#####	为什么是六边形
+
+![微服务设计PDF](../assets/微服务设计PDF.jpg)
+
+
+
+力量在起作用 ︰ 蜜蜂似乎已经进化出使用分泌的软蜡去构筑完美六角形巢室的能力。然而，一些研究人员认为，软蜡表面的均匀张力促使其收缩为面积最小的形状，就像泡筏上面裂变出的气泡。Grafissimo / Getty
+
+
+
+![img](../assets/u=1077390341,3620909245&fm=173&s=F21A14C74AA1C8DE04A3482B0300300A&w=640&h=429&img.JPEG)
+
+
+
+那么，为什么又是六边形呢，这是一个简单的几何问题。如果你想要把大小形状完全相同的单元摊平在一个平面内，只有三种常见形状可行（等边等角）︰  等边三角形、  方形和六角形。其中，与正方形和三角形相比，六角形对边长的要求最低。由此，在面积相同的情况下，六边形比三角形或正方形的总边长都小。所以，蜜蜂会选择六边形是有道理的，因为这种形状具有力学上的合理性和材料的节省原理—  —就像建筑工人会控制砖的用量以节省成本。这个事实在 18 世纪时被发现，达尔文称六边形的蜂巢「最大限度地节省了劳力和蜂蜡的使用。」
+
+----
+
+达尔文认为自然选择赋予了蜜蜂泌蜡筑巢的天赋，并且六边形比其他形状更加省时省力。然而，即使蜜蜂在处理蜂房角度和巢壁厚度时看似有些特殊能力，但人们对蜜蜂到底是否有意的在使用这些能力却莫衷一是。毕竟，制作六角形阵列的巢室本来也是大自然会插手的事儿。
+
+![img](../assets/u=475737029,499920300&fm=173&s=F32BB0445EB694D2163650910300508A&w=640&h=424&img.JPEG)
+
+六角泡泡：肥皂泡层主要包括六角型气泡，尽管并不都是完美的六角形。也有一些五角或七角的气泡。尽管如此，所有气泡的边线交点都分出三条边，每两条边的夹角都接近 120 度。Shebeko / Shutterstock
+
+如果你在水面上吹一层气泡——即所谓的泡筏——这些气泡会变成六边形，或者近乎六边形。你永远不会找到四边形的泡筏，如果四面气泡壁碰到一起，它们会立即重新排列成三面的连接，夹角近乎120度，就像奔驰标志的中心那样。
+
+
+
+----
+
+
+
+因为雪花的基本组织是冰胚，每一个冰胚是由5个水分子组成。其中4个水分子分别在1个四面体的顶角上，另有1个水分子位于四面体中心。许多冰胚互相连接，就组成了冰晶，许多冰晶结合，就形成了雪花。因此雪花之所以呈六角形，是与一些水分子怎样结合成为冰胚，以及冰胚怎样结合成冰晶等有关。
+
+如果冰胚平排地结合，不单可以使我们看出最初的六边形结晶，而且还可以看出由于水分子一个一个结合上去，新的六边形结晶是怎样从原有六边形雪花中增长起来的。
+
+![点击查看源网页](../assets/aikvnPdi8CA1efugWO4eLvNUMQiSR5gp48t-l2_HPvMgAwAAWAIAAEpQ.jpg)
+
+
+
+
+
+光是六边形的结合，并不一定能组成很对称的六边形雪花。根据研究，雪花在空中飘浮时本身还会振动，这种振动，是环绕对称点而进行的。这样，就保证了在增长过程中的雪花，始终保持六边形。至于六边形的千姿百态，则与雪花在空中飘浮时，空中的温度和湿度条件不同有关。
+
+---
+
+
+
+
+
+
+
+正六边形蜂巢，密合度最高、所需材料最少、可使用的空间最大。
+
+科学家们研究发现，如果蜂巢呈圆形或八角形，会出现空陈，如果是三角形或四角形，面积会减小，而这种可容纳高达上万只蜜蜂居住的正六边形蜂巢，密合度最高、所需材料最少、可使用的空间最大。蜂巢的构造非常精巧，由无数个大小相同的正六边形房孔组成，每个房孔都被其他房孔包围，两个房孔之间隔一堵蜡制的墙。
+
+![img](../assets/u=1077390341,3620909245&fm=173&s=F21A14C74AA1C8DE04A3482B0300300A&w=640&h=429&img.JPEG)
+
+房孔的底既不是平的，也不是圆的，而是尖的，由三个完全相同的菱形组成。有人测量过菱形的角度，两个钝角都是110度而两个锐角都是70度。世界上所有的蜂巢都是按照这个统一的角度和模式建造的。
+
+六角形是**最坚固**的形状，而且建造起来**最省时省力**。和四角形还有三角形相比，六角形更加稳固，能够让蜂巢**不会轻易坍塌**，而且还能**节省空间**。
+
+
+
+#####	微服务设计
+
+
+
+
+
+![点击查看源网页](../assets/145030353243331357.png)
+
+
+
+![点击查看源网页](../assets/z6uybwj1kl.jpeg)
+
+
+
+##### 领域事件调度
+
+
+
+![1557334455342](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/1557334455342.png)
+
+
+
+
+
+##	微服务
+
+
+
+![微服务设计PDF](../assets/微服务设计PDF.jpg)
+
+
+
+
+
+### 蜂巢
+
+##### 初
+
+![http://pic67.nipic.com/file/20150519/4763246_105724789000_2.jpg](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/4763246_105724789000_2.jpg)
+
+##### 中
+
+![点击查看源网页](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/tooopen_sy_124750827486.jpg)
+
+##### 最终
+
+
+
+![蜂巢center](../../../DG.Vivaldi/Architect/DDD%E6%A6%82%E5%BF%B5/Domain%E9%A2%86%E5%9F%9F/assets/%E8%9C%82%E5%B7%A2center.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
