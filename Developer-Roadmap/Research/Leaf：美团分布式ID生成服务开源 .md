@@ -1,6 +1,6 @@
 ## [Leaf：美团分布式ID生成服务开源](https://mp.weixin.qq.com/s/6J7n3udEyQvUHRHwvALNYw)                       
 
- 原创：      志桐                                                                                                                                                      [                         美团技术团队                      ](javascript:void(0);)                *3月7日*                      
+ 原创：      志桐                微信                                                                                                                                      [                         美团技术团队                      ](javascript:void(0);)                *3月7日*                      
 
 ![img](assets/640.webp)
 
@@ -13,6 +13,8 @@
 
 
 > ##  [Leaf——美团点评分布式ID生成系统](https://tech.meituan.com/2017/04/21/mt-leaf.html)
+>
+> # [Leaf：美团分布式ID生成服务开源](https://tech.meituan.com/2019/03/07/open-source-project-leaf.html)
 
 
 
