@@ -1,0 +1,27 @@
+## 设计模式六大原则——SOLID
+
+2018年08月12日 20:34:32           [rocketeerLi](https://me.csdn.net/rocketeerLi)           阅读数：3289                                                                  
+ 版权声明：本文为 rocketeerLi 原创文章，转载请注明出处，谢谢          https://blog.csdn.net/rocketeerLi/article/details/81585705        
+
+> 辅助参考 [原文](http://www.apkbus.com/blog-892197-78029.html) 
+> [solid原则（面相对象的七大原则）](https://www.imooc.com/article/51098) 
+> https://www.imooc.com/article/51098
+
+
+
+##### SOLID
+
+设计模式的六大原则有：
+
+- Single Responsibility Principle：单一职责原则
+- Open Closed Principle：开闭原则
+- Liskov Substitution Principle：里氏替换原则
+- Law of Demeter：迪米特法则
+- Interface Segregation Principle：接口隔离原则
+- Dependence Inversion Principle：依赖倒置原则
+
+
+
+把这六个原则的首字母联合起来（ `L` 算做一个）就是 `SOLID` （solid，稳定的），其代表的含义就是这六个原则结合使用的好处：**建立稳定、灵活、健壮的设计**
+
+下面我们来分别看一下这六大设计原则。
