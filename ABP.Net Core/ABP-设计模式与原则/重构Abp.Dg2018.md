@@ -42,6 +42,20 @@ public class AbpAuthorizeAttribute : Attribute, IAbpAuthorizeAttribute
 
 
 
+![1559719167340](../../ABP.Net%20Core/ABP-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%8E%9F%E5%88%99/assets/1559719167340.png)
+
+------
+
+##### 微信数据包的泛型
+
+![1559726973966](../../ABP.Net%20Core/ABP-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%8E%9F%E5%88%99/assets/1559726973966.png)
+
+
+
+![1559726920157](../../ABP.Net%20Core/ABP-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%8E%9F%E5%88%99/assets/1559726920157.png)
+
+------
+
 
 
 ### 分页GetAll()
@@ -51,6 +65,16 @@ public class AbpAuthorizeAttribute : Attribute, IAbpAuthorizeAttribute
 
 
 ![1559718229955](assets/1559718229955.png)
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -93,7 +117,7 @@ public class AbpAuthorizeAttribute : Attribute, IAbpAuthorizeAttribute
 
 ###	仓储泛型
 
-#### 	 泛型约束
+##### 	 泛型约束
 
 怎么解决类型不安全的问题呢？那就是使用泛型约束。 
 所谓的泛型约束，实际上就是约束的类型T。使T必须遵循一定的规则。比如T必须继承自某个类，或者T必须实现某个接口等等。那么怎么给泛型指定约束？其实也很简单，只需要where关键字，加上约束的条件。 
@@ -129,6 +153,8 @@ public class AbpAuthorizeAttribute : Attribute, IAbpAuthorizeAttribute
 | T：<基类名>   | 类型参数必须是指定的基类或派生自指定的基类。                 |
 | T：<接口名称> | 类型参数必须是指定的接口或实现指定的接口。 可以指定多个接口约束。 约束接口也可以是泛型的。 |
 
+##### 泛型仓储-基类/接口
+
 
 
 ![1559719020421](assets/1559719020421.png)
@@ -141,11 +167,7 @@ public class AbpAuthorizeAttribute : Attribute, IAbpAuthorizeAttribute
 
 ![1559719143270](assets/1559719143270.png)
 
-
-
-![1559719167340](assets/1559719167340.png)
-
-
+---
 
 
 
