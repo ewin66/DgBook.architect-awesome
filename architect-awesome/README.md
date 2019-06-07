@@ -4,6 +4,13 @@
 
 
 <b style="color:red">推荐:</b> [《Java技术书籍大全》 - awesome-java-books](https://github.com/sorenduan/awesome-java-books)
+
+
+
+
+
+不可多得的[后端架构师技术图谱！内附参考资料！](https://www.jianshu.com/p/50531e843583)
+
 <p>从初级开发者到资深架构师，看这些书就够了</p>
 <hr/>
 
