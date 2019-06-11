@@ -1,8 +1,8 @@
-# C#  Task任务详解及其使用方式
+# C#  [Task任务详解](https://blog.csdn.net/younghaiqing/article/details/81455410)及其使用方式
 
 ​                                                   2018年08月06日 15:43:28           [`FTF](https://me.csdn.net/younghaiqing)           阅读数：9046                   
 
-​                   
+###  0 [C# Task用法【外界传送】](https://www.cnblogs.com/scmail81/p/9508448.html)
 
 ### 1.Task类介绍：
 
@@ -14,7 +14,7 @@ Task 类的表示单个操作不返回一个值，通常以**异步方式**执�
 
 1、任务是架构在线程之上的，也就是说任务最终还是要**抛给线程**去执行。
 
-2、**任务跟线程不是一对一的关系**，比如开10个任务并不是说会开10个线程，这一点任务有点类似线程池，但是任务相比线程池有很小的开销和精确的控制。
+2、**任务跟线程不是一对一的关系**，比如开10个任务并不是说会开10个线程，这一点任务有点类似**线程池**，但是任务相比线程池有很小的开销和精确的控制。
 
 Task和Thread一样，位于System.Threading命名空间下!
 
@@ -45,7 +45,7 @@ Task 类还提供了构造函数对任务进行初始化，但的未计划的执
 | WaitingToRun    | 这种状态表示等待任务调度器分配线程给任务执行。     |
 | RanToCompletion | 任务执行完毕。                                     |
 
-```
+```csharp
 //查看Task中的状态
    var task1 = new Task(() =>
          {
@@ -108,7 +108,7 @@ Console.WriteLine("Any task finished!");
 
 就是在第一个Task完成后自动启动下一个Task，实现Task的延续，下面我们来看下他的用法，编写如下代码：
 
-```
+```csharp
 　　static void Main(string[] args)
         {
             var task1 = new Task(() =>
@@ -144,7 +144,7 @@ Console.WriteLine("Any task finished!");
 
 下面在代码中看下如何实现任务的取消，代码如下：
 
-```
+```csharp
 　　　　var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
             var task = Task.Factory.StartNew(() =>
@@ -172,7 +172,7 @@ Console.WriteLine("Any task finished!");
 
 ## 注：
 
-1. 因为任务通常运行以异步方式在线程池线程上，创建并启动任务的线程将继续执行，一旦该任务已实例化。 **在某些情况下，当调用线程的主应用程序线程，该应用程序可能会终止之前任何任务实际开始执行。**  其他情况下，应用程序的逻辑可能需要调用线程继续执行，仅当一个或多个任务执行完毕。 您可以同步调用线程的执行，以及异步任务它启动通过调用  Wait 方法来等待要完成的一个或多个任务。 若要等待完成一项任务，可以调用其 Task.Wait 方法。 调用 Wait  方法将一直阻塞调用线程直到单一类实例都已完成执行。
+1. 因为任务通常运行以异步方式在线程池线程上，创建并启动任务的线程将继续执行，一旦该任务已实例化。 **在某些情况下，当调用线程的主应用程序线程，该应用程序可能会终止之前任何任务实际开始执行。**  其他情况下，应用程序的逻辑可能需要调用线程继续执行，仅当一个或多个任务执行完毕。 您可以同步调用线程的执行，以及异步任务它启动通过调用  Wait 方法来等待要完成的一个或多个任务。 若要等待完成一项任务，可以调用其 Task.Wait 方法。 调用 Wait  方法将**一直阻塞调用线程直到单一类实例都已完成执行**。
 
 参考文献： 
  1.<https://www.cnblogs.com/yunfeifei/p/4106318.html> 
