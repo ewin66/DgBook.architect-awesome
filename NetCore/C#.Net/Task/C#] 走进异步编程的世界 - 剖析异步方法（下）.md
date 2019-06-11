@@ -70,9 +70,9 @@
 
  
 
-## 二、在调用方法中同步等待任务
+## 二、在调用方法中同步等待任务[ WaitAll() 和 WaitAny() ]
 
-　　调用方法可能在某个时间点上需要等待某个特殊的 Task 对象完成，才执行后面的代码。此时，可以采用实例方法 Wait 。
+　　调用方法可能在某个时间点上需要**等待某个特殊的 Task 对象完成**，才执行后面的代码。此时，可以采用实例方法 Wait 。
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
@@ -216,7 +216,7 @@
 
  
 
-## 三、在异步方法中异步等待任务
+## 三、在异步方法中异步等待任务[Task.WhenAll() 和 Task.WhenAny() ]
 
 　　上节说的是如何使用 WaitAll() 和 WaitAny() 同步地等待 Task 完成。这次我们使用 Task.WhenAll() 和 Task.WhenAny()  在异步方法中异步等待任务。
 
