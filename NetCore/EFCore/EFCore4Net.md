@@ -8,6 +8,12 @@ https://mariadb.org/
 
 https://downloads.mariadb.org/mariadb/
 
+
+
+Mysql8 [优化](https://dev.mysql.com/doc/refman/8.0/en/optimization.html)
+
+https://dev.mysql.com/doc/
+
 在EntityFrameworkCore项目中添加 
 Pomelo.EntityFrameworkCore.MySql	和 
 Pomelo.EntityFrameworkCore.MySql.Design		两个包，以便支持MySql
