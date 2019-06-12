@@ -1729,7 +1729,6 @@ TODO
 * [《Apache Commons 工具类介绍及简单使用》](https://www.cnblogs.com/crazylqy/p/4872236.html)
 * [《Google guava 中文教程》](http://ifeve.com/google-guava/)
 
-
 # 分布式设计
 
 ## 扩展性设计
@@ -1933,6 +1932,7 @@ Java、Spring、Dubbo 优雅关闭方式。
 	* 通过随机等待的方式发出投票，得票多的获胜。
 
 #### Gossip
+
 * [《Gossip算法》](http://blog.51cto.com/tianya23/530743)
 
 #### 两阶段提交、多阶段提交
