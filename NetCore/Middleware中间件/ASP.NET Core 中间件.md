@@ -1,6 +1,10 @@
 
 
+##	为什么
 
+
+
+***ASP.NET Core和ASP.NET之间的性能差异是几个数量级***。大部分的ASP.NET被传统的System.Web库所限制。.NET Framework支持旧版本的ASP.NET项目，而且这个约束限制了ASP.NET的发展。微软决定重写整个架构。这意味着打破变化，但结果是值得的。
 
 
 
@@ -85,43 +89,59 @@ Host的主要的职责就是Web Server的配置和**Pilpeline（请求处理管�
 
 ##	HttpContext	&	RequestDelegate
 
-###	HttpContext	
+###	HttpContext
 
 对于由**一个服务器**和**多个中间件构建**的管道来说，
 
 面向传输层的服务器**负责请求的监听、接收和最终的响应**
 
+接受过请求，并自身完成了处理，继续分发给后续中间件进行处理。
 
+请求在*服务器与中间件之间*，以及在*中间件之间*的分发是通过**共享上下文**的方式实现的。
 
+#####	基本的要素
 
+我们知道一个HTTP事务（Transaction）具有非常清晰的界定，即**接收请求、发送响应**，
 
-
-
-> **Pipeline** = Server + Middlewares
+所以**请求**和**响应**是两个基本的要素，也是HttpContext承载的最核心的上下文信息
 
 ![1560313385813](assets/1560313385813.png)
 
 
 
-![clip_image008[6]](assets/19327-20190128080828604-2024821875.jpg)
 
-将请求分发给后续的中间件。请求在服务器与中间件之间，以及在中间件之间的分发是通过共享上下文的方式实现的。
-
-HttpHandler=Func<**HttpContext**，**Task**>
-
-![https://img2018.cnblogs.com/blog/19327/201901/19327-20190128080830664-202350109.jpg](assets/19327-20190128080830664-202350109.jpg)
 
 
 
 ###	RequestDelegate
 
+
+
+#####	本质
+
+一个委托（Delegate）对象
+
 > **Pilpeline（请求处理管道）**：一连串的**RequestDelegate**请求委托的衔接
 >
 > Func<**RequestDelegate**, **RequestDelegate**>
+>
+> > **Pipeline** = Server + **Middleware**s	【从**管道的角度**才能充分理解】
+> >
+> > **Pipeline** =Server + **HttpHandler**
 
 
 
+![clip_image008[6]](assets/19327-20190128080828604-2024821875.jpg)
 
+> HttpHandler=Func<**HttpContext**，**Task**>
+>
+> **Task对象**	表示一个同步或者异步**操作**
+
+![https://img2018.cnblogs.com/blog/19327/201901/19327-20190128080830664-202350109.jpg](../Middleware%E4%B8%AD%E9%97%B4%E4%BB%B6/assets/19327-20190128080830664-202350109.jpg)
+
+
+
+### Server	后续介绍
 
 一旦有请求抵达，**服务器**的**StartAsync启动**服务器
 
@@ -131,7 +151,7 @@ HttpHandler=Func<**HttpContext**，**Task**>
 
 HttpContext对象是对请求和响应的封装，但是请求最初来源于服务器
 
-### Server	后续介绍
+
 
 
 
@@ -291,7 +311,8 @@ public void Configure(IApplicationBuilder app)
 
 ![clip_image008[6]](assets/19327-20190128080828604-2024821875.jpg)
 
-
+要支持不同的服务器，则不同的服务器都要提供HttpContext，这样有了新的难题：**服务器和HttpContext之间的适配** 。
+现阶段的HttpContext包含HttpRequest和HttpResponse,请求和响应的数据都是要服务器(Server)提供的。
 
 ![https://img2018.cnblogs.com/blog/19327/201901/19327-20190128080850625-107550302.jpg](assets/19327-20190128080850625-107550302.jpg)
 
@@ -394,7 +415,7 @@ Host的主要的职责就是Web Server的配置和**Pilpeline（请求处理管�
 
 
 请求管道的构建主要是借助于`IApplicationBuilder`，相关类图如下：
- 
+
 
 ![img](assets/2799767-b4bced8e49659acd.png)
 
@@ -471,4 +492,47 @@ Host的主要的职责就是Web Server的配置和**Pilpeline（请求处理管�
 ## 在 [Docker 容器中托管](https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/docker/?view=aspnetcore-2.1) ASP.NET Core
 
 
+
+.NET 团队现在正在加强运行时，使其在低内存环境中具有容器感知功能并高效运行。 我们做出的最基本的改变是减少CoreCLR默认使用的内存，在过去的几个版本中，.NET 团队找到了显着提高性能并减少大量使用内存的方法
+
+Docker使用控制组（cgroups）来限制资源。在容器中运行应用程序时限制内存和CPU绝对是个好主意――它可以阻止应用程序占用整个可用内存及/或CPU，这会导致在同一个系统上运行的其他容器毫无反应。限制资源可提高应用程序的可靠性和稳定性。它还允许为硬件容量作好规划。在Kubernetes或DC/OS之类的编排系统上运行容器时尤为重要。
+
+[.NET Core已经磨练5年时间，准备好了迎接云计算时代的云原生应用开发](https://www.cnblogs.com/shanyou/p/10800521.html)，云系统中，用**更少的硬件**为**更高密度**的用户提供服务是非常重要的。应用程序的占位面积越小，密度越高。容器只包含应用程序及其依赖项。文件大小要小很多倍，启动时间以秒为单位，只有应用程序加载到内存中，容器保证在任何主机上工作。鉴于容器的明显优势，.NET
+Core的设计决定之一就是使其成为模块化。这意味着你的.NET 
+Core应用程序可以被"发布"，使得它和它的所有依赖关系在一个地方，这很容易放入容器
+
+
+
+
+
+到 2020年, 超过50% 的企业将在生产中运行关键任务、容器化的云原生应用程序,k8s 成为容器编排工具的王者。
+
+
+
+
+
+现在, 所有云提供商提供[托管 Kubernetes 服务,  甚至Docker和 DC/OS 集成 Kubernetes](https://www.cnblogs.com/shanyou/p/10841622.html)
+
+为什么Kubernetes 能够如此成功？
+
+- 社区: 项目被捐赠给一个 OSS 基金会 (云计算原生计算基金会) 很早就和其他主要的成员 (尤其是红帽) 参与, 把它从谷歌分离, 并避免锁定在谷歌
+- 容器-本机: 一些协调器 (即 DC/OS) 将容器添加到现有的调度技术中, 这确实很灵活的, 但可以感觉到 "附加"， 就包括微软的service fabric 也是把容器的调度技术添加进去，kubernetes 确实天生设计为容器调度
+- 以规模应用的最佳实践为基础: Kubernetes项目组的成员用Go语言重构了Brog系统，并得到了Brog系统开发者的大力支持。其他项目 没有这样的成熟度。
+
+Kubernetes 的网络效应现在如此强大, 以至于竞争对手们正在努力保持相关, 即使他们在某些方面客观地 ' 更好 '。
+
+
+
+
+
+> 张善友：首先Mono和.NET Core都是微软.NET 品牌之下的两大产品平台，借助于这两大平台，[我们可以构建任何应用程序，更重要的是它是一个开源跨平台和免费的，而且还有微软的官方支持。](https://www.cnblogs.com/shanyou/p/10925141.html)相比隔壁的咖啡的分裂和收费，是个明白人都应该知道怎么选更加符合商业利益。
+
+
+
+.NET Core从属于.NET基金会，由微软进行官方支持。使用最宽松的MIT和Apache 2开源协议，文档协议遵循CC-BY。这将允许任何人任何组织和企业任意处置，**包括使用，复制，修改，合并，发表，分发，再授权，或者销售**。唯一的限制是，软件中必须包含上述版权和许可提示，后者协议将会除了[为用户提供版权许可之外，还有专利许可，**并且授权是免费，无排他性的**(任何个人和企业都能获得授权)**并且永久不可撤销](https://www.cnblogs.com/shanyou/p/10198757.html)**，用户使用.NET
+Core完全不用担心收费问题，你可以很自由的部署在任何地方,。
+
+
+
+现在面对的一个环境，构建和.NET Core相比较，整体的成本增长很可观，例如项目的开发周期和团队规模被放大1/3，运营的服务器成本放大1倍以上，同样是跑在K8s集群上，.NET Core应用所需资源是Java应用的1/4到一半。
 
