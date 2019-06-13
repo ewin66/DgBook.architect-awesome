@@ -424,7 +424,7 @@ Host的主要的职责就是Web Server的配置和**Pilpeline（请求处理管�
 
 
 
-## ASP.NET Core运行机制
+## NET Core服务器
 
 其本质上是**一个独立的控制台应用**，它并不是必需在IIS内部托管且并不需要IIS来启动运行（而这正是ASP.NET Core跨平台的基石）。ASP.NET Core应用程序拥有一个内置的**Self-Hosted（自托管）**的**Web Server（Web服务器）**，用来处理外部请求。
 
@@ -475,7 +475,7 @@ Kestrel 的使用方式如下：
 
   ![Kestrel 通过反向代理服务器（如 IIS、Nginx 或 Apache）间接与 Internet 进行通信](../Middleware%E4%B8%AD%E9%97%B4%E4%BB%B6/assets/kestrel-to-internet.png)
 
-## 服务器
+### 服务器
 
 
 
@@ -495,11 +495,11 @@ Kestrel 的使用方式如下：
 
 **关于Kerstrel是否web容器，有两种观点：** 
 
-*1. 由于Kerstrel不提供编写应用的框架，所以它不是容器；asp.net core才是容器，因为它提供了开发应用的框架并提供web应用（MVC,Web API)运行环境。*
+*1. 由于Kerstrel不提供编写应用的框架，[所以它不是容器；asp.net core才是容器，因为它提供了开发应用的框架并提供web应用](https://www.cnblogs.com/vipyoumay/p/7455431.html)（MVC,Web API)运行环境。*
 
 *2. Kerstrel提供了运行环境。*
 
-[*非常欢迎大家提出自己的有力观点，帮助我们清晰化这个asp.net core容器概念。*](
+[*非常欢迎大家提出自己的有力观点，[帮助我们清晰化这个asp.net core容器概念](https://www.cnblogs.com/vipyoumay/p/7455431.html)。*](
 
 
 
