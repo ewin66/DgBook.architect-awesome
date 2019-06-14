@@ -603,7 +603,7 @@ Kestrel 的使用方式如下：
 
 
 
-###	【IOC】	DI Containers 
+###	【IOC】	DI Containers
 
 - [Microsoft.Extensions.DependencyInjection](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2)
 - [AutoFac](https://autofaccn.readthedocs.io/en/latest/integration/aspnetcore.html)
@@ -645,7 +645,9 @@ Logging
    - [OData](https://blogs.msdn.microsoft.com/odatateam/2018/07/03/asp-net-core-odata-now-available/)
    - [Sieve](https://github.com/Biarity/Sieve)
 2. GraphQL 
-   - [GraphQL-dotnet](https://github.com/graphql-dotnet/graphql-dotnet)
+	- [GraphQL-dotnet](https://github.com/graphql-dotnet/graphql-dotnet)
+3. RPC
+
 
 
 
