@@ -1,6 +1,6 @@
 
 
-# [一步步学习EF Core(1.DBFirst)](https://www.cnblogs.com/GuZhenYin/p/6857413.html)
+##	 [一步步学习EF Core(1.DBFirst)](https://www.cnblogs.com/GuZhenYin/p/6857413.html)
 
 在VS的**工具**选项中,选择**NuGet包管理器,**选择**程序包管理控制台**
 
@@ -53,3 +53,33 @@ Scaffold-DbContext "server=192.168.1.102;Database=research_home;Uid=fooww;Pwd=Fo
 
 
 
+----
+
+
+
+## MySql 使用 EF Core 2.0 CodeFirst
+
+、[DbFirst](https://blog.csdn.net/sD7O95O/article/details/78096116)、数据库迁移（Migration）介绍及示例
+
+```
+dotnet ef dbcontext scaffold "Server=localhost;User Id=test;Password=123456;Database=TestDb" "Pomelo.EntityFrameworkCore.MySql"
+```
+
+
+
+
+
+
+
+
+
+参考文章：
+
+    https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/migrations
+    
+    https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
+---------------------
+作者：dotNET跨平台 
+来源：CSDN 
+原文：https://blog.csdn.net/sD7O95O/article/details/78096116 
+版权声明：本文为博主原创文章，转载请附上博文链接！
