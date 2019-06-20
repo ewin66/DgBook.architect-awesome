@@ -69,6 +69,34 @@ dotnet ef dbcontext scaffold "Server=localhost;User Id=test;Password=123456;Data
 
 
 
+#### Code-First- 
+
+添加 TestDbContext 类（注意：把数据库连接字符串修改为自己的
+
+
+
+```csharp
+ public class TestDbContext : DbContext
+    {         public DbSet<User> User { get; set; }      
+
+  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseMySql(                "server=localhost;database=TestDb;user=test;password=123456;");
+        }        
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {           
+  base.OnModelCreating(modelBuilder);            //modelBuilder.Entity<User>().HasIndex(u => u.Aaccount).IsUnique();        
+  } 
+}
+```
+
+
+
+
+
+
+
 
 
 
