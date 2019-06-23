@@ -6,7 +6,7 @@ mysql                             MySQL is a widely used, open-source relation�
 
 ​	docker pull mysql
 
-docker run -d -P mysql
+docker run -d -P mysql :8.0.11
 
 docker run -d -P mariadb
 
@@ -28,8 +28,7 @@ docker ps -a
 CONTAINER ID        IMAGE                 COMMAND                   CREATED             STATUS                      PORTS                NAMES f6aa9080e011        mysql                 "docker-entrypoint.s…"   11  seconds ago      Exited (1) 8 seconds ago                         elated_heisenberg fe19135fd984        mariadb:10.2.16       "docker-entrypoint.s…"   24  hours ago        Exited (1) 23 hours ago                         mariadb 3dd3f2636fae        jenkins:2.60.3        "/bin/tini -- /usr/l…"   5  days ago          Exited (143) 5 days ago                          jenkins 03f00b234f26        elasticsearch:7.1.1   "/usr/local/bin/dock…"   5  days ago          Exited (78) 5 days ago                           elasticsearch 076d21ab539a        redis:latest          "docker-entrypoint.s…"   5  days ago          Exited (0) 29 seconds ago                       redis
 
 ```
- docker run --name mysql  -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql
-  docker run --name mariadb  -d -p 3307:3307 -e MYSQL_ROOT_PASSWORD=root mariadb
+ docker run --name mysql  -d -p 3309:3309 -e MYSQL_ROOT_PASSWORD=root mysql 
   docker run --name mariadb  -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mariadb
 ```
 
@@ -196,7 +195,7 @@ docker run --name mysql -p 3306:3306   -e MYSQL_ROOT_PASSWORD=wsx1001  -d mysql
 
 ## 
 
-## -d mysql：需要启动的容器的名称
+# -d mysql：需要启动的容器的名称
 
 作者：mdw5521 来源：CSDN 原文：<https://blog.csdn.net/mdw5521/article/details/79174094> 版权声明：本文为博主原创文章，转载请附上博文链接！
 
