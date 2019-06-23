@@ -1,4 +1,4 @@
-##                          干货满满！10分钟看懂Docker和K8S                                                                                                     原                                                                                             
+##                          干货满满！10分钟看懂Docker和K8S                                                                                                     原
 
 ​                 ![JamesView](assets/2926718_50.jpeg)             
 
