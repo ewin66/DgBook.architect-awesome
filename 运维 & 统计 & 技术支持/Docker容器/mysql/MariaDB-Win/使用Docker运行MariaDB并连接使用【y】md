@@ -1,0 +1,97 @@
+## 使用Docker运行MariaDB并连接使用
+
+​                  [评论：2](http://www.ptbird.cn/docker-mariadb.html#comments)                                   *·*                  [阅读：6125](http://www.ptbird.cn/docker-mariadb.html)*·*                  喜欢：2                               
+
+
+
+## 一、镜像准备
+
+为了方便省事儿，直接使用了官方的镜像 mariadb。
+
+```bash
+$ docker search mariadb
+```
+
+拉取 mariadb 镜像：
+
+```bash
+$ docker pull mariadb
+```
+
+
+
+## 二、启动容器及容器端口映射
+
+我们最终需要的实际上是宿主机暴露 `3306` 端口，因此将 MariaDB 容器的 `3306` 端口与宿主机的端口进行映射。
+
+容器的启动方式是 `-d` 后台守护进程启动，启动的时候需要指定 ROOT 密码或者是选择空 ROOT 密码。
+
+- `--name`：给了一个 `mariadb` 的别名
+- `MYSQL_ROOT_PASSWORD`：设置 root 密码
+
+```bash
+$ docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --name mariadb mariadb:latest
+```
+
+启动成功之后，实际上就能够在在宿主机直接访问 mysql 了。
+
+> 保证宿主机安装了 `mysql-client`
+
+这里遇到一个问题，如果不指定 `-h` 为某个 ip（本机指定为 127.0.0.1 或 局域网 ip），则无法连接，如果指定 `-h` 为 `localhost`也无法连接，不确定这个是什么原因【待续，正在解决...】
+
+上述问题的原因已经知道了，我在 Segmentfault 提了一个问题，有人解答了：
+
+- <https://segmentfault.com/q/1010000012060589>
+
+> 区别是mysql在使用-hlocalhost选择使用的连接方式为unix-socket,而你没有在mysql的配置文件中启用：socket=/var/run/mysqld/mysqld.sock，导致这个文件不存在而使连接失败；而-hIP的形式使用的是tcp-socket
+>
+> -h IP：是通过TCP/IP连接方式连接
+> -h localhost： 是通过socket连接方式连接
+>
+> 可以通过修改配置文件
+>
+> ​                     
+>
+> ```
+> protocol=tcp  # 强制使用TCP/IP 连接
+> skip-networking  #强制使用socket来连接。
+> ```
+
+```bash
+$ mysql -h192.168.1.130 -uroot -proot
+$ mysql -h127.0.0.1 -uroot -proot
+```
+
+
+
+## 三、使用 mysql GUI 工具连接
+
+既然暴露出来 ip 和 端口了，所以我用 SQLyog 连接了一下，并且建了一个数据库 test 和一个 user 表：
+
+![2.jpg](assets/3110633644.jpg)
+
+
+
+## 四、通过数据卷映射本地数据文件夹
+
+我们可能希望将宿主机的目录作为数据卷，把宿主机的目录挂载到我的docker容器中。
+
+创建数据卷文件夹目录：
+
+```bash
+$ mkdir -p /data/mariadb/data/
+```
+
+进行数据卷挂载：
+
+```bash
+$ docker run -d -p 3306:3306 --name mariadb -v /data/mariadb/data/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root mariadb:latest
+```
+
+挂载成功之后：
+
+![3.jpg](assets/2041300354.jpg)
+
+看 `/data/mariadb/data/` 会发现多了很多文件：
+
+![4.jpg](assets/1138331407.jpg)
