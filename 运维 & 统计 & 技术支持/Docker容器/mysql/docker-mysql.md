@@ -45,6 +45,14 @@ Status: Image is up to date for mysql:8.0.11
 
 ### docker run             mysql
 
+--name mysql
+
+```bash
+docker run --name mysql	-d -p 63306:63306 -e MYSQL_ROOT_PASSWORD=root mysql
+```
+
+
+
 PS C:\WINDOWS\system32> docker run -d -p 63306:63306 -e MYSQL_ROOT_PASSWORD=root mysql
 
 > 2e70f8849e9e9675a07ef01847d70eb18bba5f45bbb073e8882a7a9eeaae522b	【不用重命名】

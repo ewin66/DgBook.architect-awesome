@@ -2,7 +2,7 @@
 
 
 
-docker run -d  -p 5673:5672 -p 15673:15672 docker.io/rabbitmq:3-management
+docker run -name -d  -p 5673:5672 -p 15673:15672 docker.io/rabbitmq:3-management
 
 
 
@@ -21,3 +21,4 @@ docker search rabbirmq
 
 
 ##	 Docker创建[rabbitMq镜像和容器](https://blog.csdn.net/hometing218/article/details/81354340)
+

@@ -87,6 +87,7 @@ docker ps -a
 
 ```bash
 docker exec -it mysql mysql -uroot -proot			##	Name
+docker exec -it mariadb mariadb -uroot -proot	
 docker exec -it f5605d02f9f5 bash					##	ID
 ```
 
