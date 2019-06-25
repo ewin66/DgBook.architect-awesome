@@ -2,12 +2,6 @@
 
 
 
-
-
-
-
-
-
  		[docker上搭建consul集群全流程](https://www.cnblogs.com/miaoying/p/10303067.html) 	
 
 consul简介：
@@ -170,3 +164,247 @@ docker run --name consul0 -d -p 8500:8500 -p 8300:8300 -p 8301:8301 -p 8302:8302
 
 
 标签: [docker](https://www.cnblogs.com/miaoying/tag/docker/), [consul](https://www.cnblogs.com/miaoying/tag/consul/)
+
+
+
+---
+
+
+
+#	 			[Docker 容器部署 Consul 集群](https://www.cnblogs.com/lxsky/p/5276067.html) 		
+
+
+Docker 容器部署 Consul 集群
+
+**一、docker安装与启动**
+**1.1安装docker**
+[root@localhost /]# yum -y install docker-io
+
+**1.2更改配置文件**
+[root@localhost /]# vi /etc/sysconfig/docker
+other-args列更改为：other_args="--exec-driver=lxc --selinux-enabled"
+
+**1.3启动docker服务**
+[root@localhost /]# service docker start
+Starting cgconfig service:                                 [  OK  ]
+Starting docker:                                           [  OK  ]
+
+**1.4将docker加入开机启动**
+[root@localhost /]# chkconfig docker on
+
+**1.5基本信息查看**
+docker version：查看docker的版本号，包括客户端、服务端、依赖的Go等
+
+[root@localhost /]# docker version
+Client version: 1.0.0
+Client API version: 1.12
+Go version (client): go1.2.2
+Git commit (client): 63fe64c/1.0.0
+Server version: 1.0.0
+Server API version: 1.12
+Go version (server): go1.2.2
+Git commit (server): 63fe64c/1.0.0
+
+docker info ：查看系统(docker)层面信息，包括管理的images, containers数等
+[root@localhost /]# docker info
+Containers: 16
+Images: 40
+Storage Driver: devicemapper
+ Pool Name: docker-253:0-1183580-pool
+ Data file: /var/lib/docker/devicemapper/devicemapper/data
+ Metadata file: /var/lib/docker/devicemapper/devicemapper/metadata
+ Data Space Used: 2180.4 Mb
+ Data Space Total: 102400.0 Mb
+ Metadata Space Used: 3.4 Mb
+ Metadata Space Total: 2048.0 Mb
+Execution Driver: lxc-0.9.0
+Kernel Version: 2.6.32-431.el6.x86_64
+
+
+**二、progrium/consul镜像安装**
+**2.1搜索镜像**
+[root@localhost /]# docker search consul
+
+docker.io   docker.io/progrium/consul                                                              231                  [OK]
+docker.io   docker.io/gliderlabs/consul                                                            43                   [OK]
+……
+
+**2.2下载镜像progrium/consul** 
+[root@localhost /]# docker pull docker.io/progrium/consul
+
+**2.3查看镜像**
+[root@localhost /]# docker images -a   ////列出所有的images（包含历史）
+
+**三、在Docker 容器中启动Consul Agent,这里的操作参考progrium/consul的官方说明https://hub.docker.com/r/progrium/consul/**
+**3.1以Server 模式在容器中启动一个agent**
+[root@localhost /]# docker run -p 8400:8400 -p 8500:8500 -p 8600:53/udp -h **node1** progrium/consul -server -bootstrap
+
+我们测试一下，可以通过curl访问http端口:
+[root@localhost /]# curl localhost:8500/v1/catalog/nodes
+
+再测试一下，也可以通过dig访问一下 DNS 端口:
+[root@localhost /]# dig @0.0.0.0 -p 8600 node1.node.consul
+
+**3.2用Docker 容器启动Consul集群**
+分别启动三个server节点，并且绑定到同一个ip
+-bootstrap-expect：在一个datacenter中期望提供的server节点数目，当该值提供的时候，consul一直等到达到指定sever数目的时候才会引导整个集群
+
+[root@localhost /]# docker run -d --name **node1** -h node1 progrium/consul -server -bootstrap-expect 3
+[root@localhost /]# JOIN_IP="$(docker inspect -f '{{.NetworkSettings.IPAddress}}' **node1**)"   ////获取node1的ip地址
+[root@localhost /]# docker run -d --name **node2** -h **node2** progrium/consul -server -join $JOIN_IP
+[root@localhost /]# docker run -d --name **node3** -h **node3** progrium/consul -server -join $JOIN_IP
+启动client节点
+[root@localhost /]# docker run -d -p 8400:8400 -p 8500:8500 -p 8600:53/udp --name **node4** -h **node4** progrium/consul -join $JOIN_IP
+这时使用nsenter工具连接到node1上运行consul info，可以到到node1为state = Leader
+
+查看正在运行的容器
+[root@localhost /]# docker ps
+查看所有的容器（运行中和关闭的）
+[root@localhost /]# docker ps -a
+删除所有容器
+[root@localhost /]# docker rm $(docker ps -a -q)
+
+**3.3进入docker容器操作查看**
+docker使用 -d 参数时，容器启动后会进入后台。
+某些时候需要进入容器进行操作，特别是测试时。有很多种方法，包括使用ssh，docker attach命令或 nsenter工具等。
+
+**3.3.1使用docker attach，多个窗口不方便**
+[root@localhost /]# docker attach node3
+2016/03/14 03:35:40 [INFO] agent: Synced service 'consul'
+
+**3.3.2使用nsenter**
+先安装
+
+[root@localhost /]# cd /tmp
+[root@localhost /]# curl https://www.kernel.org/pub/linux/utils/util-linux/v2.24/util-linux-2.24.tar.gz
+[root@localhost /]# tar zxf util-linux-2.24.tar.gz
+[root@localhost /]# cd util-linux-2.24
+[root@localhost /]# ./configure --without-ncurses
+[root@localhost /]# make nsenter
+[root@localhost /]# cp nsenter /usr/local/bin                   ////不用make install，直接把make生成的nsenter 复制到/usr/local/bin目录下即可
+
+
+[root@localhost /]# PID=`docker inspect --format "{{ .State.Pid }}" node1 `
+[root@localhost /]# nsenter --target $PID --mount --uts --ipc --net --pid
+上面2条命令可以合一：nsenter --target `docker inspect --format "{{ .State.Pid }}" node1` --mount --uts --ipc --net --pid
+node1:/#             ////ok了可以随便输入linux命令检查一下看看，比如 
+开始consul命令
+node1:/# consul members
+node1:/# consul info
+
+ 
+
+
+
+
+
+标签: [Docker](https://www.cnblogs.com/lxsky/tag/Docker/), [Consul](https://www.cnblogs.com/lxsky/tag/Consul/), [nsenter](https://www.cnblogs.com/lxsky/tag/nsenter/)
+
+
+
+---
+
+
+
+
+
+
+
+
+
+#  			[consul部署多台Docker集群](https://www.cnblogs.com/gudanshiyigerendekuanghuan/p/10603516.html) 		
+
+
+
+# Consul
+
+1. 最近在学习Ocelot，发现里面集成Consul，所有部署一下多机版集群，后来发现网上都是在一台虚拟机中的Docker部署，而且大同小异，没有真正解释清楚。
+
+   # 前提准备
+
+2. 4台Centos虚拟机，本人安装VM虚拟机，用复制镜像快速搭建环境。（需要脚本的话联系我）
+
+3. 第一台安装好后，把Docker安装好，设置docker开机启动，关掉防火墙，设置静态IP等。
+
+4. 然后用copy虚拟机，修改ip地址后，全部启动
+
+   > 这些操作可自行百度
+
+   # Consul
+
+   > 目前都是单数据中心，多数据中心后面更新，此篇仅供入门参考,如果有不对的地方欢迎指正
+
+5. Consul分client和server模式
+    
+
+- client 负责注册服务，转发请求，没有持久化的功能 配置文件启动 ，会默认遍历所有/config/file 下的*.json文件
+
+- server 也可以注册服务，但是推荐client，能持久化数据，存放在 /config/data下
+
+  # 在客户端模式下运行Consul Agent
+
+  1. `--net=host`:docker内部对于虚拟机的来说也是localhost
+
+     > 如果主机上的其他容器也使用--net=host，这将是一个很好的配置，它还会将代理暴露给直接在容器外部的主机上运行的进程
+
+1. `-bind`:这是给其他consul server来加入集群的ip
+
+2. `-join`:加入集群
+
+3. `-client`:使用此配置，Consul的客户端接口将绑定到网桥IP，并可供该网络上的其他容器使用，但不能在主机网络上使用。
+
+   > Consul还将接受-client=0.0.0.0绑定到所有接口的选项。
+
+4. `-bootstrap-expect`设置服务数量，当达到设定数量启动集群。-bind的这台机器成为leader
+
+5. `-ui`管理界面
+
+6. `-h`:设置node的名称，集群的服务器不能取同名的node名称
+
+7. `CONSUL_BIND_INTERFACE`:ifconfig查看，好像虚拟机的这个名称不一样，我的是ens33，还有叫eth0的。
+
+   # 需要用到的命令
+
+8. Docker中`Consul`部署
+
+- `docker inspect -f '{{.NetworkSettings.IPAddress}}' consul1`查看容器内Consul1的ip
+
+- `docker exec -t consul名称 consul members` 查看集群成员
+
+- `ifconfig` 查看ip配置
+
+- `/sbin/ifconfig ens33 | sed -n 's/.*inet \(addr:\)\?\([0-9.]\{7,15\}\) .*/\2/p'`
+
+- `docker run -d  --name consul1 --net=host -e  CONSUL_BIND_INTERFACE=ens33 consul agent -server=true -client=0.0.0.0  -bind=192.168.110.100 -ui -bootstrap-expect=3`  leader 服务
+
+- `docker run -d --name consul2 -h=node1 --net=host -e  CONSUL_BIND_INTERFACE=ens33 consul agent -server=true -client=0.0.0.0  -join=192.168.110.100 -ui`  follower
+
+- `docker run -d --name consul4 -h=node4--net=host -e  CONSUL_BIND_INTERFACE=ens33 consul agent -server=false -client=0.0.0.0  -join=192.168.110.100 -ui` client
+
+  # 启动
+
+  ## 现有四台虚拟机，ip地址分别是：
+
+1. 192.168.110.100
+
+2. 192.168.110.101
+
+3. 192.168.110.102
+
+4. 192.168.110.103
+    在第一台服务器中运行server作为leader
+    `docker run -d --name consul1 -h=node1 --net=host -e  CONSUL_BIND_INTERFACE=ens33 consul agent -server=true -client=0.0.0.0  -bind=192.168.110.100 -ui -bootstrap-expect=3`
+    接下来三台台加入集群
+    `docker run -d  --name consul2 -h=node2 --net=host -e  CONSUL_BIND_INTERFACE=ens33 consul agent -server=true -client=0.0.0.0  -join=192.168.110.100 -ui`
+    `docker run -d  --name consul3 -h=node3 --net=host -e  CONSUL_BIND_INTERFACE=ens33 consul agent -server=true -client=0.0.0.0  -join=192.168.110.100 -ui`
+    `docker run -d -v /consulconfig:/config/file --name  consul4  -h=node4 --net=host -e CONSUL_BIND_INTERFACE=ens33 consul agent  -config-dir=/config/file    -server=false -client=0.0.0.0  -join=192.168.110.100 -ui`
+
+   > 如果需要挂载数据文件，请指定`-data-dir`
+
+# 查看状态
+
+- `docker exec -t consul1 consul operator raft list-peers` 查看投票状态
+- `docker exec -t consul名称 consul members` 查看集群成员
+
+
+

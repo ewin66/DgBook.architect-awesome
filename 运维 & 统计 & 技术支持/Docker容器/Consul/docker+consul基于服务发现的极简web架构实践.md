@@ -364,7 +364,7 @@ HTTP/1.1 200 OK
 
 进入node3
  `$ docker kill nginx`
- 
+
 
 
 
@@ -433,3 +433,318 @@ $ http http://192.168.99.100:8500/v1/health/checks/nginx
 在实践过程中，我发现有一个或许是更优的架构。那就是seneca的方案，使用事件相应作为微服务的提供方式，这样就避免了服务发现这件事，完全不需要注册服务，选择服务这么麻烦。也不用为服务发现服务搭建一个集群确保其高可用。
 
 小礼物走一走，来简书关注我
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+
+
+
+
+
+
+
+# consul+docker实现服务注册
+
+
+
+
+
+
+
+近期新闻
+
+css宣布支持三角函数
+ES10即将来临
+基本架构
+
+在这里插入图片描述
+注册中心： 每个服务提供者向注册中心登记自己的服务，将服务名与主机Ip，端口等一些附加信息告诉注册中心，注册中心按服务名分类组织服务清单。如A服务运行在192.168.1.82:3000，192.168.1.83：3000实例上。那么维护的内容如下：
+在这里插入图片描述
+简单来说，服务中心会维护一份，在册的服务名与服务ip的映射关系。同时注册中心也会检查注册的服务是否可用，不可用则剔除。
+服务消费者：即在注册中心注册的服务，他们之间不再通过具体地址访问，而是通过服务名访问其他在册服务的资源。
+技术说明
+
+Consul:采用Go开发的高可用的服务注册与配置服务，本文的注册中心采用Consul实现。
+Docker:基于Go语言的开源应用容器引擎。
+Registor:Go语言编写，针对docker使用的，通过检查本机容器进程在线或者停止运行状态，去注册服务的工具。这里主要用作对服务消费者的监控。
+示例环境： 系统：macos； docker: 17.09.1-ce； docker-compose:1.17.1。
+docker命令创建注册中心
+
+docker run -h node1  --name consul -d --restart=always\
+    -p  8400 \
+    -p   8500:8500 \
+progrium/consul -server \
+-bootstrap-expect 1 -advertise 127.0.0.1
+
+    1
+    2
+    3
+    4
+    5
+
+下面来解释下各个参数
+-h 节点名字
+–name 容器（container）名称，后期用来方便启动关闭，看日志等，这个一定要写
+-d 后台运行
+-v /data:/data 使用宿主机的/data目录映射到容器内部的/data,用于保存consul的注册信息，要不docker 一重启，数据是不保留的。
+–restart=always 这个可以活得长一点
+下面几个参数都是consul集群用的，非集群模式可以不使用。
+-p 8500:8500
+progrium/consul 镜像名称，本地没有就自动从公共docker库下载
+后面的都是consul的参数：
+-server \ 以服务节点启动
+-bootstrap-expect 3 \ 预期的启动节点数3，最少是3，要不达不到cluster的效果
+-advertise 127.0.0.1 告诉集群，我的ip是什么，就是注册集群用的
+使用docker-compose创建注册中心
+
+使用docker命令创建注册中心比较麻烦，并且不好维护，这里使用docker-compose来实现。
+docker-compose:
+compose是 Docker 容器进行编排的工具，定义和运行多容器的应用，可以一条命令启动多个容器，使用Docker Compose不再需要使用shell脚本来启动容器。
+
+Compose 通过一个配置文件来管理多个Docker容器，在配置文件中，所有的容器通过services来定义，然后使用docker-compose脚本来启动，停止和重启应用，和应用中的服务以及所有依赖服务的容器，非常适合组合使用多个容器进行开发的场景。
+首先看下docker-compose配置文件：
+
+version: "3.0"
+
+services:
+    # consul server，对外暴露的ui接口为8500，只有在2台consul服务器的情况下集群才起作用
+    consulserver:
+        image: progrium/consul:latest
+        hostname: consulserver
+        ports:
+            - "8300"
+            - "8400"
+            - "8500:8500"
+            - "53"
+        command: -server -ui-dir /ui -data-dir /tmp/consul --bootstrap-expect=3
+
+    # consul server1在consul server服务起来后，加入集群中
+    consulserver1:
+        image: progrium/consul:latest
+        hostname: consulserver1
+        depends_on:
+            - "consulserver"
+        ports:
+            - "8300"
+            - "8400"
+            - "8500"
+            - "53"
+        command: -server -data-dir /tmp/consul -join consulserver
+    
+    # consul server2在consul server服务起来后，加入集群中
+    consulserver2:
+        image: progrium/consul:latest
+        hostname: consulserver2
+        depends_on:
+            - "consulserver"
+        ports:
+            - "8300"
+            - "8400"
+            - "8500"
+            - "53"
+        command: -server -data-dir /tmp/consul -join consulserver
+    
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+    13
+    14
+    15
+    16
+    17
+    18
+    19
+    20
+    21
+    22
+    23
+    24
+    25
+    26
+    27
+    28
+    29
+    30
+    31
+    32
+    33
+    34
+    35
+    36
+    37
+    38
+    39
+
+这里consulserver,consulserver1等是服务名，image定义镜像名，depends_on定义依赖容器,command可以覆盖容器启动后默认命令。详细的配置项介绍及compose命令，可查看这里。
+下面进入模版目录，运行
+
+docker-compose up -d
+
+    1
+
+浏览器输入http://127.0.0.1:8500，可以看到consul server服务已启动。效果如下：
+在这里插入图片描述
+
+接下来，添加registrator。方法是在配置文件里加上registrator信息，registrator保证了，如果服务已停止，则从注册中心中移除。
+
+    registrator:
+        image: gliderlabs/registrator:master
+        hostname: registrator
+        depends_on:
+            - "consulserver"
+        volumes:
+            - "/var/run/docker.sock:/tmp/docker.sock"
+        command: -internal consul://consulserver:8500
+    
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+
+注册中心已经建好了，接下来我们创建需要注册在consul server上的服务。
+搭建service web服务
+
+首先我们创建一个服务的本地镜像，用来创建服务容器。
+创建server.js,这里用express框架创建node服务，端口3000。
+
+var express = require("express");
+var PORT = 3000;
+var app = express();
+const ip = require("ip");
+app.get("/getRemoteIp", (req, res) => {
+    res.send({ ip: ip.address() });
+});
+app.get("/", function(req, res) {
+    res.send("Helloworld\n");
+});
+app.listen(PORT);
+console.log("Running on http://localhost:" + PORT);
+
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+
+再创建package.json定义依赖。
+创建镜像最重要的是Dockerfile。
+
+FROM node:alpine
+RUN mkdir -p /home/Service
+WORKDIR /home/Service 
+COPY . /home/Service
+RUN npm install
+EXPOSE 3000
+CMD npm start
+
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+
+FROM:构建镜像的基础源镜像
+WORKDIR：容器的工作目录
+COPY:将本地的东西拷贝到容器的指定目录下
+EXPOSE:将容器内的某个端口导出给主机，用于我们访问
+CMD:每次容器启动的时候执行的命令
+详细配置项信息可以看这里。
+
+接着就可以创建镜像了：
+
+docker build -t client-server .
+
+    1
+
+建成后使用docker images查看镜像，也可以运行镜像，验证是否创建成功。
+
+docker run -d -p 3000:3000 client-server
+
+    1
+
+下面可以创建consul client了，配置文件如下。
+
+version: "3.0"
+##	 启动node-service-web节点服务
+
+services:
+    web:
+        image: client-server:latest
+        environment:
+            SERVICE_3000_NAME: service-web
+        ports:
+            - "3000"
+
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+
+这里client-server就是刚创建的镜像。
+运行docker-compose -f docker-compose.web.yml up -d --scale web=3启动服务，–scale web=3表示启动三台服务器。效果如下：
+在这里插入图片描述
+验证Registrator功能
+
+我们停止一个service-web 服务，看下Registrator是否会将无效的服务移除。
+首先看下当前服务 docker ps
+在这里插入图片描述
+再停止一个服务
+
+docker stop de8848a31fe7
+
+    1
+
+接着登录http://localhost:8500/ui/#/dc1/services/consul，看到service-web变为两个，说明Registrator会移除下线服务。
+
+参考文档：
+https://zhuanlan.zhihu.com/p/36114437
+https://www.jianshu.com/p/d16a1bea5cbb
+https://www.jianshu.com/p/ab76ba86eafc
+
+https://www.cnblogs.com/bossma/p/9756809.html
+--------------------- 
+作者：巨大星星星 
+来源：CSDN 
+原文：https://blog.csdn.net/qq_36228442/article/details/89085373 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+
