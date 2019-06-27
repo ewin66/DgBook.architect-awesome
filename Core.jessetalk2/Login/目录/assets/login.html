@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html> <!--<![endif]-->
+
+
+
+<html lang="zh_CN" class="">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>登录 - Jessetalk -  跟Jesse一起学 ASP.NET Core - Powered By EduSoho</title>
+      <meta name="keywords"
+          content="
+asp.net core学习视频,c# ,腾飞 jesse"/>
+    <meta name="description"
+          content=""/>
+    <meta content="dhrMAKgyRS8o9YXtijpcwHW-8SVBXS7iuoeoUK9PNOM" name="csrf-token"/>
+    <meta content="0" name="is-login"/>
+    <meta content="0" name="is-open"/>
+  
+
+  
+  
+  <!--[if lt IE 9]>
+  <script src="/static-dist/libs/html5shiv.js?version=8.2.13"></script>
+  <script src="/static-dist/es5-shim/es5-shim.js?version=8.2.13"></script>
+  <script src="/static-dist/es5-shim/es5-sham.js?version=8.2.13"></script>
+  <![endif]-->
+
+          <link href="/static-dist/app/css/bootstrap.css?version=8.2.13" rel="stylesheet" />
+<link href="/static-dist/app/css/main.css?version=8.2.13" rel="stylesheet" />
+<link href="/static-dist/app/css/main-v2.css?version=8.2.13" rel="stylesheet" />
+
+
+
+  
+  </head>
+<body class="es-main-default es-nav-default login">
+
+<!--[if lt IE 9]>
+<script src="/static-dist/libs/fix-ie.js?version=8.2.13"></script>
+<style>
+  .lt-ie9 {
+    overflow: hidden;
+  }
+  .ie-mask {
+    z-index: 999999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    background: #000;
+  }
+  .ie-alert-wrap {
+    position: absolute;
+    z-index: 1000000;
+    margin: -200px auto 0;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  .ie-alert {
+    width: 514px;
+    height: 397px;
+    margin: 0 auto;
+  }
+  .ie-alert__chrome,
+  .ie-alert__firefox {
+    position: absolute;
+    z-index: 1000001;
+    display: block;
+    bottom: 48px;
+    width: 60px;
+    height: 80px;
+  }
+  .ie-alert__chrome {
+    left: 50%;
+    margin-left: -80px;
+  }
+  .ie-alert__firefox {
+    right: 50%;
+    margin-right: -80px;
+  }
+</style>
+<div class="ie-mask"></div>
+<div class="ie-alert-wrap">
+  <div class="ie-alert" style="background:url('/static-dist/app/img/browser/browser_update.png?version=8.2.13')">
+    <a href="http://www.baidu.com/s?wd=%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8" target="_blank" class="ie-alert__chrome"></a>
+    <a href="http://firefox.com.cn/download/" target="_blank" class="ie-alert__firefox"></a>
+  </div>
+</div>
+
+<![endif]-->
+
+  <div class="es-wrap">
+
+                  
+<header class="es-header navbar">
+  <div class="navbar-header">
+  <div class="visible-xs  navbar-mobile">
+    <a href="javascript:;" class="navbar-more js-navbar-more">
+      <i class="es-icon es-icon-menu"></i>
+    </a>
+    <div class="html-mask"></div>
+    <div class="nav-mobile">
+      <form class="navbar-form" action="/search" method="get">
+        <div class="form-group">
+          <input class="form-control" placeholder="搜索" name="q">
+          <button class="button es-icon es-icon-search"></button>
+        </div>
+      </form>
+
+      <ul class="nav navbar-nav">
+        
+    
+      <li class="">
+  <a href="http://video.jessetalk.cn/group" >小组 </a>
+  </li>      
+      <li class="">
+  <a href="http://video.jessetalk.cn/mobile/" target="_blank">移动端 </a>
+  </li>      
+      <li class="">
+  <a href="http://www.jessetalk.cn" target="_blank">博客 </a>
+  </li>      
+      <li class="">
+  <a href="https://shimo.im/docs/R7hiBLZvegQKlkPY" target="_blank">邀请返现 </a>
+  </li>      
+      <li class="">
+  <a href="https://shimo.im/docs/5ExkCykyZZwgjaRX/ " target="_blank">企业推荐 </a>
+  </li>        </ul>
+    </div>
+  </div>
+    <a href="/" class="navbar-brand">
+          Jessetalk
+      </a>
+</div>  <nav class="collapse navbar-collapse">
+    <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+      
+    
+      <li class="">
+  <a href="http://video.jessetalk.cn/group" >小组 </a>
+  </li>      
+      <li class="">
+  <a href="http://video.jessetalk.cn/mobile/" target="_blank">移动端 </a>
+  </li>      
+      <li class="">
+  <a href="http://www.jessetalk.cn" target="_blank">博客 </a>
+  </li>      
+      <li class="">
+  <a href="https://shimo.im/docs/R7hiBLZvegQKlkPY" target="_blank">邀请返现 </a>
+  </li>      
+      <li class="">
+  <a href="https://shimo.im/docs/5ExkCykyZZwgjaRX/ " target="_blank">企业推荐 </a>
+  </li>      </ul>
+    <div class="navbar-user ">
+  <ul class="nav user-nav">
+          <li class="user-avatar-li nav-hover visible-xs">
+  <a href="javascript:;" class="user-avatar-toggle">
+    <img class="cd-avatar cd-avatar-xs" src="/assets/img/default/avatar.png?version=8.2.13">
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="user-nav-li-login">
+      <a href="/login?goto=http%3A//video.jessetalk.cn/my/course/5">
+        <i class="es-icon es-icon-denglu"></i>登录
+      </a>
+    </li>
+    <li class="user-nav-li-register">
+      <a href="/register?goto=http%3A//video.jessetalk.cn/my/course/5">
+        <i class="es-icon es-icon-zhuce"></i>注册
+      </a>
+    </li>
+          <li class="mobile-switch js-switch-mobile"><a href="javascript:;">
+        <i class="es-icon es-icon-qiehuan"></i>切换触屏版</a>
+      </li>
+       </ul>
+</li>
+
+<li class="visitor-li visitor-login-li hidden-xs"><a href="/login?goto=http%3A//video.jessetalk.cn/my/course/5">登录</a></li>
+<li class="visitor-li hidden-xs"><a href="/register?goto=http%3A//video.jessetalk.cn/my/course/5">注册</a></li>          </ul>
+  <form class="navbar-form navbar-right hidden-xs" action="/search" method="get">
+    <div class="form-group">
+      <input class="form-control js-search" value="" name="q" placeholder="搜索">
+      <button class="button es-icon es-icon-search"></button>
+    </div>
+  </form>
+</div>  </nav>
+</header>    
+          
+      <div id="content-container" class="container">
+            <div class="es-section login-section">
+    <div class="logon-tab clearfix">
+      <a class="active">登录帐号</a>
+      <a href="/register?goto=http%3A//video.jessetalk.cn/my/course/5">注册帐号</a>
+    </div>
+    <div class="login-main">
+      <form id="login-form" class="form-vertical" method="post" action="/login_check">
+
+                  
+        <div class="form-group mbl">
+          <label class="control-label" for="login_username">帐号</label>
+          <div class="controls">
+            <input class="form-control input-lg" id="login_username" type="text" name="_username" value="" required
+              placeholder='邮箱/手机/用户名'/>
+            <div class="help-block"></div>
+          </div>
+        </div>
+        <div class="form-group mbl">
+          <label class="control-label" for="login_password">密码</label>
+          <div class="controls">
+            <input class="form-control input-lg" id="login_password" type="password" name="_password" required placeholder='密码'/>
+          </div>
+        </div>
+
+        <div class="form-group mbl">
+          <div class="controls">
+            <input type="checkbox" name="_remember_me" checked="checked"> 记住密码
+          </div>
+        </div>
+        <div class="form-group mbl">
+          <button type="button" class="btn btn-primary btn-lg btn-block js-btn-login">登录</button>
+        </div>
+
+        <input type="hidden" name="_target_path" value="http://video.jessetalk.cn/my/course/5">
+        <input type="hidden" name="_csrf_token" value="dhrMAKgyRS8o9YXtijpcwHW-8SVBXS7iuoeoUK9PNOM">
+      </form>
+
+      <div class="mbl">
+        <a class="link-primary" href="/password/reset">找回密码</a>
+        <span class="color-gray mhs">|</span>
+        <span class="color-gray">还没有注册帐号？</span>
+        <a class="link-primary" href="/register?goto=http%3A//video.jessetalk.cn/my/course/5">立即注册</a>
+      </div>
+
+          </div>
+  </div>
+
+      </div>
+
+          
+                          
+<footer class="es-footer">
+  <div class="copyright">
+    <div class="container">
+        Powered by <a href="http://www.edusoho.com/" target="_blank">EduSoho v8.2.13</a>
+  ©2014-2019 <a class="mlm" href="http://www.howzhi.com/" target="_blank">好知网</a>      <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ea57062625842add337bab50d907e2cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+      <a class="mlm" href="/archive/course">课程存档</a>
+      <div class="mts">
+                      </div>
+    </div>
+  </div>
+</footer>
+    
+        
+        </div>
+
+        
+    
+        
+      
+  <div id="login-modal" class="modal" data-url="/login/ajax"></div>
+  <div id="modal" class="modal"></div>
+  <div id="attachment-modal" class="modal"></div>
+
+    
+
+  
+
+
+  <script>
+  if (typeof app === 'undefined') {
+      var app = {};
+  }
+  app.version = '8.2.13';
+  app.httpHost = 'http://video.jessetalk.cn';
+  app.basePath = 'http://video.jessetalk.cn';
+  app.theme = 'jianmo';
+
+              app.scheduleCrontab = '/anon/crontab';
+      
+  var CLOUD_FILE_SERVER = ""; 
+
+  app.config = {"api":{"weibo":{"key":""},"qq":{"key":""},"douban":{"key":""},"renren":{"key":""}},"loading_img_path":"\/assets\/img\/default\/loading.gif?version=8.2.13"};
+
+  app.arguments = {};
+      
+  app.scripts = null;
+
+  app.fileSingleSizeLimit = 2;
+  app.uploadUrl = '/file/upload';
+  app.imgCropUrl = '/file/img/crop';
+  app.lessonCopyEnabled = '0';
+  app.cloudPlayerSdkUrl = '//service-cdn.qiqiuyun.net/js-sdk/sdk-v1.js?15616163';
+  app.cloudPlayServer = '';
+  app.cloudVideoPlayerSdkUrl = '//service-cdn.qiqiuyun.net/js-sdk/video-player/sdk-v1.js?15616163';
+  app.cloudOldUploaderSdkUrl = '//service-cdn.qiqiuyun.net/js-sdk/uploader/sdk-v1.js?15616163';
+  app.cloudOldDocumentSdkUrl = '//service-cdn.qiqiuyun.net/js-sdk/document-player/v7/viewer.html?15616163';
+  app.lang = 'zh_CN';
+</script>
+
+<script src="/bundles/translations/translator.min.js?version=8.2.13"></script>
+
+  <script src="/bundles/translations/zh_CN.js?version=8.2.13"></script>
+      <script src="/static-dist/libs/base.js?version=8.2.13"></script>
+        <script src="/static-dist/app/js/common.js?version=8.2.13"></script>
+        <script src="/static-dist/app/js/main.js?version=8.2.13"></script>
+        <script src="/static-dist/jianmotheme/js/main.js?version=8.2.13"></script>
+        <script src="/static-dist/libs/jquery-validation.js?version=8.2.13"></script>
+        <script src="/static-dist/app/js/auth/login/index.js?version=8.2.13"></script>
+        <script src="/static-dist/app/js/default/header/index.js?version=8.2.13"></script>
+  
+<script type="text/javascript">
+  window.seajsBoot && window.seajsBoot();
+</script>
+
+</body>
+</html>
