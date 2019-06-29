@@ -111,6 +111,29 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 ````
 
+##	 EF Core Scaffold-DbContext 注意点
+
+
+
+```
+Scaffold-DbContext "Server=xxx.xxx.xxx.xxx;Database=Blogging;User ID=sa;Password=$xxxxx;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+```
+
+以上是我的命令
+ 执行时，总是提示我
+
+```bash
+System.Data.SqlClient.SqlException (0x80131904): 用户 'sa' 登录失败。
+```
+
+后来发现，密码中包含$符号，所以需要在$符号前加上`，即：
+
+```bash
+Scaffold-DbContext "Server=xxx.xxx.xxx.xxx;Database=Blogging;User ID=sa;Password=`$xxxxx;" Micros
+```
+
+
+
 
 
 ## 目录和命名空间
