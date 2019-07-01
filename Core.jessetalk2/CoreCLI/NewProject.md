@@ -23,6 +23,36 @@ dotnet ef database update
 
 
 
+##	用VSCode新建webapi项目[JwtAuthSample](https://www.cnblogs.com/wyt007/p/8183085.html)，
+
+并打开所在文件夹项目
+
+```
+dotnet new webapi --name JwtAuthSample
+```
+
+编辑JwtAuthSample.csproj，添加watch
+
+```
+<DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
+```
+
+重新生成一下项目
+
+```
+dotnet restore
+```
+
+然后运行
+
+```
+dotnet watch run
+```
+
+
+
+
+
 ## 创建控制器
 
 ```bash
