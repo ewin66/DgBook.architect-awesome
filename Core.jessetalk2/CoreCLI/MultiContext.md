@@ -1,4 +1,4 @@
-
+  
 
 ##	指定Context
 
@@ -7,6 +7,7 @@ Update-Database -Context FirstDbContext
 SimpleCmsWithAbpDbContext
 Update-Database -Context SimpleCmsWithAbpDbContext
 ConfigurationDbContext
+
 
 Update-Database -Context ConfigurationDbContext
 Update-Database -Context ResearchDbContext
