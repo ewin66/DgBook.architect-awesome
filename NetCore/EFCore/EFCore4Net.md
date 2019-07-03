@@ -10,6 +10,13 @@ https://downloads.mariadb.org/mariadb/
 
 
 
+```
+Add-Migration Init
+Update-Database
+```
+
+
+
 Mysql8 [优化](https://dev.mysql.com/doc/refman/8.0/en/optimization.html)
 
 https://dev.mysql.com/doc/
