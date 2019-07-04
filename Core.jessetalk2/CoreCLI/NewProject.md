@@ -141,9 +141,9 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 ````
 
-##	 EF Core Scaffold-DbContext 注意点
+##	 EF Core Scaffold-DbContext 注意点【$前加上`】
 
-
+https://www.jianshu.com/p/65b34b1e8407
 
 ```
 Scaffold-DbContext "Server=xxx.xxx.xxx.xxx;Database=Blogging;User ID=sa;Password=$xxxxx;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
