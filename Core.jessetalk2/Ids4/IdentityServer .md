@@ -2,6 +2,18 @@
 
 
 
+```
+Install-Package Abp.ZeroCore.IdentityServer4
+```
+
+
+
+```
+Install-Package Abp.ZeroCore.IdentityServer4.EntityFrameworkCore
+```
+
+
+
 
 
 
