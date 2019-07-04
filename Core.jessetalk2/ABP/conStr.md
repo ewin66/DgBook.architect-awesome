@@ -24,6 +24,10 @@ Add-Migration -Name InitialIdentityServerConfigurationDbMigration -Context Confi
     "DefaultConnection": "server=192.168.1.102;Database=research_home;Uid=fooww;Pwd=Fooww_08@2018;SslMode=none;Allow User Variables=True",
     "Default3": "server=127.0.0.1;port=33066;Database=DgSquare2019;Uid=root;Pwd=wsx1001;SslMode=none;Allow User Variables=True",
     "Default2": "Server=localhost; Database=ResearchDb; Trusted_Connection=True;"
+          "Default": "User ID=postgres;Password=wsx1001;Host=localhost;Port=5432;Database=PostgreSqlResDemoDb;Pooling=true;",
+
+      
+      
   },
   "App": {
     "ServerRootAddress": "http://localhost:21021/",
