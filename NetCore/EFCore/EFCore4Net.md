@@ -99,3 +99,8 @@ Add-Migration Init
 Update-Database
 ```
 
+```
+    "Default": "User ID=postgres;Password=wsx1001;Host=localhost;Port=5432;Database=PostgreSqlResDemoDb;Pooling=true;",
+
+```
+
