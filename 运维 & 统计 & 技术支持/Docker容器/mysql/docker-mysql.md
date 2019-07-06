@@ -342,9 +342,14 @@ mysql>selecthost, userfromuser;
 
 
 
+```
+ALTER USER root@localhost IDENTIFIED WITH mysql_native_password BY 'root';
 
+ALTER USER root@localhost IDENTIFIED WITH mysql_native_password BY 'wsx1001';
 
+```
 
+# Mysql8.0安装步骤
 
 # [在Dockerfile中配置了ROOT密码为什么还是显示密码为空](https://segmentfault.com/q/1010000011389249)
 
