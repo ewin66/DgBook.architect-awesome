@@ -1,0 +1,243 @@
+
+
+
+
+
+
+#  			[mysql innodb cluster服务器搭建](https://www.cnblogs.com/itpoorman/p/7754494.html)
+
+https://www.cnblogs.com/itpoorman/p/7754494.html
+
+1、限于环境，只有2台服务器，一台安装mysql + mysqlrouter，另一台安装2个mysql实例；
+
+2、添加2台服务器的/etc/hosts文件，如下：
+
+```
+192.168.1.223  dbserver01
+192.168.1.224  dbserver02
+```
+
+3、准备安装包文件：
+
+```
+mysql-router-2.1.4-linux-glibc2.12-x86-64bit.tar.gz
+mysql-shell-1.0.10-linux-glibc2.12-x86-64bit.tar.gz
+mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz
+```
+
+4、解压安装包到相应目录如：/test/mysql-3306，在/test/mysql-3306目录下创建data、log目录，创建my.cnf文件
+
+my.cnf文件内容：
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+```
+[mysqld]
+port = 3306
+socket=/test/mysql-3306/mysql.sock
+basedir=/test/mysql-3306
+datadir=/test/mysql-3306/data
+log-error=/test/mysql-3306/log/mysql.log
+pid-file=/test/mysql-3306/mysql.pid
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+[mysqld_safe]
+port = 3306
+socket=/test/mysql-3306/mysql.sock
+basedir=/test/mysql-3306
+datadir=/test/mysql-3306/data
+log-error=/test/mysql-3306/log/mysql.log
+pid-file=/test/mysql-3306/mysql.pid
+
+
+[mysql]
+port = 3306
+socket=/test/mysql-3306/mysql.sock
+
+
+[mysqladmin]
+port = 3306
+socket=/test/mysql-3306/mysql.sock
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+5、拷贝init_3306.sh、login_3306.sh、start_3306.sh、stop_3306.sh到/test/mysql-3306目录，各文件内容如下：
+
+init_3306.sh文件内容：
+
+```
+#!/bin/sh
+
+bin/mysqld --defaults-file=/test/mysql-3306/my.cnf --initialize --user=root --console
+```
+
+login_3306.sh文件内容：
+
+```
+#!/bin/sh
+
+bin/mysql --defaults-file=/test/mysql-3306/my.cnf -uroot -p
+```
+
+start_3306.sh文件内容：
+
+```
+#!/bin/sh
+
+
+nohup bin/mysqld_safe --defaults-file=/test/mysql-3306/my.cnf --user=root >/dev/null 2>&1 &
+```
+
+stop_3306.sh文件内容：
+
+```
+#!/bin/sh
+
+bin/mysqladmin --defaults-file=/test/mysql-3306/my.cnf shutdown -uroot -pxxxx@2017
+```
+
+6、执行init_3306.sh文件初始化数据库成功；
+
+7、查看log/mysql.log文件中生成的密码；
+
+8、执行start_3306.sh文件启动数据库成功；
+
+9、执行login_3306.sh数据log文件中密码登录成功；
+
+ 
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+```
+mysql> set sql_log_bin = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set password=password('xxxx@2017');
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> grant all privileges on *.* to 'root'@'%' identified by 'xxxx@2017' with grant option;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set sql_log_bin = 1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye 
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+ 
+
+10、修改my.cnf文件，增加【mysqld】段内配置
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+```
+server_id = 1
+gtid_mode = ON
+enforce_gtid_consistency = ON
+master_info_repository = TABLE
+relay_log_info_repository = TABLE
+binlog_checksum = NONE
+log_slave_updates = ON
+log_bin = binlog
+binlog_format = ROW
+
+transaction_write_set_extraction = XXHASH64
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+11、重启mysql，执行mysqlsh命令
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+```
+[root@dbserver01 test]# mysqlsh 
+MySQL Shell 1.0.10
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+Currently in JavaScript mode. Use \sql to switch to SQL mode and execute queries.
+mysql-js> dba.configureLocalInstance('root@localhost:3306');
+Please provide the password for 'root@localhost:3306': 
+
+Detecting the configuration file...
+Default file not found at the standard locations.                  
+Please specify the path to the MySQL configuration file: /test/mysql-3306/my.cnf
+Validating instance...
+
+The instance 'localhost:3306' is valid for Cluster usage
+You can now use it in an InnoDB Cluster.
+
+{
+    "status": "ok"
+}
+mysql-js> 
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+ 12、创建集群实例
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+```
+mysql-js> \c root@dbserver01:3306
+Creating a Session to 'root@dbserver01:3306'
+Enter password: 
+Your MySQL connection id is 8
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-js> var cluster = dba.createCluster('szcluster');
+A new InnoDB cluster will be created on instance 'root@dbserver01:3306'.
+
+Creating InnoDB cluster 'szcluster' on 'root@dbserver01:3306'...
+Adding Seed Instance...
+
+Cluster successfully created. Use Cluster.addInstance() to add MySQL instances.
+At least 3 instances are needed for the cluster to be able to withstand up to
+one server failure.
+
+mysql-js> cluster.status();
+{
+    "clusterName": "szcluster", 
+    "defaultReplicaSet": {
+        "name": "default", 
+        "primary": "dbserver01:3306", 
+        "status": "OK_NO_TOLERANCE", 
+        "statusText": "Cluster is NOT tolerant to any failures.", 
+        "topology": {
+            "dbserver01:3306": {
+                "address": "dbserver01:3306", 
+                "mode": "R/W", 
+                "readReplicas": {}, 
+                "role": "HA", 
+                "status": "ONLINE"
+            }
+        }
+    }
+}
+mysql-js> 
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+ 13、完成另一台服务器两个实例的配置(执行到10、11步即可，无需执行12步)
+
+ 
+
+14、mysqlrouter --bootstrap root@dbserver01:3306 --user=root
