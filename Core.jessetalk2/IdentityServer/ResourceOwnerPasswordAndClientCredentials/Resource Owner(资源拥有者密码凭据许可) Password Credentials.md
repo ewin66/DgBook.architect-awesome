@@ -27,7 +27,7 @@ new ApiResource("api1", "api项目 一")
 
 [![复制代码](assets/copycode-1562387747935.gif)](javascript:void(0);)
 
-```
+```csharp
 //resource owner password grant client
 new Client
 {
