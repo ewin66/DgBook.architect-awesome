@@ -49,14 +49,14 @@ new Client
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     // configure identity server with in-memory stores, keys, clients and scopes
     services.AddIdentityServer()
         .AddDeveloperSigningCredential()
-        .AddInMemoryApiResources(Config.GetApiResources())
-        .AddInMemoryClients(Config.GetClients())
+    	.AddInMemoryApiResources(Config.GetApiResources())//认证服务ApiResource配置
+    	.AddInMemoryClients(Config.GetClients());//认证服务Client配置
         .AddTestUsers(Config.GetUsers());
 }
 ```
@@ -99,7 +99,7 @@ services.AddAuthentication("Bearer")
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 [Route("[controller]")]
 [Authorize]
 public class IdentityController : ControllerBase
@@ -125,7 +125,7 @@ public class IdentityController : ControllerBase
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 //resource owner password grant client
 private void btnROAuth_Click(object sender, EventArgs e)
 {
@@ -165,7 +165,7 @@ private void btnROAuth_Click(object sender, EventArgs e)
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 private void btnCallApi_Click(object sender, EventArgs e)
 {
     // call api
@@ -219,3 +219,63 @@ Jwt形式获取access_token、客户端身份验证两种方式，参考[上一�
 ### 调用Api资源服务过程解析
 
  调用过程与[上一篇](http://www.cnblogs.com/ddrsql/p/7887083.html)调用Api资源服务过程解析一样。
+
+
+
+# END
+
+```csharp
+//resource owner password grant client
+new Client
+{
+    ClientId = "ro.client",
+    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+    AccessTokenType = AccessTokenType.Reference,
+
+    ClientSecrets =
+    {
+        new Secret("secret".Sha256())
+    },
+    AllowedScopes = { "api1" }
+},
+
+public void ConfigureServices(IServiceCollection services)
+{
+    // configure identity server with in-memory stores, keys, clients and scopes
+    services.AddIdentityServer()
+        .AddDeveloperSigningCredential()
+        .AddInMemoryApiResources(Config.GetApiResources())
+        .AddInMemoryClients(Config.GetClients())
+        .AddTestUsers(Config.GetUsers());//GetUsers
+}
+```
+
+
+
+
+
+## Client请求与调用
+
+```csharp
+//api 请求token  
+	//Task<TokenResponse> tokenTask = tokenClient.RequestClientCredentialsAsync(txtCCScopes.Text);
+	Task<TokenResponse> tokenTask = tokenClient.RequestResourceOwnerPasswordAsync(txtROUser.Text, txtROPwd.Text, txtROScopes.Text);//RequestResourceOwnerPasswordAsync
+    //Client 加头调用
+    
+    client.SetBearerToken(txtAccessToken.Text);
+
+    var responseTask = client.GetAsync(txtCCApiUrl.Text);
+    
+```
+
+
+
+##	**Reference形式获取access_token**
+
+将client的AccessTokenType设置为1
+
+
+
+再次获取的access_token不包含Claim信息。
+
+此时获取的access_token(加密后)对应PersistedGrants表中的key
