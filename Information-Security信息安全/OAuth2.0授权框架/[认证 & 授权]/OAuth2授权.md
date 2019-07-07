@@ -1,4 +1,4 @@
-#  			[[认证 & 授权\] 1. OAuth2授权](https://www.cnblogs.com/linianhui/p/oauth2-authorization.html) 		
+#  			[[认证 & 授权\] 1. OAuth2授权](https://www.cnblogs.com/linianhui/p/oauth2-authorization.html)
 
 
 
