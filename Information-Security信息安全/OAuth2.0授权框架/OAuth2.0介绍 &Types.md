@@ -2,11 +2,9 @@
 
 
 
-#  			[OAuth2.0介绍](https://www.cnblogs.com/ddrsql/p/7789064.html) 		
+#  			[OAuth2.0介绍](https://www.cnblogs.com/ddrsql/p/7789064.html)
 
-
-
-# OAuth2.0介绍
+ 
 
 1. [OAuth2.0简介](https://www.cnblogs.com/ddrsql/p/7789064.html#Introduction)
 2. [四种许可类型](https://www.cnblogs.com/ddrsql/p/7789064.html#Type)
