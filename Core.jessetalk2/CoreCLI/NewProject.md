@@ -8,6 +8,18 @@ cd EFGetStarted.AspNetCore.NewDb
 
 
 
+```
+dotnet new webapi --name IdentityServerCenter --no-https
+
+dotnet restore 
+
+for IdentityServerCenter
+install-package IdentityServer4
+install-package IdentityServer4.AccessTokenValidation
+
+dotnet run 
+```
+
 
 
 ```powershell
