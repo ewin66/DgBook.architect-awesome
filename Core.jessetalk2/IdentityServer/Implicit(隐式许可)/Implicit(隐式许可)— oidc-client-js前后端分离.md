@@ -2,17 +2,17 @@
 
 # [IdentityServer4之Implicit(隐式许可) —— oidc-client-js前后端分离](https://www.cnblogs.com/ddrsql/p/8004888.html)
 
-### **参考**
+###       **参考      **
 
-**官方文档**：[oidc-client-js](https://github.com/IdentityModel/oidc-client-js/wiki)：oidc-client是一个JavaScript库，用于在浏览器（也可能是Cordova风格的应用程序）中运行。它为OIDC和OAuth2提供协议支持，并为用户会话和访问令牌管理提供管理功能。文档最后也给出了Angular2、Aurelia、ReactJS  & Redux、Blog post on Angular这几种前端框架的示例。
+#####     **官方文档#####     **：[oidc-client-js](https://github.com/IdentityModel/oidc-client-js/wiki)：oidc-client是一个JavaScript库，用于在浏览器（也可能是Cordova风格的应用程序）中运行。它为OIDC和OAuth2提供协议支持，并为用户会话和访问令牌管理提供管理功能。文档最后也给出了Angular2、Aurelia、ReactJS  & Redux、Blog post on Angular这几种前端框架的示例。
 
 [JsOidc](https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Clients/src/JsOidc)：使用oidc-client-js的客户端示例。
 
-**概念**：[隐式许可](https://www.cnblogs.com/ddrsql/p/7789064.html#Implicit)：简单描述过程以及适用范围。
+#####     **概念#####     **：[隐式许可](https://www.cnblogs.com/ddrsql/p/7789064.html#Implicit)：简单描述过程以及适用范围。
 
 [Authorize Endpoint](http://docs.identityserver.io/en/release/endpoints/authorize.html)：主要介绍了请求过程参数含义。
 
- **三个Web站点**：
+ #####     **三个Web站点#####     **：
 
 1、localhost:5000：认证服务器。
 
@@ -20,9 +20,9 @@
 
 3、localhost:5001：Api资源服务器。
 
-### **认证服务端配置**
+###    **认证服务端配置  **
 
-**认证服务ApiResource配置**
+#####     **认证服务ApiResource配置      **
 
 ```
 new ApiResource("api1", "api项目 一")
@@ -31,7 +31,7 @@ new ApiResource("api1", "api项目 一")
 },
 ```
 
-**认证服务Client配置**
+#####     **认证服务Client配置 **
 
 js client的静态资源服务端配置了host。
 
@@ -74,9 +74,9 @@ new Client
 
 ### 资源服务Api配置
 
-**资源服务器Startup配置**
+#####     **资源服务器Startup配置    **
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+[![复制代码](assets/copycode-1562483159247.gif)](javascript:void(0);)
 
 ```csharp
 // This method gets called by the runtime. Use this method to add services to the container.
@@ -120,7 +120,7 @@ Configure中添加 app.UseCors("default");
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 [Route("[controller]")]
 [Authorize]
 public class IdentityController : ControllerBase
@@ -140,7 +140,7 @@ public class IdentityController : ControllerBase
 
 ### Client客户端
 
-**1、JS Client**
+#####     **1、JS Client      **
 
 js Web-Hosted Client Resource的静态资源。
 
@@ -156,7 +156,7 @@ js Web-Hosted Client Resource的静态资源。
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```html
 <li><a class="btn btn-primary" href="index.html">Home</a></li>
 <li><button class="btn btn-default request" data-scope='openid' data-type='id_token'>Login Only</button></li>
 <li><button class="btn btn-default request" data-scope='openid profile' data-type='id_token'>Profile</button></li>
@@ -169,15 +169,18 @@ js Web-Hosted Client Resource的静态资源。
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
-id_token：请求一个身份令牌（只允许身份范围）。token：请求访问令牌（只允许资源作用域）。id_token token：请求身份令牌和访问令牌。清楚这个几个概念后页面上的操作按钮就都比较好理解了。
+```html
+id_token：请求一个身份令牌（只允许身份范围）。
+token：请求访问令牌（只允许资源作用域）。
+id_token token：请求身份令牌和访问令牌。
+清楚这个几个概念后页面上的操作按钮就都比较好理解了。
 ```
 
  app.js中的配置如下：
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```js
 var config = {
     authority: "http://localhost:5000/",
     client_id: "js",
@@ -241,7 +244,7 @@ mgr.events.addUserSignedOut(function () {
 
 ![img](assets/355798-20171208122345687-718107718.png)
 
-**automaticSilentRenew: true** 
+#####     **automaticSilentRenew: true    **
 
 时会在设置的AccessTokenLifetime过期前AccessTokenExpiringNotificationTime（默认60秒）通过当前留存的id_token去请求新的身份认证信息。
 
