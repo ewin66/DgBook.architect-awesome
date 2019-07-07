@@ -77,7 +77,7 @@ public void ConfigureServices(IServiceCollection services)
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 services.AddMvcCore()
     .AddAuthorization()
     .AddJsonFormatters();
