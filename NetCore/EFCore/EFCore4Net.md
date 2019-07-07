@@ -104,3 +104,88 @@ Update-Database
 
 ```
 
+
+
+
+
+## ConDefault
+
+````json
+
+{
+    //quadri	clover
+  "ConnectionStrings": { 
+    //"Default": "server=127.0.0.1;port=3366;Database=IdentityServerDemoDb;Uid=root;Pwd=wsx1001;SslMode=none;Allow User Variables=True", 
+    "DefaultPostgres": "User ID=postgres;Password=wsx1001;Host=localhost;Port=5432;Database=IdentityServerDemoDb;Pooling=true;",
+    "Default010": "User ID=postgres;Password=wsx1001;Host=localhost;Port=5432;Database=IdentityServerDemoDb;Pooling=true;",
+
+    //"Default": "server=192.168.1.102;Database=IdentityServerDemoDb;Uid=research_home;Pwd=research_home@20190423;SslMode=none;Allow User Variables=True",
+    "DefaultConnection": "server=192.168.1.102;Database=research_home;Uid=fooww;Pwd=Fooww_08@2018;SslMode=none;Allow User Variables=True",
+    "Default0": "server=192.168.1.102;Database=IdentityServerDemoDb;Uid=research_home;Pwd=research_home@20190423;SslMode=none;Allow User Variables=True",
+    "Default": "server=127.0.0.1;port=33068;Database=researc2314entityServer;Uid=root;Pwd=wsx1001;SslMode=none;Allow User Variables=True",
+
+    //"Default8": "server=127.0.0.1;port=3366;Database=AbpAuthIds4;Uid=root;Pwd=wsx1001;SslMode=none;Allow User Variables=True",
+    //"DefaultConnection": "server=192.168.1.102;Database=research_home;Uid=fooww;Pwd=Fooww_08@2018;SslMode=none;Allow User Variables=True", 
+    //"Default02": "Server=localhost; Database=ResearchDb; Trusted_Connection=True;",  
+    "DefaultRQ": "Server=10.0.75.1; Database=AbpZeroTemplateDb; User=sa; Password=123qwe;",
+    "Default3366": "server=127.0.0.1;port=3366;Database=IdentityServerDemoDb;Uid=root;Pwd=wsx1001;SslMode=none;Allow User Variables=True",
+    "Default33066": "server=127.0.0.1;port=33066;Database=DgSquare2019;Uid=root;Pwd=wsx1001;SslMode=none;Allow User Variables=True",
+    "DefaultConStr": "Server=localhost; Database=ResearchDb; Trusted_Connection=True;",
+    "Default4Demo": "Server=localhost; Database=IdentityServerDemoDb; Trusted_Connection=True;"
+
+  },
+  "Authentication": {
+    "Facebook": {
+      "IsEnabled": "false",
+      "AppId": "",
+      "AppSecret": ""
+    },
+    "Google": {
+      "IsEnabled": "false",
+      "ClientId": "",
+      "ClientSecret": ""
+    },
+    "JwtBearer": {
+      "IsEnabled": "true",
+      "SecurityKey": "IdentityServerDemo_C421AAEE0D114E9C",
+      "Issuer": "IdentityServerDemo",
+      "Audience": "IdentityServerDemo"
+    }
+  },
+  "IdentityServer": {
+    "IsEnabled": "true" ,
+    "Authority": "http://localhost:62114",
+    "ApiName": "default-api",
+    "ApiSecret": "secret",
+    "Clients": [
+      {
+        "ClientId": "client",
+        "AllowedGrantTypes": [
+          "password"
+        ],
+        "ClientSecrets": [
+          {
+            "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
+          }
+        ],
+        "AllowedScopes": [
+          "default-api"
+        ]
+      }
+    ]
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
+}
+
+
+
+
+````
+
