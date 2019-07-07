@@ -1,3 +1,49 @@
+
+
+
+
+![1562490743907](assets/1562490743907.png)
+
+
+
+![1562490844101](assets/1562490844101.png)
+
+
+
+![1562490947600](assets/1562490947600.png)
+
+![1562490841085](assets/1562490841085.png)
+
+
+
+## 微博授权码
+
+![1562491137028](assets/1562491137028.png)
+
+
+
+![1562491133902](assets/1562491133902.png)
+
+
+
+
+
+![授权码模式](assets/bg2014051204.png)
+
+它的步
+
+
+
+
+
+
+
+
+
+
+
+
+
 阮一峰的网络日志  » [首页](http://www.ruanyifeng.com/blog/) » [档案](http://www.ruanyifeng.com/blog/archives.html) 
 
 ​             
@@ -738,7 +784,7 @@ B步骤中，认证服务器向客户端发送访问令牌，下面是一个例�
 ​                                                            smithfox   说：                  
 
 密码模式的例子中Request Header 中的 Authorization 是怎么来的？
- 
+
 
 ​                    2015年1月28日 12:39  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-347587)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -925,7 +971,7 @@ B步骤中，认证服务器向客户端发送访问令牌，下面是一个例�
 > 令牌就可以？整个过程都没有用户名和密码的获得，那资源服务器又是如何确认用户的？
 
 令牌就可以代表用户，资源服务器只负责提供资源
- 
+
 
 ​                    2015年11月 4日 10:39  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-352570)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1011,7 +1057,7 @@ B步骤中，认证服务器向客户端发送访问令牌，下面是一个例�
     authorization server.
 
 少不了 RS 到 AS 之间交互认证 access_token，这个 Oauth 没有规定啊,可以随意发挥啊。
- 
+
 
 ​                    2015年12月16日 11:45  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353337)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1143,7 +1189,7 @@ AS完成授权之后 把授权码和state附在重定向URI之后 再把浏览�
  提到的Authorization: Basic 码是如何获得的呢？
  在网上查到是userName：password的形式以Base64编码得到的，但是实际操作中得到的结果不一致。
  所以想问下，该值是怎么编码得出的呢？
- 
+
 
 ​                    2016年6月17日 09:19  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-359282)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1154,7 +1200,7 @@ AS完成授权之后 把授权码和state附在重定向URI之后 再把浏览�
  提到的Authorization: Basic 码是如何获得的呢？
  在网上查到是userName：password的形式以Base64编码得到的，但是实际操作中得到的结果不一致。
  所以想问下，该值是怎么编码得出的呢？
- 
+
 
 ​                    2016年6月17日 10:10  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-359286)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1194,7 +1240,7 @@ client secret 这个概念漏掉了吧
 
 看新浪，腾讯的OAuth方案，客户端接入是需要申请，经过服务提供商审核的（会发放 client_id, cilent_secret），如果假冒一个钓鱼网站的话，审核是很有可能不通过的，甚至自己坑自己。
  （当然审核可能不一定100%杜绝）
- 
+
 
 ​                    2016年8月 8日 15:25  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-361973)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1238,7 +1284,7 @@ client secret是必须的，阮老师遗漏了
 
 楼上好像误解了别人的问题，jucelin的意思是一个网站提供例如新浪微博登陆，在引导用户到新浪认证时，其实时引导到一个虚假的地址。所以审核没用啊。
  我觉得OAuth2.0对这个问题无解，因为如果既然会构造虚假地址，证明客户端就是一个危险站点。他能够引诱用户访问基本就成功了
- 
+
 
 ​                    2016年8月 8日 18:56  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-361991)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1306,7 +1352,7 @@ implicit模式中这2行解释描述好像有问题，按照图中的说明，�
 
 可参考：
  <http://bitoftech.net/2014/06/01/token-based-authentication-asp-net-web-api-2-owin-asp-net-identity/>
- 
+
 
 ​                    2016年12月 7日 06:11  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-369933)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1339,7 +1385,7 @@ implicit模式中这2行解释描述好像有问题，按照图中的说明，�
 > 在 【六、授权码模式】 中的这段翻译有误，原文中是说附上早先的授权码。这一步设置的重定向URI不一定非要和早先的相一致。
 
 自己给自己打脸。关于这段是我之前理解有误，请求access_token时确实需要早先的redirect_uri,以便服务器校验code和redirect_uri是否是一对
- 
+
 
 ​                    2016年12月16日 10:34  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-370469)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1427,7 +1473,7 @@ ok，回到你的问题：服务器返回的授权码是一个客户端用于请
  因为clientId那玩意公开的，用户都知道，所以如果我知道了clientId，我可以说我是你。
  所以不安全，要做第二次验证。 第二次验证的就是在客户端后台完成的了，它得把clientId连同clientCredentail（secrectKey或者说密码）再加上获得的AuthorizationCode发给服务器做验证。
  这才能获取最终使用的accessToken。
- 
+
 
 ​                    2017年5月 1日 11:18  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-376803)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1443,7 +1489,7 @@ ok，回到你的问题：服务器返回的授权码是一个客户端用于请
     HTTP response), the authorization server MUST require the use of TLS
     as described in Section 1.6 when sending requests to the
     authorization endpoint.
- 
+
 
 ​                    2017年5月 1日 11:34  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-376804)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
@@ -1916,7 +1962,7 @@ Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
 >  （D）浏览器向资源服务器发出请求，其中不包括上一步收到的Hash值。 
 
 这里面的逻辑判断是浏览器做的吗？
- 
+
 
 ​                    2019年3月12日 10:15  | [#](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-409867)  | [引用](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-text) 
 
