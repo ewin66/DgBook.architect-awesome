@@ -31,6 +31,15 @@ Install-Package Microsoft.EntityFrameworkCore.Tools
 
 ```csharp
 dotnet ef dbcontext scaffold "Server=localhost;User Id=test;Password=123456;Database=TestDb" "Pomelo.EntityFrameworkCore.MySql"
+    
+    
+    dotnet ef dbcontext scaffold 
+   Scaffold-DbContext "server=192.168.1.102;Database=research_quadrids4Db;Uid=research_home;Pwd=research_home@20190423;SslMode=none;Allow User Variables=True","Pomelo.EntityFrameworkCore.MySql"
+    
+    
+    "Default": "server=192.168.1.102;Database=research_quadrids4Db;Uid=research_home;Pwd=research_home@20190423;SslMode=none;Allow User Variables=True",
+    
+    
 ```
 
 dotnet ef dbcontext scaffold "server=192.168.1.102;Database=research_home;Uid=fooww;Pwd=Fooww_08@2018;SslMode=none;Allow User Variables=True" "Pomelo.EntityFrameworkCore.MySql"
