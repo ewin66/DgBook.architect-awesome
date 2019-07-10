@@ -73,9 +73,13 @@ Add-Migration Init
 Update-Database
 ```
 
+## InvalidOperationException: Unable to resolve  service for type 'Research.Users.Infrastruction.BaseUserManager' while  attempting to activate  'Research.UserServices.Host.Controllers.UserInfoesController'.
+
+services.AddTransient<WebApplication3.Models.SysUserDB>();
 
 
 
+Research.Users.Infrastruction.BaseUserManager
 
 ##	PostgreSQL
 
