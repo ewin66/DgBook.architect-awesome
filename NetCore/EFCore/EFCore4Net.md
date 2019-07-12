@@ -32,7 +32,7 @@ show variables like 'character_set_database';
 --检查您的DB字符集
 ```
 
-
+Update-Database -c ApplicationDbContext
 
 数据库所选的字符集为utf8_general_ci。虽然Pomelo建议选择utf8mb4作为字符集（详细信息请参阅Pomelo《[Getting Started](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql#getting-started)》），但建议不要选择
 
