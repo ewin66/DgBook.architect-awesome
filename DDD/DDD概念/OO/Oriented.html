@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>Oriented</title><link href='night/mermaid.dark.css' rel='stylesheet' type='text/css' />
+<link href='night/codeblock.dark.css' rel='stylesheet' type='text/css' />
+<link href='night/sourcemode.dark.css' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:first-child { margin-top: -20px; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+.cm-s-inner .cm-variable, .cm-s-inner .cm-operator, .cm-s-inner .cm-property { color: rgb(184, 191, 198); }
+.cm-s-inner .cm-keyword { color: rgb(200, 143, 208); }
+.cm-s-inner .cm-tag { color: rgb(125, 244, 106); }
+.cm-s-inner .cm-attribute { color: rgb(117, 117, 228); }
+.CodeMirror div.CodeMirror-cursor { border-left: 1px solid rgb(184, 191, 198); z-index: 3; }
+.cm-s-inner .cm-string { color: rgb(210, 107, 107); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(218, 146, 74); }
+.cm-s-inner .cm-header, .cm-s-inner .cm-def, .cm-s-inner.cm-header, .cm-s-inner.cm-def { color: rgb(141, 141, 240); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(87, 172, 87); }
+.cm-s-inner .cm-hr { color: rgb(216, 213, 213); }
+.cm-s-inner .cm-link { color: rgb(211, 211, 239); }
+.cm-s-inner .cm-negative { color: rgb(217, 80, 80); }
+.cm-s-inner .cm-positive { color: rgb(80, 230, 80); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta, .cm-s-inner .cm-qualifier { color: rgb(183, 179, 179); }
+.cm-s-inner .cm-builtin { color: rgb(243, 179, 248); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(132, 182, 203); }
+.cm-s-inner .cm-number { color: rgb(100, 171, 143); }
+.cm-s-inner .cm-variable { color: rgb(184, 191, 198); }
+.cm-s-inner .cm-variable-2 { color: rgb(159, 186, 213); }
+.cm-s-inner .cm-variable-3 { color: rgb(28, 198, 133); }
+.CodeMirror-selectedtext, .CodeMirror-selected { background: rgb(74, 137, 220); text-shadow: none; color: rgb(255, 255, 255) !important; }
+.CodeMirror-gutters { border-right: none; }
+
+
+:root { --bg-color: #363B40; --side-bar-bg-color: #2E3033; --text-color: #b8bfc6; --select-text-bg-color:#4a89dc; --control-text-color: #b7b7b7; --control-text-hover-color: #eee; --window-border: 1px solid #555; --active-file-bg-color: rgb(34, 34, 34); --active-file-border-color: #8d8df0; --active-file-text-color: white; --item-hover-bg-color: #70717d; --item-hover-text-color: white; --primary-color: #6dc1e7; --rawblock-edit-panel-bd: #4B535A; }
+html { font-size: 16px; }
+html, body { text-size-adjust: 100%; background: var(--bg-color); fill: currentcolor; }
+#write { max-width: 914px; }
+html, body, button, input, select, textarea, div.code-tooltip-content { color: rgb(184, 191, 198); border-color: transparent; }
+div.code-tooltip, .md-hover-tip .md-arrow::after { background: rgb(75, 83, 90); }
+.popover.bottom > .arrow::after { border-bottom-color: rgb(75, 83, 90); }
+html, body, button, input, select, textarea { font-style: normal; line-height: 1.625rem; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+hr { height: 2px; border: 0px; margin: 24px 0px !important; }
+h1, h2, h3, h4, h5, h6 { font-family: "Lucida Grande", Corbel, sans-serif; font-weight: normal; clear: both; word-wrap: break-word; margin: 0px; padding: 0px; color: rgb(222, 222, 222); }
+h1 { font-size: 2.5rem; line-height: 2.75rem; margin-bottom: 1.5rem; letter-spacing: -1.5px; }
+h2 { font-size: 1.63rem; line-height: 1.875rem; margin-bottom: 1.5rem; letter-spacing: -1px; font-weight: bold; }
+h3 { font-size: 1.17rem; line-height: 1.5rem; margin-bottom: 1.5rem; letter-spacing: -1px; font-weight: bold; }
+h4 { font-size: 1.12rem; line-height: 1.375rem; margin-bottom: 1.5rem; color: white; }
+h5 { font-size: 0.97rem; line-height: 1.25rem; margin-bottom: 1.5rem; font-weight: bold; }
+h6 { font-size: 0.93rem; line-height: 1rem; margin-bottom: 0.75rem; color: white; }
+@media (min-width: 980px) {
+  h3.md-focus::before, h4.md-focus::before, h5.md-focus::before, h6.md-focus::before { color: rgb(221, 221, 221); border: 1px solid rgb(221, 221, 221); border-radius: 3px; position: absolute; left: -1.64286rem; top: 0.357143rem; float: left; font-size: 9px; padding-left: 2px; padding-right: 2px; vertical-align: bottom; font-weight: normal; line-height: normal; }
+  h3.md-focus::before { content: "h3"; }
+  h4.md-focus::before { content: "h4"; }
+  h5.md-focus::before { content: "h5"; top: 0px; }
+  h6.md-focus::before { content: "h6"; top: 0px; }
+}
+a { text-decoration: none; outline: 0px; }
+a:hover { outline: 0px; }
+a:focus { outline: dotted thin; }
+sup.md-footnote { background-color: rgb(85, 85, 85); color: rgb(221, 221, 221); }
+p { word-wrap: break-word; }
+p, ul, dd, ol, hr, address, pre, table, iframe, .wp-caption, .wp-audio-shortcode, .wp-video-shortcode { margin-top: 0px; margin-bottom: 1.5rem; }
+li > blockquote { margin-bottom: 0px; }
+audio:not([controls]) { display: none; }
+[hidden] { display: none; }
+.in-text-selection, ::selection { background: rgb(74, 137, 220); color: rgb(255, 255, 255); text-shadow: none; }
+ul, ol { padding: 0px 0px 0px 1.875rem; }
+ul { list-style: square; }
+ol { list-style: decimal; }
+ul ul, ol ol, ul ol, ol ul { margin: 0px; }
+b, th, dt, strong { font-weight: bold; }
+i, em, dfn, cite { font-style: italic; }
+blockquote { margin: 35px 0px 1.875rem 1.875rem; border-left: 2px solid rgb(71, 77, 84); padding-left: 30px; }
+pre, code, kbd, tt, var { background: rgba(0, 0, 0, 0.05); font-size: 0.875rem; font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace; }
+kbd { padding: 2px 4px; font-size: 90%; color: rgb(255, 255, 255); background-color: rgb(51, 51, 51); border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.25) 0px -1px 0px inset; }
+pre.md-fences { padding: 10px 30px; margin-bottom: 20px; border: 1px solid; }
+.md-fences .code-tooltip { bottom: -3.2em; }
+.enable-diagrams pre.md-fences[lang="sequence"] .code-tooltip, .enable-diagrams pre.md-fences[lang="flow"] .code-tooltip, .enable-diagrams pre.md-fences[lang="mermaid"] .code-tooltip { bottom: -2.2em; right: 4px; }
+code, kbd, tt, var { padding: 2px 5px; }
+table { max-width: 100%; width: 100%; border-collapse: collapse; border-spacing: 0px; }
+th, td { padding: 5px 10px; vertical-align: top; }
+a { transition: all 0.2s ease-in-out; }
+hr { background: rgb(71, 77, 84); }
+h1 { margin-top: 2em; }
+a { color: rgb(224, 224, 224); text-decoration: underline; }
+a:hover { color: rgb(255, 255, 255); }
+.md-inline-math script { color: rgb(129, 177, 219); }
+b, th, dt, strong { color: rgb(222, 222, 222); }
+mark { background: rgb(211, 212, 14); }
+blockquote { color: rgb(157, 162, 166); }
+table a { color: rgb(222, 222, 222); }
+th, td { border: 1px solid rgb(71, 77, 84); }
+.task-list { padding-left: 0px; }
+.md-task-list-item { padding-left: 1.25rem; }
+.md-task-list-item > input { top: auto; }
+.md-task-list-item > input::before { content: ""; display: inline-block; width: 0.875rem; height: 0.875rem; vertical-align: middle; text-align: center; border: 1px solid rgb(184, 191, 198); background-color: rgb(54, 59, 64); margin-top: -0.4rem; }
+.md-task-list-item > input:checked::before, .md-task-list-item > input[checked]::before { content: "√"; font-size: 0.625rem; line-height: 0.625rem; color: rgb(222, 222, 222); }
+.CodeMirror-gutters { background: var(--bg-color); border-right: 1px solid transparent; }
+.auto-suggest-container { border: 0px; background-color: rgb(82, 92, 101); }
+#typora-quick-open { background-color: rgb(82, 92, 101); }
+#typora-quick-open input { background-color: rgb(82, 92, 101); border-width: 0px 0px 1px; border-top-style: initial; border-right-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-left-color: initial; border-image: initial; border-bottom-style: solid; border-bottom-color: grey; }
+.typora-quick-open-item { background-color: inherit; color: inherit; }
+.typora-quick-open-item.active, .typora-quick-open-item:hover { background-color: rgb(77, 139, 219); color: white; }
+.typora-quick-open-item:hover { background-color: rgba(77, 139, 219, 0.8); }
+.typora-search-spinner > div { background-color: rgb(255, 255, 255); }
+#write pre.md-meta-block { border-bottom: 1px dashed rgb(204, 204, 204); background: transparent; padding-bottom: 0.6em; line-height: 1.6em; }
+.btn, .btn .btn-default { background: transparent; color: rgb(184, 191, 198); }
+.ty-table-edit { border-top: 1px solid gray; background-color: rgb(54, 59, 64); }
+.popover-title { background: transparent; }
+.md-image > .md-meta { color: rgb(187, 187, 187); background: transparent; }
+.md-expand.md-image > .md-meta { color: rgb(221, 221, 221); }
+#write > h3::before, #write > h4::before, #write > h5::before, #write > h6::before { border: none; border-radius: 0px; color: rgb(136, 136, 136); text-decoration: underline; left: -1.4rem; top: 0.2rem; }
+#write > h3.md-focus::before { top: 2px; }
+#write > h4.md-focus::before { top: 2px; }
+.md-toc-item { color: rgb(168, 194, 220); }
+#write div.md-toc-tooltip { background-color: rgb(54, 59, 64); }
+.dropdown-menu .btn:hover, .dropdown-menu .btn:focus, .md-toc .btn:hover, .md-toc .btn:focus { color: white; background: black; }
+#toc-dropmenu { background: rgba(50, 54, 59, 0.93); border: 1px solid rgba(253, 253, 253, 0.15); }
+#toc-dropmenu .divider { background-color: rgb(155, 155, 155); }
+.outline-expander::before { top: 2px; }
+#typora-sidebar { box-shadow: none; border-right: none; }
+.sidebar-tabs { border-bottom: 0px; }
+#typora-sidebar:hover .outline-title-wrapper { border-left: 1px dashed; }
+.outline-title-wrapper .btn { color: inherit; }
+.outline-item:hover { border-color: rgb(54, 59, 64); background-color: rgb(54, 59, 64); color: white; }
+h1.md-focus .md-attr, h2.md-focus .md-attr, h3.md-focus .md-attr, h4.md-focus .md-attr, h5.md-focus .md-attr, h6.md-focus .md-attr, .md-header-span .md-attr { color: rgb(140, 142, 146); display: inline; }
+.md-comment { color: rgb(90, 149, 227); opacity: 1; }
+.md-inline-math g, .md-inline-math svg { stroke: rgb(184, 191, 198) !important; fill: rgb(184, 191, 198) !important; }
+[md-inline="inline_math"] { color: rgb(156, 178, 233); }
+#math-inline-preview .md-arrow::after { background: black; }
+.modal-content { background: var(--bg-color); border: 0px; }
+.modal-title { font-size: 1.5em; }
+.modal-content input { background-color: rgba(26, 21, 21, 0.51); color: white; }
+.modal-content .input-group-addon { background-color: rgba(0, 0, 0, 0.17); color: white; }
+.modal-backdrop { background-color: rgba(174, 174, 174, 0.7); }
+.modal-content .btn-primary { border-color: var(--primary-color); }
+.md-table-resize-popover { background-color: rgb(75, 83, 90); }
+.form-inline .input-group .input-group-addon { color: white; }
+#md-searchpanel { border-bottom: 1px dashed grey; }
+.context-menu, #spell-check-panel, #footer-word-count-info { background-color: rgb(66, 70, 74); }
+.context-menu.dropdown-menu .divider, .dropdown-menu .divider { background-color: rgb(119, 119, 119); }
+footer { color: inherit; }
+@media (max-width: 1000px) {
+  footer { border-top: none; }
+  footer:hover { color: inherit; }
+}
+#file-info-file-path .file-info-field-value:hover { background-color: rgb(85, 85, 85); color: rgb(222, 222, 222); }
+.megamenu-content, .megamenu-opened header { background: var(--bg-color); }
+.megamenu-menu-panel h2, .megamenu-menu-panel h1, .long-btn { color: inherit; }
+.megamenu-menu-panel input[type="text"] { background: inherit; border-width: 0px 0px 1px; border-top-style: initial; border-right-style: initial; border-left-style: initial; border-color: initial; border-image: initial; border-bottom-style: solid; }
+#recent-file-panel-action-btn { background: inherit; border: 1px solid grey; }
+.megamenu-menu-panel .dropdown-menu > li > a { color: inherit; background-color: rgb(47, 53, 58); text-decoration: none; }
+.megamenu-menu-panel table td:nth-child(1) { color: inherit; font-weight: bold; }
+.megamenu-menu-panel tbody tr:hover td:nth-child(1) { color: white; }
+.modal-footer .btn-default, .modal-footer .btn-primary, .modal-footer .btn-default:not(:hover) { border: 1px solid transparent; }
+.btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default { color: white; border: 1px solid rgb(221, 221, 221); background-color: inherit; }
+.modal-header { border-bottom: 0px; }
+.modal-footer { border-top: 0px; }
+#recent-file-panel tbody tr:nth-child(2n-1) { background-color: transparent !important; }
+.megamenu-menu-panel tbody tr:hover td:nth-child(2) { color: inherit; }
+.megamenu-menu-panel .btn { border: 1px solid rgb(238, 238, 238); background: transparent; }
+.mouse-hover .toolbar-icon.btn:hover, #w-full.mouse-hover, #w-pin.mouse-hover { background-color: inherit; }
+.typora-node::-webkit-scrollbar { width: 5px; }
+.typora-node::-webkit-scrollbar-thumb:vertical { background: rgba(250, 250, 250, 0.3); }
+.typora-node::-webkit-scrollbar-thumb:vertical:active { background: rgba(250, 250, 250, 0.5); }
+#w-unpin { background-color: rgb(65, 130, 196); }
+#top-titlebar, #top-titlebar * { color: var(--item-hover-text-color); }
+.typora-sourceview-on #toggle-sourceview-btn, #footer-word-count:hover, .ty-show-word-count #footer-word-count { background: rgb(51, 51, 51); }
+#toggle-sourceview-btn:hover { color: rgb(238, 238, 238); background: rgb(51, 51, 51); }
+.on-focus-mode .md-end-block:not(.md-focus):not(.md-focus-container) * { color: rgb(104, 104, 104) !important; }
+.on-focus-mode .md-end-block:not(.md-focus) img, .on-focus-mode .md-task-list-item:not(.md-focus-container) > input { }
+.on-focus-mode li[cid]:not(.md-focus-container) { color: rgb(104, 104, 104); }
+.on-focus-mode .md-fences.md-focus .CodeMirror-code > :not(.CodeMirror-activeline) *, .on-focus-mode .CodeMirror.cm-s-inner:not(.CodeMirror-focused) * { color: rgb(104, 104, 104) !important; }
+.on-focus-mode .md-focus, .on-focus-mode .md-focus-container { color: rgb(255, 255, 255); }
+.on-focus-mode #typora-source .CodeMirror-code > :not(.CodeMirror-activeline) * { color: rgb(104, 104, 104) !important; }
+#write .md-focus .md-diagram-panel { border: 1px solid rgb(221, 221, 221); margin-left: -1px; width: calc(100% + 2px); }
+#write .md-focus.md-fences-with-lineno .md-diagram-panel { margin-left: auto; }
+.md-diagram-panel-error { color: rgb(241, 144, 142); }
+.active-tab-files #info-panel-tab-file, .active-tab-files #info-panel-tab-file:hover, .active-tab-outline #info-panel-tab-outline, .active-tab-outline #info-panel-tab-outline:hover { color: rgb(238, 238, 238); }
+.sidebar-footer-item:hover, .footer-item:hover { background: inherit; color: white; }
+.ty-side-sort-btn.active, .ty-side-sort-btn:hover, .selected-folder-menu-item a::after { color: white; }
+#sidebar-files-menu { border: 1px solid; box-shadow: rgba(0, 0, 0, 0.79) 4px 4px 20px; background-color: var(--bg-color); }
+.file-list-item { border-bottom: none; }
+.file-list-item-summary { opacity: 1; }
+.file-list-item.active:first-child { border-top: none; }
+.file-node-background { height: 32px; }
+.file-library-node.active > .file-node-content, .file-list-item.active { color: var(--active-file-text-color); }
+.file-library-node.active > .file-node-background { background-color: var(--active-file-bg-color); }
+.file-list-item.active { background-color: var(--active-file-bg-color); }
+#ty-tooltip { background-color: black; color: rgb(238, 238, 238); }
+.md-task-list-item > input { margin-left: -1.3em; margin-top: 0.3rem; -webkit-appearance: none; }
+.md-mathjax-midline { background-color: rgb(87, 97, 107); border-bottom: none; }
+footer.ty-footer { border-color: rgb(101, 101, 101); }
+
+
+
+
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name='header-n815' class='md-header-anchor '></a>分合</h1><p><img src='assets/u=175570629,697816409&amp;fm=26&amp;gp=0.jpg' alt='https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=175570629,697816409&amp;fm=26&amp;gp=0.jpg' referrerPolicy='no-referrer' /></p><p><img src='assets/faf2b2119313b07e8558702e0ed7912397dd8c2a.jpg' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/adaf2edda3cc7cd9e3d10bbe3801213fb90e91dc.jpg' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/Gucn_20110929176343100536Pic1.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/20180925171826464.png' alt='https://img-blog.csdn.net/20180925171826464?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpbmF5ZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/20180925170933334.png' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h2><a name='header-n824' class='md-header-anchor '></a>微服务</h2><p>&nbsp;</p><p><img src='assets/2628378-0ce5ae51a51eed8b.jpg' alt='img' referrerPolicy='no-referrer' /></p><h3><a name='header-n827' class='md-header-anchor '></a>对比</h3><p><img src='assets/1562918491699.png' alt='1562918491699' referrerPolicy='no-referrer' /></p><blockquote><p>当然，微服务也不是万能的，相对于单体服务，微服务也是有很多缺点的：</p><ul><li>运维层面上，运维需要维护的服务更多了</li><li>问题难定位，单体项目日志集中在一起，出现问题好定位，而微服务通过日志去定位问题比较困难</li><li>微服务的雪崩问题，由于网络的不稳定性，不可能保证每个服务100%可用，如果某个服务发生问题，可能会导致依赖服务阻塞，最终引发雪崩效应</li><li>分布式的复杂性，由于服务都独立部署，事物问题、网络延迟等问题会增大业务的复杂性</li></ul></blockquote><p>虽然使用微服务会遇到上面的这些问题，但是针对问题也同样产生了对应的解决方案：</p><blockquote><ul><li>运维层面上可以写自启动脚本</li><li>定位问题方面可以将日志文件写到一起</li><li>雪崩问题可以添加服务可用性监控</li><li>分布式复杂性问题，可以使用分布式事务解决事物问题 
+虽然使用为服务会带来一些问题，但是每当遇到问题，都会产生解决方案。相对于微服务带来的好处，微服务在一些大型服务上的使用前景还是很乐观的。 </li></ul><p>作者：Lebron_Chen  <span>		</span>来源：CSDN 
+原文：<a href='https://blog.csdn.net/Leon_cx/article/details/81487547' target='_blank' class='url'>https://blog.csdn.net/Leon_cx/article/details/81487547</a> 
+版权声明：本文为博主原创文章，转载请附上博文链接！</p></blockquote><p>&nbsp;</p><p><img src='assets/z6uybwj1kl.jpeg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/47219fc7d5ab4b1084fdd1de324397fa_th.jpeg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/1613169-20190429210932443-1765586270.png' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><h2><a name='header-n860' class='md-header-anchor '></a>分治</h2><p>&nbsp;</p><p><img src='assets/u=2660848518,917384741&amp;fm=26&amp;gp=0.jpg' alt='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2660848518,917384741&amp;fm=26&amp;gp=0.jpg' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/171947341889143.jpg' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h3><a name='header-n866' class='md-header-anchor '></a>分离<span>	</span>为了更好的相遇</h3><p>&nbsp;</p><p>&nbsp;</p><h2><a name='header-n871' class='md-header-anchor '></a>降维 </h2><p>&nbsp;</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562916837697.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562916847171.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><h1><a name='header-n1422' class='md-header-anchor '></a>变化</h1><p>&nbsp;</p><p><img src='assets/v2-76c7a2655dee5e0f7becb5978fabff82_r.jpg' alt='preview' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h2><a name='header-n880' class='md-header-anchor '></a>二元</h2><p>&nbsp;</p><h3><a name='header-n882' class='md-header-anchor '></a>波粒二象性</h3><p>&nbsp;</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/0026X9ckzy7sLwqyh6E30&amp;690.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/42a98226cffc1e170ea1c9744790f603738de95d.jpg' alt='https://gss0.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=f62d7c86daca7bcb7d2ecf298e39475b/42a98226cffc1e170ea1c9744790f603738de95d.jpg' referrerPolicy='no-referrer' /></p><p>1924年，法国理论物理学家，波动力学的创始人，物质波理论的创立者，量子力学的奠基人之一的德布罗意提出了“物质波”假说，认为和光一样，一切物质都具有波粒二象性。人是物质构成的，那么人是否也具有波粒二象性呢？</p><blockquote><p>人的一生，从很大的尺度上来讲是很短暂的。古人就曾说：天上一日，地上一年。在很大的尺度上人就是一个粒子，男人带正电荷，女人带负电荷。人的波粒二象性就是指人的生死轮回，可以理解为生为粒子、死为波。根据物质不灭，能量守恒定律，人之死其实就是从物质态转化为能量态，人之生其实就是从能量态转化为物质态。从这个意义上来讲，人的生死其实是一种假象。</p><p><a href='https://baijiahao.baidu.com/s?id=1606946805816769312&wfr=spider&for=pc' target='_blank' class='url'>https://baijiahao.baidu.com/s?id=1606946805816769312&wfr=spider&for=pc</a></p></blockquote><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/1562915663147.png' alt='1562915663147' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><h3><a name='header-n896' class='md-header-anchor '></a>声带</h3><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562916045901.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562916120266.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h3><a name='header-n903' class='md-header-anchor '></a>进退</h3><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562916182368.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>寸拳是中国传统武术中的一种技击方式，又称为<a href='https://baike.baidu.com/item/%E5%AF%B8%E5%8A%B2%E6%8B%B3/3884919'>寸劲拳</a>，它讲究短距离迅速出拳打出自己的有力的一拳要爆发出自己的所有爆发力打倒敌人。即最短的距离内，爆发出最大的威力。</p><p>寸拳以本能反应为主导与潜能最大发挥为主体，至简、至灵、至威、至猛。</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562916188919.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>“寸劲拳”十分讲求内意的运用。而所谓的内意，就是隐于人的思维系统中的意念、意识，它无形、无象、无声地深藏于灵魂之中，是决定一个人行动的关键因素。</p><p>也就是说，你的每一个打击动作都脱离不开意念、意识对肢体的指挥与调动作用。例如，当你想用拳打击对手时，首先是心想，即通过心之发动而产生了打的意念和意识，而且这种意念与意识对对手来讲，是毫无觉察的。当打的念头一旦成为意志，即下了打的决心之后，则会眼、心、手结合而以意领气，以气催力，在外形肢体上形成打击的动作。在“寸劲拳”的训练与运用上，内气亦是一个十分重要的因素。气衰则劲力不充，且难以在最短的时间、最短的距离之内，爆发出巨大的杀伤力来。所以你在打击时，若能使内气贯注于攻击点上，就能够在一刹那间，由内气的急剧转动和聚集，而发出强大的震荡力与穿透力来。衡量一个内家高手内功深浅的重要标志之一，就是看他能否在最短的时间与距离内爆发出最大的劲力来。</p><p>&nbsp;</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg.gif' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><h3><a name='header-n916' class='md-header-anchor '></a>盈冲</h3><p>自然的法则,是损减有余来补充不足.因此虚的要胜过实的,不足的要胜过有余的.
+其实后来<a href='https://www.baidu.com/s?wd=%E5%BC%A0%E4%B8%89%E4%B8%B0&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao'>张三丰</a>的太极拳就是这个原理.就是俗话说的<a href='https://www.baidu.com/s?wd=%E5%88%9A%E6%9F%94%E5%B9%B6%E6%B5%8E&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao'>刚柔并济</a>,以柔克刚,四两拨千斤的道理.</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562915967809.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>剑道很注重“盈冲”。所谓“盈冲”，就是吸气满腹之时，丹田感到充实有力。此时若发动攻击，则力量充沛，攻势凌厉;若处于防守，则沉养自若。这在战术上也称为“实”。反之，吐尽气息时，体内即感到空虚，此时攻击无势，防守无力，是最脆弱的时刻，在战术上称为“虚”。剑道技术发挥时，要把虚实作为施展动作的依据，对手气息盈冲，则要避其锋芒，对手若虚弱，则加速打击。攻防虚实变化是无常的，但有一定的规律性，“实”之所尽则变“虚”，“虚”之所尽则移“实”。此外还有表面为实，内在为虚，以及表面为虚，内在为实等等。只有及时识别个中虚实，才能正确地避实击虚，一举致胜。识别虚实，以气息是否盈冲为主要方法，故此在剑道训练中，常把调息和识别虚实联系起来，作为一个主要的目标进行训练。</p><h2><a name='header-n920' class='md-header-anchor '></a>选择</h2><p>&nbsp;</p><p><img src='assets/timg-1562917766018.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>先后，</p><p>&nbsp;</p><h2><a name='header-n925' class='md-header-anchor '></a>面向结构 对象 服务</h2><p>类的成员包括：字段，属性，方法</p><p><img src='assets/view.jpg' alt='第9、10章 java之对象和类以及类的封装,继承与多态PPT' referrerPolicy='no-referrer' /></p><p>字段<span>	</span>类 的变量，</p><p>属性<span>	</span>则是对字段的封装，它使用get和set访问器来控制如何设置或返回字段值。</p><p><img src='assets/v2-c36b5b9dc1e61ac555e11a2c3727a9df_r.jpg' alt='preview' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/view-1562917538557.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h2><a name='header-n933' class='md-header-anchor '></a>意识<span>	</span>存在</h2><p>&nbsp;</p><p><img src='assets/8326cffc1e178a820cbf018df403738da977e818.jpg' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><h1><a name='header-n939' class='md-header-anchor '></a>工程师</h1><h2><a name='header-n940' class='md-header-anchor '></a>面向变化</h2><p>&nbsp;</p><p><img src='assets/timg-1562917017262.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/timg-1562917053124.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/728da9773912b31b7f45c9098f18367adab4e1e1.jpg' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>【出处】《<a href='https://baike.baidu.com/item/%E5%91%A8%E6%98%93/6219'>周易</a>·系辞下》</p><p>【释义】事物发展到了极点，就要发生变化，发生变化，才会使事物的发展不受阻塞，事物才能不断的发展。 说明在面临不断发展的局面时，必须要改变现状，进行变革和革命。</p><p>&nbsp;</p><h2><a name='header-n952' class='md-header-anchor '></a>分析决策</h2><h3><a name='header-n953' class='md-header-anchor '></a>决策树</h3><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/u=4006041300,3172240982&amp;fm=26&amp;gp=0.jpg' alt='https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4006041300,3172240982&amp;fm=26&amp;gp=0.jpg' referrerPolicy='no-referrer' /></p><h3><a name='header-n955' class='md-header-anchor '></a>数据支持</h3><p>&nbsp;</p><p><img src='assets/15450884q2z8324mxq89i9.gif' alt='https://pic.edu.jg.com.cn/forum/201707/31/15450884q2z8324mxq89i9.gif' referrerPolicy='no-referrer' /><span>	</span></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>世界观<span>	</span>方法论</p><p> </p><h3><a name='header-n958' class='md-header-anchor '></a>复杂度</h3><p>&nbsp;</p><p><img src='assets/1562919167144.png' alt='1562919167144' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/2628378-fb94277163152317.jpg' alt='img' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='../../DDD%E6%A6%82%E5%BF%B5/OO/assets/timg-1562916847171.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/timg-1562919076792.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><h3><a name='header-n1054' class='md-header-anchor '></a>终结者</h3><p>&nbsp;</p><p><img src='assets/1212211618bd438fc7a351e0b5.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/timg-1562919258992.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p><img src='assets/timg-1562919264707.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h2><a name='header-n1073' class='md-header-anchor '></a>轮转</h2><p>&nbsp;</p><p><img src='assets/timg-1562917891293.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><h3><a name='header-n968' class='md-header-anchor '></a>历史进步</h3><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/timg-1562917945429.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><h3><a name='header-n973' class='md-header-anchor '></a>重复</h3><p><img src='assets/timg-1562917968630.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><h3><a name='header-n977' class='md-header-anchor '></a>螺旋上升</h3><p>&nbsp;</p><p><img src='assets/timg-1562917817453.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/timg-1562917934901.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/timg-1562918288275.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p><img src='http://a.36krcnd.com/nil_class/655ce861-a176-4446-935c-e84a305d9b27/__1.jpg!heading' alt='做数据可视分析的“海云数据”，搭上了安永，欲布局海外' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><img src='assets/DgHub-Url.png' alt='DgHub-Url' referrerPolicy='no-referrer' /></p><h2><a name='header-n1020' class='md-header-anchor '></a><a href='https://github.com/PowerDG/DgBook.architect-awesome' target='_blank' class='url'>https://github.com/PowerDG/DgBook.architect-awesome</a></h2><p><img src='assets/timg-1562918876454.jpg' alt='点击查看源网页' referrerPolicy='no-referrer' /></p><h2><a name='header-n1428' class='md-header-anchor '></a>END</h2><p>&nbsp;</p></div>
+</body>
+</html>
