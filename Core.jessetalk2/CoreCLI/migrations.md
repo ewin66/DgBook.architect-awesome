@@ -1,3 +1,17 @@
+#	.ef-core-数据库迁移命令
+
+Add-Migration 添加一个新的迁移（名词）,string是迁移的名称
+remove-Migration 删除上一次的迁移
+Update-Database 更新最近一次的迁移到数据库（有时候可能与原来的数据库产生冲突，所以可能并不能迁移到数据库）
+Update-Database -Migration 0 表示清空数据库，回到空数据库状态
+Script-Migration 查看迁移脚本
+
+> 作者：SpuerCheng 			来源：CSDN 
+> 原文：https://blog.csdn.net/SpuerCheng/article/details/80398766 
+> 版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+
 #	EF Core 包管理
 
 安装最新稳定`Microsoft.EntityFrameworkCore.Design`包。 
