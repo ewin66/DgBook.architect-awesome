@@ -39,8 +39,10 @@ dotnet ef database update
 
 并打开所在文件夹项目
 
-```
+```bash
 dotnet new webapi --name JwtAuthSample
+dotnet new console --name PwdClient
+dotnet new webapi --name JwtAuthSample --no-https
 ```
 
 编辑JwtAuthSample.csproj，添加watch
