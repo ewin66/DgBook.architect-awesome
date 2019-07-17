@@ -1,0 +1,30 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:21021/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Fooww.Research.Web.Host": {
+      "commandName": "Project",
+
+      "commandLineArgs": "--ip 192.168.1.165 --port 5001",
+      "launchBrowser": true,
+      "launchUrl": "http://192.168.1.136:5001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://192.168.1.136:5001/"
+    }
+  }
+}
