@@ -2,13 +2,12 @@
 
 ```
 dotnet new mvc -n EFGetStarted.AspNetCore.NewDb
-
 cd EFGetStarted.AspNetCore.NewDb
 ```
 
 
 
-```
+```bash
 dotnet new webapi --name IdentityServerCenter --no-https
 
 dotnet restore 
@@ -18,6 +17,19 @@ install-package IdentityServer4
 install-package IdentityServer4.AccessTokenValidation
 
 dotnet run 
+
+mkdir WebApp
+cd WebApp
+dotnet new web #可以用 dotnet new --help 看帮助
+dotnet run     #直接运行，此时可以在本机浏览器查看 http://localhost:5000
+ 
+dotnet publish   #发布
+cd bin/Debug/netcoreapp2.1/publish/
+dotnet WebApp.dll
+--------------------- 
+作者：吉普赛的歌 	来源：CSDN <不写代码，生成一个.net core空网站>
+原文：https://blog.csdn.net/yenange/article/details/81675142 
+版权声明：本文为博主原创文章，转载请附上博文链接
 ```
 
 
