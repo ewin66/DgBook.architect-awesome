@@ -1,0 +1,23 @@
+
+
+
+
+
+
+```
+System.NotSupportedException
+  HResult=0x80131515
+  Message=For algorithm RS256 please create custom factory by implementing IAlgorithmFactory
+  Source=JWT
+  StackTrace:
+   at JWT.Algorithms.HMACSHAAlgorithmFactory.Create(JwtHashAlgorithm algorithm)
+   at JWT.JwtDecoder.Validate(String payload, String payloadJson, String[] parts, Byte[] key)
+   at JWT.JwtDecoder.Decode(String token, Byte[] key, Boolean verify)
+   at BookService.Host.Web.JWTDecoder.JWTDecoder2(String token) in C:\foowwdg\ResearchHome2019\Fooww.Research\aspnet-core\microservices\BookService.Host\Web\JWTDecoder.cs:line 38
+   at BookService.Host.Controllers.TestController.JWTDecoder2(String t) in C:\foowwdg\ResearchHome2019\Fooww.Research\aspnet-core\microservices\BookService.Host\Controllers\TestController.cs:line 110
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+
+```
+
