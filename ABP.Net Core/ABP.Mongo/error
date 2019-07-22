@@ -1,0 +1,31 @@
+```
+
+```
+
+
+
+
+
+```bash
+Castle.MicroKernel.Handlers.HandlerException
+  HResult=0x80131500
+  Message=Can't create component 'Research.BookAppService' as it has dependencies to be satisfied.
+
+'Research.BookAppService' is waiting for the following dependencies:
+- Service 'Abp.Domain.Repositories.IRepository`2[[Research.Book, Research.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Guid, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]' which was not registered.
+
+  Source=Castle.Windsor
+  StackTrace:
+   at Castle.MicroKernel.Handlers.DefaultHandler.AssertNotWaitingForDependency()
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.DefaultKernel.ResolveComponent(IHandler handler, Type service, IDictionary additionalArguments, IReleasePolicy policy, Boolean ignoreParentContext)
+   at Castle.MicroKernel.DefaultKernel.Castle.MicroKernel.IKernelInternal.Resolve(Type service, IDictionary arguments, IReleasePolicy policy, Boolean ignoreParentContext)
+   at Castle.MicroKernel.DefaultKernel.Resolve(Type service, IDictionary arguments)
+   at Castle.Windsor.WindsorContainer.Resolve[T]()
+   at Research.Web.Controllers.HomeController.Index() in C:\github.PowerDG\The-Thousand\Research2019\Mongo2Research\4.0.0\src\Research.Web\Controllers\HomeController.cs:line 15
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+bs
+```
+
