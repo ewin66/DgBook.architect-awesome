@@ -23,7 +23,7 @@ Update-Database -Verbose
 Add-Migration -Name InitialIdentityServerConfigurationDbMigration -Context ConfigurationDbContext  -OutputDir Migrations/IdentityServer/ConfigurationDb -Project Fooww.Research.EntityFrameworkCore
 ```
 
-
+Add-Migration -Name InitBook	-OutputDir EntityFrameworkCore/Migrations
 
 ##	Update-Database
 
