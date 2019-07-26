@@ -13,6 +13,8 @@ https://downloads.mariadb.org/mariadb/
 ```
 Add-Migration Init
 Update-Database
+
+Add-Migration -Name Initaffich	-OutputDir EntityFrameworkCore/Migrations
 ```
 
 
