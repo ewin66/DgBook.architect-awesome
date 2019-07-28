@@ -1,1 +1,0 @@
-﻿document.writeln('<a href="http://www.ibeifeng.com/tuiguang_web.php?div_top1_0603-qudao" target="_blank"><img src="/ibeifeng/336-280.jpg" border="0" width="336" height="280" /></a>');
