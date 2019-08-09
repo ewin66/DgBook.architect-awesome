@@ -166,7 +166,7 @@ daemon.containerd.Create(context.Background(), container.ID, spec, createOptions
 
 在这一部分，我们将介绍 Docker 默认的网络设置模式：**网桥模式**。
 
-在这种模式下，除了分配隔离的网络命名空间之外，Docker  还会为所有的容器设置 IP 地址。当 Docker 服务器在主机上启动之后会创建新的虚拟网桥  docker0，随后在该主机上启动的全部服务在默认情况下都与该网桥相连。
+在这种模式下，除了分配隔离的网络命名空间之外，Docker  还会为所有的容器设置 IP 地址。当 Docker 服务器在主机上启动之后会创建新的虚拟网桥  **docker0**，随后在该主机上启动的全部服务在默认情况下都与该网桥相连。
 
 ![docker-network-topology](assets/2017-11-30-docker-network-topology.png)
 
