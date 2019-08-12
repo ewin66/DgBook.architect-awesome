@@ -1,9 +1,3 @@
-
-
-
-
-
-
 ##   [Linq/EF/lambda Group by/Order by 多个字段详细用法](https://www.cnblogs.com/jory/p/6136427.html)
 
 
@@ -51,12 +45,6 @@ https://www.cnblogs.com/jory/p/6136427.html
 
 
 ## EF   照指定条件置顶排序
-
-
-
-
-
-
 
 ```csharp
 
