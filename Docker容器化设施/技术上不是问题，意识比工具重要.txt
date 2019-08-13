@@ -1,0 +1,45 @@
+> 其实本来所谓的微服务就是对互联网在应用技术的一个总结归纳，
+>
+> IT厂商鼓吹所有概念无非是为了生意（business），SOA是，Cloud是，Microservice也是。
+>
+> 下面玩笑很有意思的概括了这个情况（我加了第一条线，原图见[这里](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fblog.gardeviance.org%2F2012%2F07%2Fadoption-cycles.html)）
+>
+> https://yq.aliyun.com/articles/2764
+
+
+
+![screenshot](assets/f9684c79f476a27982f3285cfb9b5b6eb7e29517.png)
+
+所以微服对我们的思考我觉得更多的是思维上的，对已微服务架构， **技术上不是问题，意识比工具重要。**
+
+- 按照业务 或者客户需求组织资源（这是最难的）
+- 做有生命的产品，而不是项目
+- 头狼战队，全栈化
+- 后台服务贯彻Single Responsibility Principle
+- VM->Docker （to PE）
+- DevOps (to PE)
+
+同时，对于开发同学，有这么多的中间件和强大的PE支持固然是好事，我们也需要深入去了解这些中间件背后的原理，知其然知其所以然，设想下，如果我们是一个小公司的CTO，离开的阿里的大环境，在有限的技术资源如何通过开源技术实施微服务？
+
+最后，一般提到微服务都离不开DevOps和Docker，
+
+理解微服务架构是核心，
+
+devops和docker是工具，是手段。
+![screenshot](assets/2ada4ac057eaf561f8862572bf6327845c482ca7.png)
+
+### 参考资料和推荐阅读
+
+- [http://www.infoq.com/articles/microservices-intro](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fwww.infoq.com%2Farticles%2Fmicroservices-intro)
+- [http://martinfowler.com/articles/microservices.html](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fmartinfowler.com%2Farticles%2Fmicroservices.html)
+- [http://martinfowler.com/microservices/](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fmartinfowler.com%2Fmicroservices%2F)
+- [http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fhighscalability.com%2Fblog%2F2014%2F4%2F8%2Fmicroservices-not-a-free-lunch.html)
+- [https://www.nginx.com/blog/introduction-to-microservices/](https://yq.aliyun.com/go/articleRenderRedirect?url=https%3A%2F%2Fwww.nginx.com%2Fblog%2Fintroduction-to-microservices%2F)
+- [http://microservices.io/patterns/microservices.html](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fmicroservices.io%2Fpatterns%2Fmicroservices.html)
+- [http://www.infoq.com/presentations/migration-cloud-native](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fwww.infoq.com%2Fpresentations%2Fmigration-cloud-native)
+- [https://github.com/Netflix/recipes-rss](https://yq.aliyun.com/go/articleRenderRedirect?url=https%3A%2F%2Fgithub.com%2FNetflix%2Frecipes-rss)
+- [http://www.mattstine.com/microservices](https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fwww.mattstine.com%2Fmicroservices)
+
+> PS: 阿里巴巴客户体验驱动创新中心随时招人，欢迎加入，有意者联系 xiaoxia.qxx@alibaba-inc.com
+
+​                                  本文为云栖社区原创内容，未经允许不得转载，如需转载请发送邮件至yqeditor@list.alibaba-inc.com；如果您发现本社区中有涉嫌抄袭的内容，欢迎发送邮件至：yqgroup@service.aliyun.com                                 进行举报，并提供相关证据，一经查实，本社区将立刻删除涉嫌侵权内容。                             
