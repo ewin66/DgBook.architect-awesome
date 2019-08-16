@@ -433,6 +433,7 @@ public Enum Color:byte{//等价于 public struct Color:System.Enum{
 
  
 
+
 Conditional("TEST") 对应代码中定义 #define TEST
 
 ## 第十九章 可空值类型
@@ -497,6 +498,7 @@ Public static void Main(){
          \7. GC.SuppressFinalize能将对象从终结列表中移除（以不再调用Finalize方法）；GC.ReRegisterForFinalize()方法用于将对象放入终结列表（在下次GC时能够调用Finalize（）方法）；
 
  
+
 
 ​        \8.  GC分为三代0,1,2；0代的对象最新；垃圾回收器约定越新的对象活的周期越短；GCNotification实现了垃圾回收时通知p508；GC.Collection(n)可以指定回收第0到n代的垃圾，GC.WaitForPendingFinalizers()用于在调用Finalize方法时挂起所有线程；
 
