@@ -1,23 +1,8 @@
-​          [![Nav logo](assets/nav-logo-4c7bbafe27adc892f3046e6978459bac.png)](https://www.jianshu.com/)                    
+          [![Nav logo](assets/nav-logo-4c7bbafe27adc892f3046e6978459bac.png)](https://www.jianshu.com/)                    
 
 ​           [![120](assets/7ddf6469-07dc-4212-9973-5b830be3bb39.jpg)](https://www.jianshu.com/u/b2372a42e28d)         
 
 ![img](assets/nav_jsds_beta-eeb44d165b8ba37680fdb7e65ae17ae4.png) 
-
- 
-
-​                
-
-- ​               [                 发现 ](https://www.jianshu.com/)            
-- ​               [                 关注 ](https://www.jianshu.com/subscriptions)            
-- [消息   1](https://www.jianshu.com/notifications) 
-- ​                                                      
-
-
-
- 
-
-
 
 # HTTP请求的处理流水线 -- 理解ASP.NET Core中的管道
 
