@@ -1,0 +1,2 @@
+严重性	代码	说明	项目	文件	行	禁止显示状态
+错误	CS1061	'“ModelBuilder”未包含“ConfigureAuditLogging”的定义，并且找不到可接受第一个“ModelBuilder”类型参数的可访问扩展方法“ConfigureAuditLogging”(是否缺少 using 指令或程序集引用?)	AuthServer.Host	C:\github.PowerDG\abpNext\samples\MicroserviceDemo\applications\AuthServer.Host\EntityFrameworkCore\AuthServerDbContext.cs	24	活动的
