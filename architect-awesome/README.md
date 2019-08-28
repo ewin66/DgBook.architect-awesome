@@ -1,8 +1,6 @@
 
 <h1>《后端架构师技术图谱》</h1>
 
-
-
 <b style="color:red">推荐:</b> [《Java技术书籍大全》 - awesome-java-books](https://github.com/sorenduan/awesome-java-books)
 
 
@@ -15,7 +13,6 @@
 
 <p>从初级开发者到资深架构师，看这些书就够了</p>
 <hr/>
-
 [![知识共享协议（CC协议）](https://img.shields.io/badge/License-Creative%20Commons-DC3D24.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)
 [![GitHub stars](https://img.shields.io/github/stars/xingshaocheng/architect-awesome.svg?style=flat&label=Star)](https://github.com/xingshaocheng/architect-awesome/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/xingshaocheng/architect-awesome.svg?style=flat&label=Fork)](https://github.com/xingshaocheng/architect-awesome/fork)
@@ -1353,6 +1350,7 @@ servlet 3.0 异步特性可用于配置中心的客户端
 	* Netty 是 Reactor 模式的一种实现。
 
 ## 零拷贝（Zero-copy）
+
 * [《对于 Netty ByteBuf 的零拷贝(Zero Copy) 的理解》](https://www.cnblogs.com/xys1228/p/6088805.html)
 	* 多个物理分离的buffer，通过逻辑上合并成为一个，从而避免了数据在内存之间的拷贝。
 
@@ -1363,7 +1361,8 @@ servlet 3.0 异步特性可用于配置中心的客户端
 * [《Hessian原理分析》](https://www.cnblogs.com/happyday56/p/4268249.html)
 Binary-RPC;不仅仅是序列化
 
-### Protobuf
+Protobuf
+
 * [《Protobuf协议的Java应用例子》](https://blog.csdn.net/antgan/article/details/52103966)
 Goolge出品、占用空间和效率完胜其他序列化类库，如Hessian；需要编写  .proto 文件。
 * [《Protocol Buffers序列化协议及应用》](https://worktile.com/tech/share/prototol-buffers)
@@ -1373,6 +1372,7 @@ Goolge出品、占用空间和效率完胜其他序列化类库，如Hessian；�
 	* protostuff 的好处是不用写 .proto 文件，Java 对象直接就可以序列化。
 
 # 数据库
+
 ## 基础理论
 ### 数据库设计的三大范式
 * [《数据库的三大范式以及五大约束》](https://www.cnblogs.com/waj6511988/p/7027127.html)
