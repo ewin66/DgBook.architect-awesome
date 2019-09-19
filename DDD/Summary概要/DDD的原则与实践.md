@@ -1,4 +1,4 @@
-#                   [领域驱动设计学习之路—DDD的原则与实践](https://www.cnblogs.com/edisonchou/p/edc_ddd_foundation_study_part1.html)              
+#                   [领域驱动设计学习之路—DDD的原则与实践](https://www.cnblogs.com/edisonchou/p/edc_ddd_foundation_study_part1.html)
 
 
 
