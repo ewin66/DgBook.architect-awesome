@@ -631,7 +631,7 @@ class YellowPerson extends Person {
 
 ###### C#（采用using包裹，要实现自动释放必需实现IDisposable接口）
 
-```
+```csharp
             using (var demo2 = new DemoGenericClass()) //DemoGenericClass实现IDisposable接口
             {
                 demo2.DisplayResult(123456);
@@ -640,7 +640,7 @@ class YellowPerson extends Person {
 
 ###### JAVA（采用try包裹，要实现自动释放必需实现AutoCloseable接口）
 
-```
+```java
         try(DemoGenericClass demo=new DemoGenericClass()) {
             demo.displayResult(new YellowPerson(){
                 {
@@ -658,9 +658,9 @@ class YellowPerson extends Person {
 
 ###### C#（必需是用virtual标记的方法（即：虚方法）或abstract标记的方法（即：抽象方法）子类才能使用override进行重写，重写后父类的方法将被子类取代，若需在子类中执行父类被重写的方法，应使用base关键字，若父类方法非虚方法或抽象方法但又想“重写”怎么办？则只能使用new覆盖方法，覆盖方法与重写方法的不同之处在于，在父类中仍可以正常执行父类的方法而不会执行子类的覆盖方法，覆盖方法的方法签名、访问修饰符均没有严格限制，即使不相同仍不会报错，但IDE会有提示，如需真正覆盖父类方法，则应按照重写的规范来，只是使用new来修饰覆盖方法，但覆盖方法与重写方法有本质不同，一般情况下更建议使用重写方法）
 
-> C#所有类的普通方法默认是密封方法（类似JAVA的final方法），是不允许被重写，可以理解为默认是不开放的，需要开放重写的方法必需使用virtual标记为虚方法（虚方法至少是protected及以上的访问权限），若重写后不想被后续的子类再次重写，则可以标记为sealed，即：密封方法
+> C#所有类的普通方法默认是密封方法（类似JAVA的final方法），是不允许被重写，可以理解为默认是不开放的，需要**开放重写的方法必需使用virtual标记为虚方法**（虚方法至少是protected及以上的访问权限），若**重写后不想被后续的子类再次重写，则可以标记为sealed，即：密封方法**
 
-```
+```csharp
     public class BaseClass
     {
         /// <summary>
@@ -670,8 +670,7 @@ class YellowPerson extends Person {
         public virtual void SayHello(string name)
         {
             System.Console.WriteLine($"{nameof(BaseClass)} Say:{name},hello!");
-        }
-        
+        } 
     }
 
     public class DemoGenericClass : BaseClass
@@ -684,11 +683,13 @@ class YellowPerson extends Person {
     }
 ```
 
-###### JAVA（非private  且非 final  修饰的普通方法默认均可在子类中进行重写，重写要求基本与C#相同，只是无需强制Override关键字，但建议仍使用@Override注解，以便IDE进行重写规范检查，重写后父类的方法将被子类取代，若需在子类中执行父类被重写的方法，应使用super关键字）
+###### JAVA
 
-> JAVA所有类的普通方法默认是虚方法，都是可以被重写，可以理解为默认是开放重写的，若不想被重写则应标记为final ,即：最终方法（C#中称密封方法）
+（非private  且非 final  修饰的普通方法默认均可在子类中进行重写，重写要求基本与C#相同，**只是无需强制Override关键字，但建议仍使用@Override注解**，以便IDE进行重写规范检查，重写后父类的方法将被子类取代，**若需在子类中执行父类被重写的方法，应使用super关键字**）
 
-```
+> JAVA所有类的**普通方法默认是虚方法，都是可以被重写**，可以理解为**默认是开放重写**的，若不想被重写则应标记为final ,即：最终方法（C#中称密封方法）
+
+```java
     public  class BaseClass{
         public  void  testOutput(String msg){
             System.out.println("output Msg:" + msg);
@@ -713,7 +714,7 @@ class YellowPerson extends Person {
 
 ###### C#（编辑csproj文件，可以通过PackageReference引用包、ProjectReference引用同一个解决方案下的其它项目，Reference引用本地DLL组件，csproj除了引用包以外，还可以通过在PropertyGroup元素下配置相关的属性，比如TargetFramework指定SDK框架版本等）
 
-> .NET项目的包是NuGet包，可以从nuget.org上查找浏览所需的包，项目中引用依赖包，除了在csproj文件中使用PackageReference添加编辑外（具体用法参见：[项目文件中的包引用 (PackageReference)](https://docs.microsoft.com/zh-cn/nuget/consume-packages/package-references-in-project-files)）还可以使用package manager控制台使用包管理命令，如：`Install-Package ExcelEasyUtil -Version 1.0.0`，或者直接使用.NET CLI命令行工具，如：`dotnet add package ExcelEasyUtil --version 1.0.0`
+> .NET项目的包是NuGet包，可以从nuget.org上查找浏览所需的包，项目中引用依赖包，除了在csproj文件中**使用PackageReference添加**编辑外（具体用法参见：[项目文件中的包引用 (PackageReference)](https://docs.microsoft.com/zh-cn/nuget/consume-packages/package-references-in-project-files)）还可以使用package manager控制台使用包管理命令，如：`Install-Package ExcelEasyUtil -Version 1.0.0`，或者直接使用.NET CLI命令行工具，如：`dotnet add package ExcelEasyUtil --version 1.0.0`
 >
 > .NET有包、元包、框架 之分，详细了解：[包、元包和框架](https://docs.microsoft.com/zh-cn/dotnet/core/packages)
 
