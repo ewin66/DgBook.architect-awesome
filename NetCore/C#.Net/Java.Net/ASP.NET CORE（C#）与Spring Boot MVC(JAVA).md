@@ -74,7 +74,7 @@
                 Output = new Action<string, string>((name, codeBy) =>
                 {
                     System.Console.WriteLine($"Welcome:{name},Hello Word!  by {codeBy}");
-                })
+                }) 
             };
 
             helloWord.Output("梦在旅途", helloWord.CodeBy);
@@ -112,7 +112,7 @@ public interface IHelloWord {
 
 ###### C#（IList类型（Dictionary、List）直接在new 类型{}，在{}内直接使用{key,value}或{value}方式添加集合元素，其实是隐式调用了add方法）
 
-```
+```csharp
             #region 2.类型初始化
 
             Dictionary<string, string> map = new Dictionary<string, string>
@@ -162,7 +162,7 @@ public interface IHelloWord {
 
 ###### JAVA（new集合类型{}，并在{}内再次使用{}，即{{赋值 }}，在双大括号内进行赋值操作，省略类名，这个特点有点类似VB及VB.NET的with语句，大家有兴趣可以了解一下，数组的初始化与C#相同，都可以直接在定义数组的时候在{}中给定元素）
 
-```
+```java
         //2.类型初始化
         Map<String,String> map=new HashMap(){
             {
@@ -216,7 +216,7 @@ public interface IHelloWord {
 
 ###### C#（委托定义使用delegate关键字，后面就跟方法答名定义【不含方法体】，可委托普通方法，静态方法，有很多的现成的预定义委托类型，如：Action<T0...T16>,Func<T0...T16,TOut>各有16个重载）
 
-```
+```csharp
             #region 3.委托
             delegate void HelloDelegate(string name);//定义委托类型(重点是方法签名)
 
