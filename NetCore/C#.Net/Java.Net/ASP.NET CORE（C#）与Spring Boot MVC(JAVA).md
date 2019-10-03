@@ -251,7 +251,7 @@ public interface IHelloWord {
 
 ###### JAVA（定义委托需要先定义委托类型【即：函数式接口，规则：接口+@FunctionalInterface+一个方法定义】，然后就可以普通方法，静态方法，有很多的现成的预定义委托类型【即：函数式接口】，如：BiFunction，Consumer等）
 
-```
+```java
         //3.委托
 
         HelloWord helloWordObj = new HelloWord();
@@ -315,7 +315,7 @@ public class HelloWord implements IHelloWord {
 
 ###### C#（使用(入参)=>{方法处理体}，与要传入或要实例化的委托方法签名相同即可）
 
-```
+```csharp
             #region 4.Lambda
 
             Func<int, int, int> multiplyFunc2 = new Func<int, int, int>((a, b) => a * b);
@@ -353,7 +353,7 @@ public class HelloWord implements IHelloWord {
 
 ###### JAVA（使用(入参)->{方法处理体}，与要传入或要实例化的方法签名相同，且传入或实例化的类型必需是函数式接口【可以理解为自定义的委托类型】,**注意与C#不同，Lambda方法体内不能引用外部非final的变量，与C# Lambda有本质不同**）
 
-```
+```java
         //4.Lambda
 
         BiFunction<Integer, Integer, Integer> multiplyFunc = (i1, i2) -> i1 * i2;
@@ -382,7 +382,7 @@ public class HelloWord implements IHelloWord {
 
 ###### C#（真泛型，不同的泛型类型参数视为不同的类型，有泛型接口，泛型类，泛型方法，泛型委托，泛型约束：in表示逆变【泛型参数父类型转子类型，属于消费者，一般用于入参】，out 表示协变【泛型参数子类型转父类型】，只有委托、接口才支持可变性）
 
-```
+``` cs
             #region 5.泛型
 
             //常用泛型集合类型
@@ -512,7 +512,7 @@ public class HelloWord implements IHelloWord {
 
 ###### JAVA（伪泛型，编译后类型参数擦除，同一个泛型类型不同的泛型参数类型相同，有泛型接口，泛型类，泛型方法，泛型约束：super限定下边界，逆变，用于入参,属于消费者,extends限定上边界，协变，用于出参,属于生产者，还有？通匹符）
 
-```
+```java
       //常用泛型集合
         List<Integer> intList = new ArrayList(){
             {
