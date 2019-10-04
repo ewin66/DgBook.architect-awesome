@@ -714,11 +714,13 @@ class YellowPerson extends Person {
 
 ###### C#（编辑csproj文件，可以通过PackageReference引用包、ProjectReference引用同一个解决方案下的其它项目，Reference引用本地DLL组件，csproj除了引用包以外，还可以通过在PropertyGroup元素下配置相关的属性，比如TargetFramework指定SDK框架版本等）
 
-> .NET项目的包是NuGet包，可以从nuget.org上查找浏览所需的包，项目中引用依赖包，除了在csproj文件中**使用PackageReference添加**编辑外（具体用法参见：[项目文件中的包引用 (PackageReference)](https://docs.microsoft.com/zh-cn/nuget/consume-packages/package-references-in-project-files)）还可以使用package manager控制台使用包管理命令，如：`Install-Package ExcelEasyUtil -Version 1.0.0`，或者直接使用.NET CLI命令行工具，如：`dotnet add package ExcelEasyUtil --version 1.0.0`
+> .NET项目的包是NuGet包，可以从nuget.org上查找浏览所需的包，项目中引用依赖包，除了在csproj文件中**使用PackageReference添加**编辑外（具体用法参见：[项目文件中的包引用 (PackageReference)](https://docs.microsoft.com/zh-cn/nuget/consume-packages/package-references-in-project-files)）还可以使用package manager控制台使用包管理命令，
+>
+> 如：`Install-Package ExcelEasyUtil -Version 1.0.0`，或者直接使用.NET CLI命令行工具，如：`dotnet add package ExcelEasyUtil --version 1.0.0`
 >
 > .NET有包、元包、框架 之分，详细了解：[包、元包和框架](https://docs.microsoft.com/zh-cn/dotnet/core/packages)
 
-```
+```xml
   <!--包引用-->
   <ItemGroup>
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
@@ -804,7 +806,7 @@ class YellowPerson extends Person {
 
 ###### C#（一般在Startup文件中ConfigureServices方法中按需注册依赖，注册依赖可以指定生命周期如：AddTransient【瞬时，即：每次都创建新实例】、AddScoped【作用域范围内】、AddSingleton【单例，仅实例化一次】，具体效果可以参见：[在 ASP.NET Core 依赖注入](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2)）
 
-```
+```csharp
 //1.使用ASP.NET CORE默认的DI框架，在Startup文件中ConfigureServices方法中按需注册依赖
         public void ConfigureServices(IServiceCollection services)
         {
@@ -826,7 +828,6 @@ class YellowPerson extends Person {
         {
             this.operationService = operationService;
         }
-
         [Route("optid")]
         public object Operation([FromServices]OperationService optSrv){
             //TODO:方法体中直接使用operationService 或 入参optSrv均可
@@ -839,25 +840,18 @@ class YellowPerson extends Person {
     {
         Guid OperationId { get; }
     }
-
-
     public interface IOperationTransient : IOperation
     {
     }
-
     public interface IOperationScoped : IOperation
     {
     }
-
     public interface IOperationSingleton : IOperation
     {
     }
-
     public interface IOperationSingletonInstance : IOperation
     {
-    }
-    
-
+    } 
     public class Operation : IOperationTransient,
         IOperationScoped,
         IOperationSingleton,
@@ -866,12 +860,10 @@ class YellowPerson extends Person {
         public Operation() : this(Guid.NewGuid())
         {
         }
-
         public Operation(Guid id)
         {
             OperationId = id;
         }
-
         public Guid OperationId { get; private set; }
     }
     
@@ -899,7 +891,7 @@ class YellowPerson extends Person {
 
 C#使用第三方IOC容器，如：autofac，由第三方IOC容器接管并实现DI，示例如下：（autofac支持更多、更灵活的依赖注入场景）
 
-```
+```csharp
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //采用ASP.NET CORE默认的IOC容器注册
@@ -922,7 +914,7 @@ C#使用第三方IOC容器，如：autofac，由第三方IOC容器接管并实�
 
 > 注解依赖注册一般可以通过自定义一个spring统一注册配置类，如代码中所示BeansConfig，这种一般对于集中注册Bean或Bean之间有先后依赖，先后顺序时比较有效果；另一种是直接在Bean上使用@Component注解（或其它专用含义的注解，如：@Repository、@Service，这些注解本身也标记了@Component注解）
 
-```
+```java
 //1. 在自定义的spring统一注册配置类中注册相关Bean
 @Configuration
 public class BeansConfig {
@@ -1000,7 +992,7 @@ public class DemoBean2 {
 
 ###### C#（在ASP.NET   CORE中实现AOP常见有三种方式：第一种：添加ACTION过滤器（仅适用于MVC）；第二种：使用第三方的AOP切面拦截器（如下文的AopInterceptor，可拦截指定的任意位置的虚方法），第三种：在请求管道中添加中间件（仅适用MVC））
 
-```
+```csharp
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(opt => opt.Filters.Add<AopFilter>() //第一种：添加过滤器，实现ACTION执行前后记录耗时
@@ -1106,7 +1098,7 @@ public class DemoBean2 {
 
 ###### JAVA（可以通过自定义Filter、HandlerInterceptor、MethodInterceptor 、around AOP增强等方式实现AOP拦截处理）
 
-```
+```java
 //最先执行，由servlet拦截请求（适用WEB）
 @WebFilter(filterName = "demoFilter",urlPatterns = "/*")
 class  DemoFilter implements Filter {
