@@ -107,7 +107,7 @@ ENUM保存的是TINYINT，别在枚举中搞一些“中国”“北京”“技
 
 ## 三、小众但有用的SQL实践
 
-### （9）如果明确知道只有一条结果返回，limit 1能够提高效率
+### （9）**【！】**如果明确知道只有一条结果返回，limit 1能够提高效率
 
 select * from user where login_name=?
 
