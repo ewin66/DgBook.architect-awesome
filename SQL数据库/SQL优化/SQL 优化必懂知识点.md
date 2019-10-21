@@ -6,7 +6,7 @@
 
 ### 1. 基数
 
-单个列唯一键（distict_keys）的数量叫做基数。比如性别列，该列只有男女之分，抛开中性，所以这一列基数就是主键列的基数等于表的总行数。基数的高低影响列的数据分布。
+单个列唯一键（distict_keys）的数量叫做基数。比如性别列，该列只有男女之分，抛开中性，所以这一列基数就是**主键列的基数等于表的总行数**。基数的高低影响列的数据分布。
 
 ```bash
 MariaDB [test]> select count(distinct gender),count(distinct phone) from test;
