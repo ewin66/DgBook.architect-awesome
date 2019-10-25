@@ -1,4 +1,4 @@
-## 数据层之外
+## [数据层之外
 
 ### 有效数据集
 
@@ -60,7 +60,7 @@ $res = mysql_query(
 
 
 
-## 设计字段
+## [设计字段
 
 ### 尽量使用数字型字段而非字符型
 
@@ -149,7 +149,7 @@ Decimal类型为精准浮点数，在计算时不会丢失精度
 占用空间由定义的宽度决定，每4个字节可以存储9位数字，并且小数点要占用一个字节
 可用于存储比bigint更大的整型数据
 
-## Query
+## [Query
 
 ### 避免频繁创建和删除临时表，减少系统表资源消耗
 
@@ -215,7 +215,7 @@ pt-online-schema-change它会首先建立一个与原表结构相同的新表，
 
 
 
-## Where
+## [Where
 
 ### **注意范围查询语句**
 
@@ -541,7 +541,7 @@ select * from user where login_name=? limit 1
 
 
 
-## 索引
+## [索引
 
 ###  如何选择索引列的顺序
 
@@ -636,7 +636,7 @@ Hash索引的时间复杂度是O(1)
 
 
 
-## Join联表关联操作
+## [Join联表关联操作
 
 
 
@@ -770,7 +770,7 @@ union 和 union all 的差异主要是前者需要将两个(或者多个)结果�
 
 
 
-## **MS	SQL	Server**
+## [**MS	SQL	Server**
 
 ###  [NOLOCK和ROWLOCK](https://www.cnblogs.com/moon25/archive/2008/07/20/1247157.html)
 
@@ -815,7 +815,7 @@ SELECT * FROM cte WHERE RowNo BETWEEN 1 AND 20;
 
 
 
-## ------
+## [------
 
 
 
