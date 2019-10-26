@@ -4,13 +4,13 @@
 
 在执行更新操作时，需注意使用方法
 
-```
+```csharp
 public static TDestination Map<TSource, TDestination>(TSource source, TDestination destination);
 ```
 
 对objectContext中的对象属性进行更新，而不能用这个方法
 
-```
+```csharp
 public static TDestination Map<TSource, TDestination>(TSource source);
 ```
 
