@@ -14,3 +14,4 @@ DgBook.architect-awesome
 
 Add-Migration Init
 Update-Database
+
