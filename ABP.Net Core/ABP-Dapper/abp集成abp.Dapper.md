@@ -124,19 +124,19 @@ public class SomeApplicationService : ITransientDependency
 
 1、在application和efcore层添加nuget包Abp.Dapper
 
-![img](https://img2018.cnblogs.com/blog/763945/201906/763945-20190620164234931-1225338792.png)
+![img](763945-20190620164234931-1225338792.png)
 
  
 
-![img](https://img2018.cnblogs.com/blog/763945/201906/763945-20190620164153905-1775844048.png)
+![img](763945-20190620164153905-1775844048.png)
 
 2、在EntityFrameworkCore层的EntityFrameworkCore->**EntityFrameworkModule类中添加以下代码，对应官网文档的【模块注册】
 
- ![img](https://img2018.cnblogs.com/blog/763945/201906/763945-20190620164415189-1563119010.png)
+ ![img](763945-20190620164415189-1563119010.png)
 
 3、设置包含映射器类的程序集
 
-![img](https://img2018.cnblogs.com/blog/763945/201906/763945-20190620164651275-937290853.png)
+![img](763945-20190620164651275-937290853.png)
 
 ```
 DapperExtensions.DapperExtensions.SetMappingAssemblies(new List<Assembly> { typeof(WisdomCloudEntityFrameworkModule).GetAssembly() });
@@ -153,7 +153,7 @@ DapperExtensions.DapperExtensions.SqlDialect = new MySqlDialect();
 
 4、EntityFrameworkCore添加下面文件夹来添加映射关系，对应官网文档【表映射的实体】
 
-![img](https://img2018.cnblogs.com/blog/763945/201906/763945-20190621142254060-1856424051.png)
+![img](763945-20190621142254060-1856424051.png)
 
  
 
@@ -161,6 +161,6 @@ DapperExtensions.DapperExtensions.SqlDialect = new MySqlDialect();
 
 5、在application层就可以通过IDapperRepository使用了
 
-![img](https://img2018.cnblogs.com/blog/763945/201906/763945-20190620165005761-1007495584.png)
+![img](763945-20190620165005761-1007495584.png)
 
  
