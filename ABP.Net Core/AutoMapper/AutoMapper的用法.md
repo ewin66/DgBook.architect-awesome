@@ -257,13 +257,13 @@ AutoMapper提供了一种验证机制，用来判断Destination类中的所有�
 
 验证的用法：
 
-```
+```csharp
 Mapper.AssertConfigurationIsValid();
 ```
 
 例如：
 
-```
+```csharp
 public class Source
 {
     public int SomeValue { get; set; }
@@ -273,7 +273,7 @@ public class Source
 
 Destination代码：
 
-```
+```csharp
 public class Destination
 {
     public int SomeValuefff { get; set; }
@@ -282,7 +282,7 @@ public class Destination
 
 测试：
 
-```
+```csharp
 Mapper.CreateMap<Entity.Source, Entity.Destination>();
 Mapper.AssertConfigurationIsValid();
 ```
@@ -297,7 +297,7 @@ Mapper.AssertConfigurationIsValid();
 
 指定映射字段，例如：
 
-```
+```csharp
 Mapper.CreateMap<Entity.Source, Entity.Destination>()
     .ForMember(dest => dest.SomeValuefff, opt =>
     {
@@ -307,7 +307,7 @@ Mapper.CreateMap<Entity.Source, Entity.Destination>()
 
 或者使用Ignore方法：
 
-```
+```csharp
 Mapper.CreateMap<Entity.Source, Entity.Destination>()
     .ForMember(dest => dest.SomeValuefff, opt =>
     {
@@ -321,7 +321,7 @@ Mapper.CreateMap<Entity.Source, Entity.Destination>()
 
 AutoMapper允许我们自定义解析器来完成Source到Destination的值的转换。例如：
 
-```
+```csharp
 public class Source
 {
     public int Value1 { get; set; }
@@ -338,7 +338,7 @@ Total属性在Source中不存在，如果现在创建映射规则，在映射的
 
 自定义解析器需要实现 IValueResolver 接口，接口的定义如下：
 
-```
+```csharp
 public interface IValueResolver
 {
     ResolutionResult Resolve(ResolutionResult source);
@@ -347,7 +347,7 @@ public interface IValueResolver
 
 我们来自定义一个Resolver：
 
-```
+```csharp
 public class CustomResolver : ValueResolver<Source, int>
 {
     protected override int ResolveCore(Source source)
@@ -412,7 +412,7 @@ new CustomResolver
 
 AutoMapper通过ConvertUsing来使用自定义类型转换器。ConvertUsing有三种用法：
 
-```
+```csharp
 void ConvertUsing(Func<TSource, TDestination> mappingFunction);
 void ConvertUsing(ITypeConverter<TSource, TDestination> converter);
 void ConvertUsing<TTypeConverter>() where TTypeConverter : ITypeConverter<TSource, TDestination>;
@@ -420,7 +420,7 @@ void ConvertUsing<TTypeConverter>() where TTypeConverter : ITypeConverter<TSourc
 
 当我们有如下的Source类和Destination类：
 
-```
+```csharp
 public class Source
 {
     public string Value1 { get; set; }
@@ -434,7 +434,7 @@ public class Destination
 
 我们可以使用如下配置：
 
-```
+```csharp
 public class SourceProfile : Profile
 {
     protected override void Configure()
