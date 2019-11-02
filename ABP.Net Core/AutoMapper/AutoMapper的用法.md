@@ -107,7 +107,7 @@ public class SourceProfile : Profile
 
 当有多个Profile的时候，我们可以这样添加：
 
-```
+```csharp
 public class Configuration
 {
     public static void Configure()
@@ -130,17 +130,17 @@ public class Configuration
 
 Configuration为我们的静态配置入口类；Profiles文件夹为我们所有Profile类的文件夹。如果是MVC，我们需要在Global中调用：
 
-```
+```csharp
 AutoMapper.Configuration.Configure();
 ```
 
-## 扁平化映射（Flattening）[#](https://www.cnblogs.com/youring2/p/automapper.html#1636994142)
+## 扁平化映射【Get】（Flattening）[#](https://www.cnblogs.com/youring2/p/automapper.html#1636994142)
 
-默认情况下，我们的Source类和Destination类是根据属性名称进行匹配映射的。除此之外，默认的映射规则还有下面两种情况，我们称之为扁平化映射，即当Source类中不包含Destination类中的属性的时候，AutoMapper会将Destination类中的属性进行分割，或匹配“Get”开头的方法，例如：
+默认情况下，我们的Source类和Destination类是根据属性名称进行匹配映射的。除此之外，默认的映射规则还有下面两种情况，我们称之为扁平化映射，即当Source类中不包含Destination类中的属性的时候，AutoMapper会将Destination类中的属性进行分割，**或匹配“Get”开头的方法**，例如：
 
 Order类：
 
-```
+```csharp
 public class Order
 {
     public Customer Customer { get; set; }
@@ -187,7 +187,7 @@ public class OrderProfile : Profile
 
 测试代码：
 
-```
+```csharp
 Entity.Customer customer = new Entity.Customer() { Name = "Tom" };
 Entity.Order order = new Entity.Order() { Customer = customer };
 Dto.OrderDto orderDto = Mapper.Map<Dto.OrderDto>(order);
@@ -199,11 +199,11 @@ ObjectDumper.Write(orderDto);
 
 [![image](181014259876181.png)](https://images0.cnblogs.com/blog/44814/201408/181014259876181.png)
 
-## 指定映射字段（Projection）[#](https://www.cnblogs.com/youring2/p/automapper.html#370843209)
+## 指定映射字段【ForMember】（Projection）[#](https://www.cnblogs.com/youring2/p/automapper.html#370843209)
 
 在实际的业务环境中，我们的Source类和Destination类的字段不可能一对一的匹配，这个时候我们就需要来指定他们的实际映射关系，例如：
 
-```
+```csharp
 public class CalendarEvent
 {
     public DateTime Date { get; set; }
@@ -221,7 +221,7 @@ public class CalendarEventForm
 
 在这两个类中，CalendarEvent的Date将被拆分为CalendarEventForm的日期、时、分三个字段，Title也将对应DisplayTitle字段，那么相应的Profile定义如下：
 
-```
+```csharp
 public class CalendarEventProfile : Profile
 {
     protected override void Configure()
@@ -237,7 +237,7 @@ public class CalendarEventProfile : Profile
 
 测试代码：
 
-```
+```csharp
 Entity.CalendarEvent calendarEvent = new Entity.CalendarEvent()
 {
     Date = DateTime.Now,
