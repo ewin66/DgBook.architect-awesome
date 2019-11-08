@@ -4,7 +4,11 @@
 
 https://github.com/PowerDG/DgBook.architect-awesome
 
+https://gitee.com/PowerDG/Dg.KMS.Web
 
+git@gitee.com:PowerDG/Dg.KMS.Web.git
+
+ git remote set-url gitee git@gitee.com:https://gitee.com/PowerDG/Dg.KMS.Web.git
 
 DgBook.architect-awesome
 
@@ -30,3 +34,9 @@ DgBook.architect-awesome
 Add-Migration Init
 Update-Database
 
+```
+git config --global user.email "1049365046@qq.com"
+git config --global user.name "wsx"
+git config --global credential.helper store   # git push的时候记住用户名和密码
+git config --global push.default simple       #从Git 2.0之后，push.default的默认值由'matching'改为'simple'
+```
