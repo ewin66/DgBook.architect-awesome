@@ -1,5 +1,7 @@
 # DgBook.architect-awesom
 
+ 凡事有交代、件件有着落、事事有回音 
+
 
 
 https://github.com/PowerDG/DgBook.architect-awesome
