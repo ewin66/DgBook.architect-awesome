@@ -1,6 +1,5 @@
 
 <h1>《后端架构师技术图谱》</h1>
-
 <b style="color:red">推荐:</b> [《Java技术书籍大全》 - awesome-java-books](https://github.com/sorenduan/awesome-java-books)
 
 
@@ -800,6 +799,7 @@ TODO
 	* 模型(model)－视图(view)－控制器(controller) 
 
 ## IOC
+
 * [《理解 IOC》](https://www.zhihu.com/question/23277575)
 * [《IOC 的理解与解释》](https://www.cnblogs.com/NancyStartOnce/p/6813162.html)
 	* 正向控制：传统通过new的方式。反向控制，通过容器注入对象。
@@ -821,6 +821,7 @@ TODO
 * [《UML教程》](https://www.w3cschool.cn/uml_tutorial/)
 
 ## 微服务思想
+
 * [《微服务架构设计》](https://www.cnblogs.com/wintersun/p/6219259.html)
 * [《微服务架构技术栈选型手册》](http://www.infoq.com/cn/articles/micro-service-technology-stack)
 
