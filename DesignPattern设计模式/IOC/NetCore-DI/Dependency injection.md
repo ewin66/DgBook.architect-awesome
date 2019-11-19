@@ -1,82 +1,14 @@
-[![Fork me on GitHub](https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67) ](https://github.com/wanglong)
-
- 	[Leo_wlCnBlogs](https://www.cnblogs.com/Leo_wl/) 	
-
- 	  
-
-# 导航
-
-- ​        [ 博客园](https://www.cnblogs.com/)     
-- ​         [ 首页](https://www.cnblogs.com/Leo_wl/)     
-- ​              
-- ​         [ 联系](https://msg.cnblogs.com/send/HackerVirus)    
-- ​             
-- ​         [ 管理](https://i.cnblogs.com/)     
-
-| [<](javascript:void(0);)                                                        2019年11月                                                            [>](javascript:void(0);) |                                                              |                                                              |                                                             |                                                              |                                                             |      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------- | ---- |
-| 日                                                           | 一                                                           | 二                                                           | 三                                                          | 四                                                           | 五                                                          | 六   |
-| 27                                                           | 28                                                           | 29                                                           | 30                                                          | 31                                                           | [1](https://www.cnblogs.com/Leo_wl/archive/2019/11/01.html) | 2    |
-| 3                                                            | 4                                                            | [5](https://www.cnblogs.com/Leo_wl/archive/2019/11/05.html)  | [6](https://www.cnblogs.com/Leo_wl/archive/2019/11/06.html) | 7                                                            | 8                                                           | 9    |
-| 10                                                           | [11](https://www.cnblogs.com/Leo_wl/archive/2019/11/11.html) | [12](https://www.cnblogs.com/Leo_wl/archive/2019/11/12.html) | 13                                                          | [14](https://www.cnblogs.com/Leo_wl/archive/2019/11/14.html) | 15                                                          | 16   |
-| 17                                                           | 18                                                           | 19                                                           | 20                                                          | 21                                                           | 22                                                          | 23   |
-| 24                                                           | 25                                                           | 26                                                           | 27                                                          | 28                                                           | 29                                                          | 30   |
-| 1                                                            | 2                                                            | 3                                                            | 4                                                           | 5                                                            | 6                                                           | 7    |
-
-公告
-
-- **[我的标签](http://weibo.com/u/3209909971/home?wvr=5&lf=reg)** 
-
-  ------
-
-  ​    [2014](http://www.cnblogs.com/xing901022/p/3694709.html)    [2013下](http://www.cnblogs.com/xing901022/p/3248913.html)    [2013上](http://www.cnblogs.com/xing901022/archive/2013/01/18/2857982.html)    [2012下](http://www.cnblogs.com/xing901022/archive/2012/10/19/2699162.html)    [LVS中文](http://zh.linuxvirtualserver.org/)    [开源](http://code.taobao.org/)    [反向代理](http://www.cnblogs.com/xing901022/archive/2013/04/09/3248870.html)    [CUDA](http://www.cnblogs.com/xing901022/p/3248469.html) 
-
-   [![点击这里给我发消息](Dependency injection.assets/button_old_131.gif)](http://wpa.qq.com/msgrd?v=3&uin=1340601454&site=qq&menu=yes)
-
-  微信订阅号：HackerVirus
-
-  ![img](Dependency injection.assets/141844064735565.png) 
-
-   
-
-  技术QQ群:114818988
-  [欢迎点击访问个人网站](http://hackervirus.byethost18.com/)[http://hackervirus.sxl.cn/](http://hackervirus.sxl.cn)[![hit counter html code](http://xyz.freelogs.com/counter/index.php?u=hackervirus2020&s=angelus)](http://xyz.freelogs.com/stats/h/hackervirus2020/)
-   
-
-  ------
-
-   
-
-  ------
-
-  
-
-    
-
-  ​        昵称：        [             HackerVirus         ](https://home.cnblogs.com/u/Leo_wl/)
-  [             9年10个月         ](https://home.cnblogs.com/u/Leo_wl/)
-  [             3457         ](https://home.cnblogs.com/u/Leo_wl/followers/)
-  [             246         ](https://home.cnblogs.com/u/Leo_wl/followees/)
-
-   [-取消关注](javascript:void(0);)
-
-​         [Dependency injection](https://www.cnblogs.com/Leo_wl/p/11148137.html)          
-
-https://www.cnblogs.com/Leo_wl/p/11148137.html
 
 
-
-
-
-**阅读目录**
-
-- [Dependency injection](https://www.cnblogs.com/Leo_wl/p/11148137.html#_label0)
-
-[回到目录](https://www.cnblogs.com/Leo_wl/p/11148137.html#_labelTop)
-
-# [Dependency injection](https://www.cnblogs.com/Vincent-yuan/p/11145717.html)
+#[Dependency injection](https://www.cnblogs.com/Vincent-yuan/p/11145717.html)
 
 这篇文章主要讲解asp.net core 依赖注入的一些内容。
+
+>  [Dependency injection](https://www.cnblogs.com/Leo_wl/p/11148137.html)          
+>
+> https://www.cnblogs.com/Leo_wl/p/11148137.html
+
+
 
 ASP.NET Core支持依赖注入。这是一种在类和其依赖之间实现控制反转的一种技术(IOC).
 
