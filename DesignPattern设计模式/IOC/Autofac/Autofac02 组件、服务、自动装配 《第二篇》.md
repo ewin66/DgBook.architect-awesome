@@ -433,13 +433,13 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
  ##### NamedParameter 和TypedParameter：只能提供常量参数
 
-　　**3、从表达式中使用参数**
+### 　　**3、从表达式中使用参数**
 
 　　如果使用表达式注册的方式，可以使用第二个可用的委托参数来获得参数。
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
     builder.Register((c, p) => new AutoFacManager(p.Named<string>("name"), c.Resolve<IPerson>()));
     builder.RegisterType<Worker>().As<IPerson>();
     using (IContainer container = builder.Build())
