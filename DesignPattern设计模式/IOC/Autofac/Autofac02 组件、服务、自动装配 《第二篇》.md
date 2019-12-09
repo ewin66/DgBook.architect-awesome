@@ -425,10 +425,13 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　Autofac提供几种不同的参数对应策略：
 
-1. NamedParameter ：像上面那样对应的参数名字
-2. TypedParameter：对应到参数的类型（必须是具体的类型）
-3. ResolvedParameter：灵活的参数匹配
-4. NamedParameter 和TypedParameter：只能提供常量参数
+ ##### NamedParameter ：像上面那样对应的参数名字
+
+##### TypedParameter：对应到参数的类型（必须是具体的类型）
+
+##### ResolvedParameter：灵活的参数匹配
+
+ ##### NamedParameter 和TypedParameter：只能提供常量参数
 
 　　**3、从表达式中使用参数**
 
