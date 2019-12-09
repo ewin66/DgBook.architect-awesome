@@ -326,28 +326,28 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　示例：
 
-```
+```csharp
     builder.Register(c => new AutoFacManager { person = c.Resolve<IPerson>() });
     builder.RegisterType<Worker>().As<IPerson>();
 ```
 
 　　为了提供循环依赖（就是当A使用B的时候B已经初始化），需要使用OnActivated事件接口：
 
-```
+```csharp
     builder.Register(c => new AutoFacManager()).OnActivated(e => e.Instance.person = e.Context.Resolve<IPerson>());
     builder.RegisterType<Worker>().As<IPerson>();
 ```
 
 　　通过反射，使用PropertiesAutowired()修饰符注入属性:
 
-```
+```csharp
     builder.RegisterType<AutoFacManager>().PropertiesAutowired();
     builder.RegisterType<Worker>().As<IPerson>();
 ```
 
 　　如果你预先知道属性的名字和值，你可以使用:
 
-```
+```csharp
     builder.RegisterType<AutoFacManager>().WithProperty("person", new Worker());
     builder.RegisterType<Worker>().As<IPerson>();
 ```
@@ -356,7 +356,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　可以实现方法注入的方式有两种。
 
-　　**1、使用Activator**
+### 　　**1、使用Activator**
 
 　　如果你使用委托来激活，只要调用这个方法在激活中
 
@@ -375,18 +375,18 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　注意，使用这种方法，AutoFacManager类里必须要有这个方法：
 
-```
+```csharp
     public void SetDependency(IPerson MyPerson)
     {
         person = MyPerson;
     }
 ```
 
-　　**2、使用Activating Handler**
+### 　　**2、使用Activating Handler**
 
 　　如果你使用另外一种激活，比如反射激活，创建激活的事件接口OnActivating，这种方式仅需一行代码：
 
-```
+```csharp
 　　builder.Register<AutoFacManager>(c => new AutoFacManager()).OnActivating(e => e.Instance.SetDependency(new Worker()));
 ```
 
