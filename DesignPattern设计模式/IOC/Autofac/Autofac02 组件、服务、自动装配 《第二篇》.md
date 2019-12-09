@@ -8,7 +8,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　创建出来的对象需要从组件中来获取，组件的创建有如下4种(延续第一篇的Demo，仅仅变动所贴出的代码)方式：
 
-　　**1、类型创建RegisterType**
+### 　　**1、类型创建RegisterType**
 
 　　AutoFac能够通过反射检查一个类型,选择一个合适的构造函数,创造这个对象的实例。主要通过RegisterType<T>() 和 RegisterType(Type) 两个方法以这种方式建立。
 
@@ -19,13 +19,13 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
     builder.RegisterType<Worker>().As<IPerson>();
 ```
 
-　　**2、实例创建**
+### 　　**2、实例创建**
 
 ```
 　　builder.RegisterInstance<AutoFacManager>(new AutoFacManager(new Worker()));
 ```
 
-　　**单例**
+### 　　**单例**
 
 　　提供示例的方式，还有一个功能，就是不影响系统中原有的单例：
 
@@ -35,7 +35,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　这种方法会确保系统中的单例实例最终转化为由容器托管的单例实例。
 
-　　**3、Lambda表达式创建**
+### 　　**3、Lambda表达式创建**
 
 　　Lambda的方式也是Autofac通过反射的方式实现
 
@@ -44,7 +44,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
     builder.RegisterType<Worker>().As<IPerson>();
 ```
 
-　　**4、程序集创建**
+### 　　**4、程序集创建**
 
 　　程序集的创建主要通过RegisterAssemblyTypes()方法实现，Autofac会自动在程序集中查找匹配的类型用于创建实例。
 
@@ -53,7 +53,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
     builder.RegisterType<Worker>().As<IPerson>();
 ```
 
-　　**5、泛型注册**
+### 　　**5、泛型注册**
 
 　　泛型注册通过RegisterGeneric() 这个方法实现，在容易中可以创建出泛型的具体对象。
 
@@ -70,7 +70,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-　　**6、默认的注册**
+### 　　**6、默认的注册**
 
 　　如果一个类型被多次注册,以最后注册的为准。通过使用PreserveExistingDefaults() 修饰符，可以指定某个注册为非默认值。
 
@@ -96,7 +96,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　Autofac有三种典型的方式区分服务，同一个服务的不同实现可以由类型，名称和键区分。
 
-　　**1、类型**
+### 　　**1、类型**
 
 　　类型是描述服务的基本方法
 
@@ -110,7 +110,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 　　AutoFacManager manager = container.Resolve<AutoFacManager>();
 ```
 
-　　**2、名字**
+### 　　**2、名字**
 
 　　服务可以进一步按名字识别。使用这种方式时，用 Named()注册方法代替As()以指定名字:
 
@@ -126,7 +126,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　ResolveNamed()只是Resolve()的简单重载，指定名字的服务其实是指定键的服务的简单版本。
 
-　　**3、键**
+### 　　**3、键**
 
 　　有Name的方式很方便，但是值支持字符串，但有时候我们可能需要通过其他类型作键。
 
@@ -142,7 +142,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 　　builder.RegisterType<Student>().Keyed<IPerson>(DeviceState.Student);
 ```
 
-　　**显式检索**
+### 　　**显式检索**
 
 　　使用key检索服务以创建实例，通过ResolveKeyd()方法：
 
@@ -152,7 +152,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
  　ResolveKeyd()会导致容器被当做 Service Locator使用，这是不被推荐的。应该使用IIndex type替代。
 
- 　**IIndex索引**
+###  　**IIndex索引**
 
 　　Autofac.Features.Indexed.IIndex<K,V>是Autofac自动实现的一个关联类型。component可以使用IIndex<K,V>作为参数的构造函数从基于键的服务中选择需要的实现。
 
@@ -176,7 +176,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　从容器中的可用服务中选择一个构造函数来创造对象，这个过程叫做自动装配。这个过程是通过反射实现的，所以实际上容器创造对象的行为比较适合用在配置环境中。
 
-　　**1、选择构造函数**
+### 　　**1、选择构造函数**
 
 　　Autofac**默认从容器中选择参数最多的构造函数**。如果想要选择一个不同的构造函数，就需要在注册的时候就指定它。
 
@@ -186,11 +186,11 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　这种写法将指定调用Worker(int)构造函数，如该构造函数不存在则报错。
 
-　　**2、额外的构造函数参数**
+### 　　**2、额外的构造函数参数**
 
 　　有两种方式可以添加额外的构造函数参数，在注册的时候和在检索的时候。在使用自动装配实例的时候这两种都会用到。
 
-　　**注册时添加参数**
+### 　　**注册时添加参数**
 
 　　使用WithParameters()方法在每一次创建对象的时候将组件和参数关联起来。
 
@@ -199,10 +199,11 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
     builder.RegisterType<Worker>().WithParameters(ListNamedParameter).As<IPerson>();
 ```
 
-　　**在检索阶段添加参数**
+### 　　**在检索阶段添加参数**
+
 　　在Resolve()的时候提供的参数会覆盖所有名字相同的参数，在注册阶段提供的参数会覆盖容器中所有可能的服务。
 
-　　**3、自动装配**
+### 　　**3、自动装配**
 
 　　至今为止，自动装配最大的作用就是减少重复配置。许多相似的component无论在哪里注册，都可以通过扫描使用自动装配。
 
@@ -218,7 +219,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 # 四、程序集扫描
 
- 　**1、扫描**
+###  　**1、扫描**
 
 　　Autofac可以使用约定在程序集中注册或者寻找组件。
 
@@ -230,7 +231,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　每个RegisterAssemblyTypes方法只能应用一套规则。如果有多套不同的集合要注册，那就有必要多次调用RegisterAssemblyTypes。
 
-　　**2、选择类型**
+### 　　**2、选择类型**
 
 　　RegisterAssemblyTypes接受程序集的集合。默认情况下，程序集中所有公共具体的类都会被注册。
 
@@ -254,7 +255,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　多个过滤器可以同时使用，这时他们之间是AND的关系。
 
-　　**3、指定服务**
+### 　　**3、指定服务**
 
 　　RegisterAssemblyTypes这个注册方法是注册单个方法的超集，所以类似As的方法也可以用在程序集中，例如
 
@@ -264,19 +265,23 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　As和Named这两个方法额外的重载方法接受lambda表达式来决定服务会提供什么样的类型。
 
-# 五、事件
+# 五、事件[生命 周期]
 
-　　**1、激活事件**
+## 　　**1、激活事件**
 
 　　在component生命周期的不同阶段使用事件。
 
 　　Autofac暴露五个事件接口供实例的按如下顺序调用
 
-1. OnRegistered
-2. OnPreparing
-3. OnActivated
-4. OnActivating
-5. OnRelease
+1. ### OnRegistered
+
+2. ### OnPreparing
+
+3. ### OnActivated
+
+4. ### OnActivating
+
+5. ### OnRelease
 
 　　这些事件会在注册的时候被订阅，或者被附加到IComponentRegistration 的时候。
 
@@ -297,19 +302,21 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　![img](Autofac02 组件、服务、自动装配 《第二篇》.assets/201549263656413.jpg)
 
-　　**OnActivating**
+### 　　**OnActivating**
 
 　　组件被创建之前调用，在这里你可以：
 
-1. 将实例转向另外一个或者使用代理封装它
-2. 进行属性注入
-3. 执行其他初始化工作
+1. ##### 将实例转向另外一个或者使用代理封装它
 
-　　**OnActivated**
+2. ##### 进行属性注入
+
+3. ##### 执行其他初始化工作
+
+### 　　**OnActivated**
 
 　　在component被完全创建的时候调用一次。在这个时候你可以执行程序级别的一些工作（这些工作依赖于对象被完全创建）-这种情况很罕见。
 
-　　**OnRelease**
+### 　　**OnRelease**
 
 　　替代component的标准清理方法。实现了IDisposable 接口的标准清理方法（没有标记为ExternallyOwned）  通过调用Dispose  方法。没有实现IDisposable或者被标记为ExternallyOwned的清理方法是一个空函数-不执行任何操作。OnRelease  就是用来覆盖默认的清理行为的。
 
