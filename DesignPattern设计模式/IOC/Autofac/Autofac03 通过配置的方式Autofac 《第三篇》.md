@@ -50,7 +50,7 @@ https://www.cnblogs.com/qixuejia/p/5009845.html
 
 ### 　　**3、通过Register的方式**
 
-```
+```csharp
     builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
     builder.Register(c => new AutoFacManager(c.Resolve<IPerson>()));
 ```
