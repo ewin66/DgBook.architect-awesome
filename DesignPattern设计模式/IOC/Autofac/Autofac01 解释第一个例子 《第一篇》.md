@@ -1,6 +1,10 @@
 
 
-、
+、[Autofac 解释第一个例子 《第一篇》](https://www.cnblogs.com/qixuejia/p/5009825.html)
+
+https://www.cnblogs.com/qixuejia/p/5009825.html
+
+
 
 Autofac是一个轻量级的依赖注入的框架，同类型的框架还有Spring.NET，Unity，Castle等。
 
@@ -10,11 +14,13 @@ Autofac是一个轻量级的依赖注入的框架，同类型的框架还有Spri
 
 　　具体信息可以到这里去查看：https://code.google.com/p/autofac/wiki/FrequentlyAskedQuestions
 
-　　这篇文章以一个最简单的例子，开始Autofac的学习：
+　这篇文章以一个最简单的例子，
+
+### 开始Autofac的学习：
 
 [![复制代码](Autofac1 解释第一个例子 《第一篇》.assets/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 namespace ConsoleApplication3
 {
     class Program
@@ -80,29 +86,30 @@ namespace ConsoleApplication3
 
 　　简单解释：
 
-　　1、ContainerBuilder类型的作用
+### 　　1、ContainerBuilder类型的作用
 
 　　　　组件通过ContainerBuilder的对象注册。  
 
-　　2、组件
+### 　　2、组件
 
 　　　　对象需要从组件中来获取，比如例子中的Worker类的实例就需要从组件中获取。
 
-　　3、哪些实例可以作为组件
+### 　　3、哪些实例可以作为组件
 
 - Lambda表达式
 - 一个类型
 - 一个预编译的实例
 - 实例类型所在的程序集
 
-　　4、容器
+### 　　4、容器
 
 　　　　ContainerBuilder的Build()方法可以创建容易，从容器的Resolve()方法能够获得对象。
 
-　　5、为了指定组件服务是某一接口
+### 　　5、为了指定组件服务是某一接口
 
 　　　　As()方法将用于注册时之指定：builder.RegisterTye<TaskController>().As<TController>(); 
-　　6、组件的依赖关系
+
+### 　　6、组件的依赖关系
 
 　　　　组件的依赖关系主要通过接口实现，如Worker:IPerson
 
