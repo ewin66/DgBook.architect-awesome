@@ -394,7 +394,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　当注册或者检索component的时候可以使用参数。
 
-　　**1、传递参数给Resolve**
+### 　　**1、传递参数给Resolve**
 
 　　Resolve接受可变参数或IEnumerable<T>传入多个值
 
@@ -421,7 +421,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
     }
 ```
 
-　　**2、可用的参数类型**
+### 　　**2、可用的参数类型**
 
 　　Autofac提供几种不同的参数对应策略：
 
