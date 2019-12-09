@@ -322,7 +322,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 # 六、属性注入
 
-　　属性注入使用可写属性而不是构造函数参数实现注入。
+### 　　属性注入使用可写属性而不是构造函数参数实现注入。
 
 　　示例：
 
@@ -338,7 +338,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
     builder.RegisterType<Worker>().As<IPerson>();
 ```
 
-　　通过反射，使用PropertiesAutowired()修饰符注入属性:
+### 　　通过反射，使用PropertiesAutowired()修饰符注入属性:
 
 ```csharp
     builder.RegisterType<AutoFacManager>().PropertiesAutowired();
@@ -400,7 +400,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
     using (IContainer container = builder.Build())
     {
         AutoFacManager manager = container.Resolve<AutoFacManager>(new NamedParameter("name", "刘备"));
@@ -413,7 +413,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　此时，AutoFacManager下必须添加如下构造函数
 
-```
+```csharp
     public AutoFacManager(string name,IPerson MyPerson)
     {
         Name = name;
