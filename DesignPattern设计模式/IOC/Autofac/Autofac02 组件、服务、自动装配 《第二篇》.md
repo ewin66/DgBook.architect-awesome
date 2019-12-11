@@ -456,7 +456,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　Autofac提供一些机制去创建和使用component的元数据。元数据是存储component中的关于这个component的信息，不需要创建实例也能访问。
 
-　　**1、在注册的时候添加元数据**
+### 　　**1、在注册的时候添加元数据**
 
 　　值描述的元数据在注册阶段和component联系起来，每个元数据都是一个键值对：
 
@@ -481,7 +481,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-　　**2、使用元数据**
+### 　　**2、使用元数据**
 
 　　不用于一般的属性，元数据和component本身是相互独立额度。
 
