@@ -454,25 +454,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 # 九、元数据
 
-　　Autofac提供一些机制去创建和使用component的元数据。元数                         
-
-
-
-
-
-
-
-
-
-
-
-
-
-\
-
-\
-
-\\\\据是存储component中的关于这个component的信息，不需要创建实例也能访问。
+　　Autofac提供一些机制去创建和使用component的元数据。元数据是存储component中的关于这个component的信息，不需要创建实例也能访问。
 
 　　**1、在注册的时候添加元数据**
 
