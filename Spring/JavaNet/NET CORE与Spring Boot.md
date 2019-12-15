@@ -190,8 +190,55 @@ namespace NetCoreConsoleApp
 
 DemoHostedService类代码：
 
-```
-using` `Microsoft.Extensions.Configuration;``using` `Microsoft.Extensions.Hosting;``using` `Microsoft.Extensions.Logging;``using` `System;``using` `System.Diagnostics;``using` `System.Threading;``using` `System.Threading.Tasks;` `namespace` `NetCoreConsoleApp``{``  ``public` `class` `DemoHostedService : IHostedService``  ``{``    ``private` `readonly` `IConfiguration config;``    ``private` `readonly` `ILogger logger;` `    ``public` `DemoHostedService(IConfiguration config, ILogger logger)``    ``{``      ``this``.config = config;``      ``this``.logger = logger;``    ``}` `    ``public` `Task StartAsync(CancellationToken cancellationToken)``    ``{``      ``Console.WriteLine(nameof(DemoHostedService) + ``"已开始执行..."``);` `      ``//TODO 业务逻辑代码，如下模拟``      ``Stopwatch stopwatch = Stopwatch.StartNew();``      ``for` `(``int` `i = 1; i <= 100; i++)``      ``{``        ``Console.WriteLine(``"test WriteLine:"` `+ i);``        ``Thread.Sleep(100);``      ``}` `      ``stopwatch.Stop();` `      ``logger.LogInformation(``"Logging - Execute Elapsed Times:{}ms"``, stopwatch.ElapsedMilliseconds);` `      ``return` `Task.FromResult(0);``    ``}` `    ``public` `Task StopAsync(CancellationToken cancellationToken)``    ``{``      ``Console.WriteLine(nameof(DemoHostedService) + ``"已被停止"``);``      ``return` `Task.FromResult(0);``    ``}` `  ``}``}
+```csharp
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+ 
+namespace NetCoreConsoleApp
+{
+    public class DemoHostedService : IHostedService
+    {
+        private readonly IConfiguration config;
+        private readonly ILogger logger;
+ 
+        public DemoHostedService(IConfiguration config, ILogger<DemoHostedService> logger)
+        {
+            this.config = config;
+            this.logger = logger;
+        }
+ 
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine(nameof(DemoHostedService) + "已开始执行...");
+ 
+            //TODO 业务逻辑代码，如下模拟
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            for (int i = 1; i <= 100; i++)
+            {
+                Console.WriteLine("test WriteLine:" + i);
+                Thread.Sleep(100);
+            }
+ 
+            stopwatch.Stop();
+ 
+            logger.LogInformation("Logging - Execute Elapsed Times:{}ms", stopwatch.ElapsedMilliseconds);
+ 
+            return Task.FromResult(0);
+        }
+ 
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine(nameof(DemoHostedService) + "已被停止");
+            return Task.FromResult(0);
+        }
+ 
+    }
+}
 ```
 
 　
