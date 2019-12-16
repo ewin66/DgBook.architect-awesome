@@ -261,14 +261,177 @@ namespace NetCoreConsoleApp
 
 然后采取自定义注解类(SpringBeansConfig)的方式注册相关Bean（包含配置映射类Bean：AppProperties），代码如下：
 
-```
-//app.java` `package` `cn.zuowenjun.spring;` `import` `cn.zuowenjun.spring.cn.zuowenjun.spring.services.HostService;``import` `org.springframework.context.annotation.AnnotationConfigApplicationContext;` `import` `java.io.IOException;` `/**`` ``* Hello world!`` ``*/``public` `class` `App {``  ``public` `static` `void` `main(String[] args) {``    ``AnnotationConfigApplicationContext applicationContext = ``new` `AnnotationConfigApplicationContext(SpringBeansConfig.``class``);``    ``HostService hostService = applicationContext.getBean(HostService.``class``);` `    ``hostService.run();` `    ``applicationContext.registerShutdownHook();` `    ``try` `{``      ``System.in.read();``    ``} ``catch` `(IOException e) {``      ``System.out.println(``"等待读取输入数据报错："` `+ e.getMessage() + ``"，将直接退出程序！"``);``    ``}``  ``}``}` `//AppProperties.java` `package` `cn.zuowenjun.spring;` `import` `org.springframework.beans.factory.annotation.Value;` `public` `class` `AppProperties {` `  ``@Value``(``"${app.name}"``)``  ``private` `String appName;` `  ``@Value``(``"${app.author}"``)``  ``private` `String appAuthor;` `  ``@Value``(``"${app.test.msg}"``)``  ``private` `String testMsg;` `  ``public` `String getAppName() {``    ``return` `appName;``  ``}` `  ``public` `void` `setAppName(String appName) {``    ``this``.appName = appName;``  ``}` `  ``public` `String getAppAuthor() {``    ``return` `appAuthor;``  ``}` `  ``public` `void` `setAppAuthor(String appAuthor) {``    ``this``.appAuthor = appAuthor;``  ``}` `  ``public` `String getTestMsg() {``    ``return` `testMsg;``  ``}` `  ``public` `void` `setTestMsg(String testMsg) {``    ``this``.testMsg = testMsg;``  ``}``}` `//SpringBeansConfig.java` `package` `cn.zuowenjun.spring;` `import` `cn.zuowenjun.spring.cn.zuowenjun.spring.services.HostService;``import` `org.springframework.context.annotation.Bean;``import` `org.springframework.context.annotation.Configuration;``import` `org.springframework.context.annotation.PropertySource;``import` `org.springframework.context.annotation.Scope;``import` `org.springframework.core.annotation.Order;` `@Configuration``@PropertySource``(value = ``"classpath:app.properties"``, ignoreResourceNotFound = ``false``)``public` `class` `SpringBeansConfig {` `  ``@Bean``  ``@Order``(``1``)``  ``public` `HostService hostService() {``    ``return` `new` `HostService();``  ``}` `  ``@Bean``  ``@Order``(``0``)``  ``@Scope``(``"singleton"``)``  ``public` `AppProperties appProperties() {``    ``return` `new` `AppProperties();``  ``}` `  ``//注册其它所需Bean...``}` `//HostService.java` `package` `cn.zuowenjun.spring.cn.zuowenjun.spring.services;` `import` `cn.zuowenjun.spring.AppProperties;``import` `org.slf4j.Logger;``import` `org.slf4j.LoggerFactory;``import` `org.springframework.beans.factory.annotation.Autowired;``import` `org.springframework.util.StopWatch;` `import` `java.util.Collections;``import` `java.util.concurrent.ExecutorService;``import` `java.util.concurrent.Executors;` `public` `class` `HostService {` `  ``private` `static` `final` `Logger LOGGER = LoggerFactory.getLogger(HostService.``class``);` `  ``@Autowired``  ``private` `AppProperties appProperties;` `  ``//可以添加其它属性注入` `  ``public` `void` `run() {``//    ExecutorService pool = Executors.newSingleThreadExecutor();``//    pool.execute(() -> execute());` `    ``new` `Thread(``this``::execute).start();``  ``}` `  ``/// ``  ``/// 控制台核心执行入口方法``  ``/// ``  ``private` `void` `execute() {``    ``//TODO 业务逻辑代码，如下模拟``    ``StopWatch stopwatch = ``new` `StopWatch();``    ``stopwatch.start();``    ``for` `(``int` `i = ``1``; i <= ``100``; i++) {``      ``System.out.println(``"test WriteLine:"` `+ i);``      ``try` `{``        ``Thread.sleep(``100``);``      ``} ``catch` `(Exception e) {``      ``}``    ``}``    ``stopwatch.stop();` `    ``System.out.println(String.join(``""``, Collections.nCopies(``30``, ``"="``)));` `    ``System.out.printf(``"app name is:%s %n"``, appProperties.getAppName());``    ``System.out.printf(``"app author is:%s %n"``, appProperties.getAppAuthor());``    ``System.out.printf(``"app test msg:%s %n"``, appProperties.getTestMsg());` `    ``LOGGER.info(``"Logging - Execute Elapsed Times:{}ms"``, stopwatch.getTotalTimeMillis());``  ``}``}
+```java
+//app.java
+ 
+package cn.zuowenjun.spring;
+ 
+import cn.zuowenjun.spring.cn.zuowenjun.spring.services.HostService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+ 
+import java.io.IOException;
+ 
+/**
+ * Hello world!
+ */
+public class App {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringBeansConfig.class);
+        HostService hostService = applicationContext.getBean(HostService.class);
+ 
+        hostService.run();
+ 
+        applicationContext.registerShutdownHook();
+ 
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println("等待读取输入数据报错：" + e.getMessage() + "，将直接退出程序！");
+        }
+    }
+}
+ 
+ 
+//AppProperties.java
+ 
+package cn.zuowenjun.spring;
+ 
+import org.springframework.beans.factory.annotation.Value;
+ 
+ 
+public class AppProperties {
+ 
+    @Value("${app.name}")
+    private String appName;
+ 
+    @Value("${app.author}")
+    private String appAuthor;
+ 
+    @Value("${app.test.msg}")
+    private String testMsg;
+ 
+    public String getAppName() {
+        return appName;
+    }
+ 
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+ 
+    public String getAppAuthor() {
+        return appAuthor;
+    }
+ 
+    public void setAppAuthor(String appAuthor) {
+        this.appAuthor = appAuthor;
+    }
+ 
+    public String getTestMsg() {
+        return testMsg;
+    }
+ 
+    public void setTestMsg(String testMsg) {
+        this.testMsg = testMsg;
+    }
+}
+ 
+ 
+//SpringBeansConfig.java
+ 
+package cn.zuowenjun.spring;
+ 
+import cn.zuowenjun.spring.cn.zuowenjun.spring.services.HostService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.annotation.Order;
+ 
+@Configuration
+@PropertySource(value = "classpath:app.properties", ignoreResourceNotFound = false)
+public class SpringBeansConfig {
+ 
+    @Bean
+    @Order(1)
+    public HostService hostService() {
+        return new HostService();
+    }
+ 
+    @Bean
+    @Order(0)
+    @Scope("singleton")
+    public AppProperties appProperties() {
+        return new AppProperties();
+    }
+ 
+    //注册其它所需Bean...
+}
+ 
+ 
+//HostService.java
+ 
+package cn.zuowenjun.spring.cn.zuowenjun.spring.services;
+ 
+import cn.zuowenjun.spring.AppProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StopWatch;
+ 
+import java.util.Collections;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+ 
+ 
+public class HostService {
+ 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HostService.class);
+ 
+    @Autowired
+    private AppProperties appProperties;
+ 
+    //可以添加其它属性注入
+ 
+    public void run() {
+//        ExecutorService pool = Executors.newSingleThreadExecutor();
+//        pool.execute(() -> execute());
+ 
+        new Thread(this::execute).start();
+    }
+ 
+    /// <summary>
+    /// 控制台核心执行入口方法
+    /// </summary>
+    private void execute() {
+        //TODO 业务逻辑代码，如下模拟
+        StopWatch stopwatch = new StopWatch();
+        stopwatch.start();
+        for (int i = 1; i <= 100; i++) {
+            System.out.println("test WriteLine:" + i);
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
+        }
+        stopwatch.stop();
+ 
+        System.out.println(String.join("", Collections.nCopies(30, "=")));
+ 
+        System.out.printf("app name is:%s %n", appProperties.getAppName());
+        System.out.printf("app author is:%s %n", appProperties.getAppAuthor());
+        System.out.printf("app test msg:%s %n", appProperties.getTestMsg());
+ 
+        LOGGER.info("Logging - Execute Elapsed Times:{}ms", stopwatch.getTotalTimeMillis());
+    }
+}
 ```
 
 　app.properties配置文件内容如下，注意应放在classpth目录下（即：resources目录下，没有需自行创建并设为resources目录）：
 
-```
-app.name=demo spring console``app.author=zuowenjun``app.test.msg=hello java spring console app!
+```csharp
+app.name=demo spring console
+app.author=zuowenjun
+app.test.msg=hello java spring console app!
 ```
 
 　如上即上实现一个spring的控制台程序，当然由于是示例，故只引用了logger包，正常还需引用jdbc或ORM框架的相关jar包，　上述代码关键逻辑说明（同样要注意顺序）：
