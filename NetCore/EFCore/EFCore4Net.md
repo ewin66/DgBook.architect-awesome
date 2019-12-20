@@ -91,6 +91,18 @@ Install-Package Npgsql.EntityFrameworkCore.PostgreSQL.Design
 
 Install-Package Microsoft.EntityFrameworkCore.Tools
 
+[New](https://docs.microsoft.com/zh-cn/dotnet/core/tools/dotnet-new?tabs=netcore22)            [Run](https://docs.microsoft.com/zh-cn/dotnet/core/tools/dotnet-run?tabs=netcore30)             [Pack打包](https://docs.microsoft.com/zh-cn/dotnet/core/tools/dotnet-pack)
+
+```bash
+dotnet new webapi --name EFGetStarted --no-https
+```
+
+
+
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+dotnet add package  Npgsql.EntityFrameworkCore.PostgreSQL.Design
+dotnet add package  Npgsql.EntityFrameworkCore.PostgreSQL.Design
+
 管理包控制台对应EF所在项目
 
 启动项对应配置文件启动项目
