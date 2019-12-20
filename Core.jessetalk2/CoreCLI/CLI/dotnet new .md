@@ -4,6 +4,10 @@
 
 # dotnet new
 
+https://docs.microsoft.com/zh-cn/dotnet/core/tools/dotnet-new?tabs=netcore22
+
+
+
 -  								2019/05/06 							
 -  								[ 									 												![img](https://github.com/mairaw.png?size=32) 												![img](https://github.com/olprod.png?size=32) 												![img](assets/14702782.png) 									 								](https://github.com/dotnet/docs.zh-cn/blob/live/docs/core/tools/dotnet-new.md) 							
 
