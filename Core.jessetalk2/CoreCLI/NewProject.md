@@ -7,6 +7,16 @@ cd EFGetStarted.AspNetCore.NewDb
 
 
 
+
+
+```bash
+dotnet new webapi --name EFGetStarted --no-https
+```
+
+
+
+
+
 ```bash
 dotnet new webapi --name IdentityServerCenter --no-https
 
