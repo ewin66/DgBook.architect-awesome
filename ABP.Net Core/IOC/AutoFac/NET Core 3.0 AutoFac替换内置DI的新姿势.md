@@ -1,4 +1,4 @@
-#                   [NET Core 3.0 AutoFac替换内置DI的新姿势](https://www.cnblogs.com/ZaraNet/p/11591915.html)
+#                   [NET Core 3.0 A utoFac替换内置DI的新姿势](https://www.cnblogs.com/ZaraNet/p/11591915.html)
 
 　　.NET Core 3.0 和 以往版本不同，替换AutoFac服务的方式有了一定的变化，在尝试着升级项目的时候出现了一些问题。
 
