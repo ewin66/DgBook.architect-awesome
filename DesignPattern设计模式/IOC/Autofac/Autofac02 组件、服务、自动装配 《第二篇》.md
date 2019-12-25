@@ -460,7 +460,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　值描述的元数据在注册阶段和component联系起来，每个元数据都是一个键值对：
 
-```
+```csharp
     builder.RegisterType<AutoFacManager>();
     builder.Register(c => new Worker()).As<IPerson>().WithMetadata("大将", "赵云");
 ```
@@ -469,7 +469,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 　　<component
     　　type="ConsoleApplication3.Program.Worker, ConsoleApplication3"
     　　service="ConsoleApplication3.Program.IPerson, ConsoleApplication3" >
