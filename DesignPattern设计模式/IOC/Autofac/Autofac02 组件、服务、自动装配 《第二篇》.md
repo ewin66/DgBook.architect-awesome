@@ -568,7 +568,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　在没有指定其他参数的情况下，这是默认是作用域。
 
-```
+```csharp
 　　builder.RegisterType<Worker>();
  
 　　// or
