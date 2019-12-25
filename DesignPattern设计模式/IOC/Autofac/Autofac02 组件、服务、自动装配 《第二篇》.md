@@ -501,7 +501,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
 　　public class Student
 　　{
     　　public Student(Worker worker) { }
