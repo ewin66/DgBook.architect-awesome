@@ -592,7 +592,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　这种配置模型在其他容器中等价于per-HTTP-request, per-thread等。
 
-```
+```csharp
 　　builder.RegisterType<Worker>().InstancePerLifetimeScope();
 ```
 
@@ -610,7 +610,7 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 　　提供的标签和生命周期作用域是对应的
 
-```
+```csharp
 　　var userSessionLifetime = container.BeginLifetimeScope();
 　　userSessionLifetime.Tag = MyContextHierarchy.UserSession;
 ```
