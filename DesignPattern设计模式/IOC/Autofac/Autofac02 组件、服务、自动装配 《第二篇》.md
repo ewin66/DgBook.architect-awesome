@@ -600,11 +600,11 @@ https://www.cnblogs.com/qixuejia/p/5009837.html
 
 ###  　**4、上下文**
 
-　　上下文作用域和per-lifetime作用域类似，但是对可见性提供更多显示的控制。
+　　上下文作用域和**per-lifetime作用域**类似，但是对可见性提供更多显示的控制。
 
 　　在大多数程序中，同一层次的容器嵌套代表一个工作单元，如果需要多层嵌套（例如global->request->transation），可以使用标签确保component在多层结构中的某一层共享。
 
-```
+```csharp
 　　builder.RegisterType<XWorker>().InstancePerMatchingLifetimeScope(MyContextHierarchy.UserSession);
 ```
 
