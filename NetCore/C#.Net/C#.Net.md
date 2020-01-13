@@ -206,9 +206,17 @@ Object.Finalizep	P479
 
 
 
-
+## Public Override New Static？？
 
 ## 线程安全
+
+### Task？？？
+
+### Asynsc？？
+
+### 线程池？？
+
+### 异常处理？？
 
 ###  进程和线程的区别
 
@@ -281,7 +289,7 @@ OOP三大特性之一的继承，我们知道，C#语言中，object是所有类
 
 
 
-### 字典Dict和Hashtable
+### 字典Dict和Hashtable【ToLookUp】
 
 Dictionary<TKey, TValue>是做什么的？ 
 .NET BCL中还有哪些常用的容器？它们分别是如何实现的（哪种数据结构）？分别是适用于哪些场景？ 
@@ -441,6 +449,8 @@ Set元素是不能重复的，那么用什么方法来区分重复与否呢? 是
 # 	Web后端
 
 
+
+## 日志？？
 
 ## 调用流程
 
