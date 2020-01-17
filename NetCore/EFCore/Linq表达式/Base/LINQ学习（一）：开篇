@@ -48,7 +48,7 @@ LINQ的核心是查询表达式。查询是一种从数据源检索数据的表�
 
 [![复制代码](LINQ%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BC%80%E7%AF%87.assets/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
         static void Main(string[] args)
         {
             int[] numbers = new int[] { 1, 5, 3, 6, 2};
@@ -80,7 +80,7 @@ LINQ的核心是查询表达式。查询是一种从数据源检索数据的表�
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
         static void Main(string[] args)
         {
             //数据源
@@ -112,7 +112,7 @@ LINQ的核心是查询表达式。查询是一种从数据源检索数据的表�
 
  
 
-**具体理解：**
+## **具体理解：**
 
 数据源：LINQ 数据源是支持泛型 IEnumerable<T> 接口或从该接口继承的接口的任意对象。
 
@@ -120,9 +120,13 @@ LINQ的核心是查询表达式。查询是一种从数据源检索数据的表�
 
 执行查询：可分为延迟执行和强制立即执行。
 
-（1）延迟执行：查询变量本身只是存储查询命令。 实际的查询执行会延迟到在 foreach 语句中循环访问查询变量时发生。 例子如上。
+### （1）延迟执行：查询变量本身只是存储查询命令。 
 
-（2）强制立即执行：对一系列源元素执行聚合函数的查询必须首先循环访问这些元素。 Count、Max、Average 和 First 就属于此类查询。 由于查询本身必须使用 foreach 以便返回结果，因此这些查询在执行时不使用显式 foreach 语句。 另外还要注意，这些类型的查询返回单个值，而不是 IEnumerable 集合。例子：统计数组中大于2的个数。
+实际的查询执行会延迟到在 foreach 语句中循环访问查询变量时发生。 例子如上。
+
+### （2）强制立即执行：对一系列源元素执行聚合函数的查询必须首先循环访问这些元素。
+
+ Count、Max、Average 和 First 就属于此类查询。 由于查询本身必须使用 foreach 以便返回结果，因此这些查询在执行时不使用显式 foreach 语句。 另外还要注意，这些类型的查询返回单个值，而不是 IEnumerable 集合。例子：统计数组中大于2的个数。
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
