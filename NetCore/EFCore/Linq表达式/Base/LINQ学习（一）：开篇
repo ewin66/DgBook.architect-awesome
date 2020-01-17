@@ -130,7 +130,7 @@ LINQ的核心是查询表达式。查询是一种从数据源检索数据的表�
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```csharp
             int[] numbers = new int[] { 1, 5, 3, 6, 2};
             int query = (from num in numbers
                         where num > 2
