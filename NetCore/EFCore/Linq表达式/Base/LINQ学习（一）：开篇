@@ -1,0 +1,141 @@
+# [LINQ学习（一）：开篇](https://www.cnblogs.com/ForEvErNoME/archive/2012/07/20/2601573.html)
+
+
+
+
+
+LINQ都推出好几年了，现在有时间可以学习下。主要是想接触下这种思想，为以后学习EF或者其他ORM框架打基础。
+
+**1.基本介绍：**
+
+语言集成查询（LINQ，Language INtegrated Query）是Visual Studio 2008 和 .NET Framework 3.5 版中引入的一项创新功能，它在对象领域和数据领域之间架起了一座桥梁。至今，LINQ仍然得到支持。
+
+ 
+
+**那么LINQ究竟是什么？为什么要引入这项技术？**
+
+在开发中，我们会涉及不同的数据源，例如 XML 文档、SQL 数据库、ADO.NET 数据集、  支持 IEnumerable 或泛型 IEnumerable<T> 接口的任意对象集合中的数据以及对其有 LINQ  提供程序可用的任何其他格式的数据，想要从不同的数据源中获取数据，我们可能需要学习不同的操作方式。于是LINQ  通过提供一种跨各种数据源和数据格式使用数据的一致模型，简化了这一情况，我们可以使用相同的基本编码模式（即LINQ语法）来对数据进行查询和操作。
+
+LINQ的核心是查询表达式。查询是一种从数据源检索数据的表达式。 查询通常用专门的查询语言来表示。
+
+ 
+
+**在.net Framework 3.5中，LINQ分5个功能：**
+
+（1）LINQ To Objects （对对象）
+
+（2）LINQ To DataSet （对数据集） 
+
+（3）LINQ To SQL （对Sql数据库）
+
+（4）LINQ To Entities （对实体）
+
+（5）LINQ To XML （对XML）
+
+ 
+
+**我们来总体看看LINQ架构：**
+
+![img](LINQ%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BC%80%E7%AF%87.assets/LINQ10.gif)
+
+ 
+
+**2.LINQ 查询操作**
+
+所有 LINQ 查询操作都由以下三个不同的操作组成：获取数据源、创建查询、执行查询。
+
+我们先来个例子做对比：查询数组中大于2的并且从小到大排序。
+
+[![复制代码](LINQ%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BC%80%E7%AF%87.assets/copycode.gif)](javascript:void(0);)
+
+```
+        static void Main(string[] args)
+        {
+            int[] numbers = new int[] { 1, 5, 3, 6, 2};
+            List<int> list = new List<int> { };
+            foreach (int num in numbers)
+            {
+                //大于2的数
+                if (num > 2)
+                {
+                    list.Add(num);
+                }
+            }
+            //list排序
+            list.Sort();
+            Console.Write("数组中大于2并且从小到大排序：");
+            foreach (int ordernum in list)
+            {
+                Console.Write("{0} ",ordernum);
+            }
+            Console.ReadKey();
+        }
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+ 
+
+看上去是不是比较繁琐呢，使用LINQ可以简化操作：
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+```
+        static void Main(string[] args)
+        {
+            //数据源
+            int[] numbers = new int[] { 1, 5, 3, 6, 2};
+            //创建查询
+            var query = from num in numbers
+                        where num > 2
+                        orderby num ascending
+                        select num;
+            Console.Write("数组中大于2并且从小到大排序：");
+            //执行查询
+            foreach (int num in query)
+            {
+                Console.Write("{0} ", num);
+            }          
+            Console.ReadKey();
+        }
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+ 
+
+ 下图显示了完整的查询操作。 在 LINQ 中，当我们创建查询表达式时是不会对数据进行查询的，只有查询执行才去检索数据。换句话说，如果只是创建查询变量，则不会检索任何数据。
+
+![完整LINQ查询操作](http://i.msdn.microsoft.com/dynimg/IC107892.png)
+
+那么对程序进行断点时，会发现foreach会跳转到查询表达式中，然后再检索数据，这就是延迟执行。
+
+ 
+
+**具体理解：**
+
+数据源：LINQ 数据源是支持泛型 IEnumerable<T> 接口或从该接口继承的接口的任意对象。
+
+创建查询：查询存储在查询变量中，并用查询表达式进行初始化。具体使用的是LINQ 查询语法与方法语法 (C#)。
+
+执行查询：可分为延迟执行和强制立即执行。
+
+（1）延迟执行：查询变量本身只是存储查询命令。 实际的查询执行会延迟到在 foreach 语句中循环访问查询变量时发生。 例子如上。
+
+（2）强制立即执行：对一系列源元素执行聚合函数的查询必须首先循环访问这些元素。 Count、Max、Average 和 First 就属于此类查询。 由于查询本身必须使用 foreach 以便返回结果，因此这些查询在执行时不使用显式 foreach 语句。 另外还要注意，这些类型的查询返回单个值，而不是 IEnumerable 集合。例子：统计数组中大于2的个数。
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+```
+            int[] numbers = new int[] { 1, 5, 3, 6, 2};
+            int query = (from num in numbers
+                        where num > 2
+                        select num).Count();
+            Console.Write("数组中大于2的个数：{0}个", query);
+            Console.ReadKey();
+            //返回大于2的个数
+```
+
+[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+
+ 
